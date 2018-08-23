@@ -1,12 +1,16 @@
 <resources>
     <string name="app_name">CodeforcesApplication</string>
 
+    <!--Экран списка контестов-->
     <string name="contestsList">Списки контестов</string>
     <string name="upcomingContests">Предстоящие</string>
     <string name="currentContests">Текущие</string>
     <string name="pastContests">Прошедшие</string>
 
+    <string name="emptyContestsList">Список контестов пуст</string>
+
     <string name="contest_name">Название контеста</string>
     <string name="contest_start">Начало</string>
     <string name="contest_duration">Длительность</string>
+
 </resources>

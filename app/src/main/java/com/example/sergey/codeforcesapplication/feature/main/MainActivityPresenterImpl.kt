@@ -2,34 +2,35 @@ package com.example.sergey.codeforcesapplication.feature.main
 
 import com.example.sergey.codeforcesapplication.feature.base.BasePresenter
 import com.example.sergey.codeforcesapplication.model.Contest
+import com.example.sergey.codeforcesapplication.model.repository.ContestsRepository
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 
-class MainActivityPresenterImpl :
-        BasePresenter<MainContractor.MainActivityView>(),
-        MainContractor.MainActivityPresenter<MainContractor.MainActivityView> {
+class MainActivityPresenterImpl(private val contestsRepository: ContestsRepository) :
+        BasePresenter<MainActivityContractor.MainActivityView>(),
+        MainActivityContractor.MainActivityPresenter<MainActivityContractor.MainActivityView> {
 
-    override fun viewIsReady() {
-        getView()?.showContests(getMockContestsList("Предстоящие"))
-    }
+    override fun viewIsReady() = getContests(contestsRepository::getUncommingContests)
 
-    override fun uncommingContestsTabClicked() {
-        getView()?.showContests(getMockContestsList("Предстоящие")) // TODO: Получать только нужные
-    }
+    override fun uncommingContestsTabClicked() = getContests(contestsRepository::getUncommingContests)
 
-    override fun currentContestsTabClicked() {
-        getView()?.showContests(getMockContestsList("Текущие")) // TODO: Получать только нужные
-    }
+    override fun currentContestsTabClicked() = getContests(contestsRepository::getCurrentContests)
 
-    override fun pastContestsTabClicked() {
-        getView()?.showContests(getMockContestsList("Прошедшие")) // TODO: Получать только нужные
-    }
+    override fun pastContestsTabClicked() = getContests(contestsRepository::getPastContests)
 
-    private fun getMockContestsList(prefix: String): List<Contest> {
-        val contests: MutableList<Contest> = ArrayList()
+    private fun getContests(loadContestsFunction: () -> Deferred<List<Contest>>) {
+        launch(UI) {
+            getView()?.showProgress()
+            var contests = loadContestsFunction().await()
+            getView()?.hideProgress()
 
-        for (i in 0 until 100) {
-            contests.add(Contest(i, "$prefix: Technocup 2018 - Elimination Round #$i", 1537693500, 9000))
+            if (contests.isEmpty()) {
+                getView()?.showEmptyListMessage()
+                return@launch
+            }
+
+            getView()?.showContests(contests)
         }
-
-        return contests
     }
 }

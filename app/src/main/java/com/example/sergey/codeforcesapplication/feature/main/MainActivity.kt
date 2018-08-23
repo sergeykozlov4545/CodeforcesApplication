@@ -6,13 +6,16 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.TextView
 import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
+import com.example.sergey.codeforcesapplication.extansion.hide
+import com.example.sergey.codeforcesapplication.extansion.show
 import com.example.sergey.codeforcesapplication.model.Contest
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class MainActivity : AppCompatActivity(), MainContractor.MainActivityView {
+class MainActivity : AppCompatActivity(), MainActivityContractor.MainActivityView {
 
-    private val presenter = MainActivityPresenterImpl()
+    private lateinit var presenter: MainActivityContractor.MainActivityPresenter<MainActivityContractor.MainActivityView>
 
     private var contestsListAdapter = ContestsListAdapter()
 
@@ -21,6 +24,7 @@ class MainActivity : AppCompatActivity(), MainContractor.MainActivityView {
         setContentView(R.layout.activity_main)
 
         initView()
+        initPresenter()
     }
 
     override fun onResume() {
@@ -35,13 +39,20 @@ class MainActivity : AppCompatActivity(), MainContractor.MainActivityView {
         presenter.detachView()
     }
 
+    override fun showProgress() = progressView.show()
+
+    override fun hideProgress() = progressView.hide()
+
     override fun showContests(contestsList: List<Contest>) {
         contestsListAdapter.updateData(contestsList)
+        contestsListView.show()
     }
 
-    override fun showEmptyListMessage() {
-        TODO("not implemented")
-    }
+    override fun hideContests() = contestsListView.hide()
+
+    override fun showEmptyListMessage() = emptyListView.show()
+
+    override fun hideEmptyListMessage() = emptyListView.hide()
 
     private fun initView() {
         (toolbar.findViewById<TextView>(R.id.title_toolbar)).setText(R.string.contestsList)
@@ -66,9 +77,13 @@ class MainActivity : AppCompatActivity(), MainContractor.MainActivityView {
             }
         })
 
-        with(contestsList) {
+        with(contestsListView) {
             layoutManager = LinearLayoutManager(applicationContext)
             adapter = contestsListAdapter
         }
+    }
+
+    private fun initPresenter() {
+        presenter = MainActivityPresenterImpl((applicationContext as CodeforcesApplication).contestsRepository)
     }
 }
