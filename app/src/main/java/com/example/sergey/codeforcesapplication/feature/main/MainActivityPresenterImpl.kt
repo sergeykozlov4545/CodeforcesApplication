@@ -8,26 +8,26 @@ class MainActivityPresenterImpl :
         MainContractor.MainActivityPresenter<MainContractor.MainActivityView> {
 
     override fun viewIsReady() {
-        getView()?.showContests(getMockContestsList())
+        getView()?.showContests(getMockContestsList("Предстоящие"))
     }
 
     override fun uncommingContestsTabClicked() {
-        getView()?.showContests(getMockContestsList()) // TODO: Получать только нужные
+        getView()?.showContests(getMockContestsList("Предстоящие")) // TODO: Получать только нужные
     }
 
     override fun currentContestsTabClicked() {
-        getView()?.showContests(getMockContestsList()) // TODO: Получать только нужные
+        getView()?.showContests(getMockContestsList("Текущие")) // TODO: Получать только нужные
     }
 
     override fun pastContestsTabClicked() {
-        getView()?.showContests(getMockContestsList()) // TODO: Получать только нужные
+        getView()?.showContests(getMockContestsList("Прошедшие")) // TODO: Получать только нужные
     }
 
-    private fun getMockContestsList(): List<Contest> {
+    private fun getMockContestsList(prefix: String): List<Contest> {
         val contests: MutableList<Contest> = ArrayList()
 
         for (i in 0 until 100) {
-            contests.add(Contest(i, "Technocup 2018 - Elimination Round #$i", 1537693500, 9000))
+            contests.add(Contest(i, "$prefix: Technocup 2018 - Elimination Round #$i", 1537693500, 9000))
         }
 
         return contests
