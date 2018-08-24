@@ -22,14 +22,11 @@ class ContestsListViewHolder(override val containerView: View?) :
         }
         contestDurationView.text = durationFormatter(contest.durationSeconds)
 
-        contestCardView.setOnClickListener(null)
-        if (!contest.isUpcomming) {
-            contestCardView.setOnClickListener { v ->
-                val context = v?.context ?: return@setOnClickListener
+        contestCardView.setOnClickListener { v ->
+            val context = v?.context
 
-                if (context is MainActivityContractor.MainActivityView) {
-                    context.getPresenter().contestCardClicked(contest.id)
-                }
+            if (context is MainActivityContractor.MainActivityView) {
+                context.getPresenter().contestCardClicked(contest)
             }
         }
     }
