@@ -3,7 +3,7 @@ package com.example.sergey.codeforcesapplication.feature.main
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.GridLayoutManager
 import android.widget.TextView
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
@@ -78,7 +78,8 @@ class MainActivity : AppCompatActivity(), MainActivityContractor.MainActivityVie
         })
 
         with(contestsListView) {
-            layoutManager = LinearLayoutManager(applicationContext)
+            val columnCount = resources.getInteger(R.integer.contests_list_column_count)
+            layoutManager = GridLayoutManager(applicationContext, columnCount)
             adapter = contestsListAdapter
         }
     }
