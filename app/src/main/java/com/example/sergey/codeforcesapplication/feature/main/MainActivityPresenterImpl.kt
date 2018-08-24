@@ -19,6 +19,10 @@ class MainActivityPresenterImpl(private val contestsRepository: ContestsReposito
 
     override fun pastContestsTabClicked() = getContests(contestsRepository::getPastContests)
 
+    override fun contestCardClicked(contestId: Long) {
+        // TODO: Открыть экран детализации контеста
+    }
+
     private fun getContests(loadContestsFunction: () -> Deferred<List<Contest>>) {
         launch(UI) {
             getView()?.hideEmptyListMessage()

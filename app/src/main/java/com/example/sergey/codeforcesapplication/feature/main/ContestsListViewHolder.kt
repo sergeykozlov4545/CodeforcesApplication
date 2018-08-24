@@ -2,7 +2,6 @@ package com.example.sergey.codeforcesapplication.feature.main
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import kotlinx.android.extensions.LayoutContainer
@@ -26,7 +25,11 @@ class ContestsListViewHolder(override val containerView: View?) :
         contestCardView.setOnClickListener(null)
         if (!contest.isUpcomming) {
             contestCardView.setOnClickListener { v ->
-                Toast.makeText(v.context, "CARD CLICK", Toast.LENGTH_SHORT).show()
+                val context = v?.context ?: return@setOnClickListener
+
+                if (context is MainActivityContractor.MainActivityView) {
+                    context.getPresenter().contestCardClicked(contest.id)
+                }
             }
         }
     }

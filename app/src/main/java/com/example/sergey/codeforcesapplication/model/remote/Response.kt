@@ -10,5 +10,5 @@ class Response<T>(
         val comment: String,
 
         @SerializedName("result")
-        val result: List<T>
+        val result: T
 )

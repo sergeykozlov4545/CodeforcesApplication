@@ -15,7 +15,7 @@ interface ContestsRepository {
     fun getUncommingContests(): Deferred<List<Contest>>
     fun getCurrentContests(): Deferred<List<Contest>>
     fun getPastContests(): Deferred<List<Contest>>
-    fun getContestStandings(): Deferred<ContestInfo>
+    fun getContestStandings(contestId: Long): Deferred<ContestInfo>
 }
 
 class ContestsRepositoryImpl(
@@ -52,11 +52,10 @@ class ContestsRepositoryImpl(
         }
     }
 
-    override fun getContestStandings(): Deferred<ContestInfo> = async {
+    override fun getContestStandings(contestId: Long): Deferred<ContestInfo> = async {
         mutex.lock()
         try {
-            val contestStandingsResponse = serviceApi.getContestStandings().await()
-            return@async contestStandingsResponse.result[0]
+            serviceApi.getContestStandings(contestId).await().result
         } finally {
             mutex.unlock()
         }

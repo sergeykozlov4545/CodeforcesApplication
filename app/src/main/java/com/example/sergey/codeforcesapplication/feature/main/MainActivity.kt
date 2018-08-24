@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity(), MainActivityContractor.MainActivityVie
         presenter.detachView()
     }
 
+    override fun getPresenter() = presenter
+
     override fun showProgress() = progressView.show()
 
     override fun hideProgress() = progressView.hide()
