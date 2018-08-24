@@ -26,7 +26,7 @@ class ContestsRepositoryImpl(
     override fun getUncommingContests(): Deferred<List<Contest>> = async {
         mutex.lock()
         try {
-            loadAndSaveContests { it == "BEFORE" }
+            loadAndSaveContests(predicate = Contest::isUpcomming)
         } finally {
             mutex.unlock()
         }
@@ -35,7 +35,7 @@ class ContestsRepositoryImpl(
     override fun getCurrentContests(): Deferred<List<Contest>> = async {
         mutex.lock()
         try {
-            loadAndSaveContests { it == "CODING" }
+            loadAndSaveContests(predicate = Contest::isCurrent)
         } finally {
             mutex.unlock()
         }
@@ -44,23 +44,23 @@ class ContestsRepositoryImpl(
     override fun getPastContests(): Deferred<List<Contest>> = async {
         mutex.lock()
         try {
-            loadAndSaveContests(true) { it in arrayOf("PENDING_SYSTEM_TEST", "SYSTEM_TEST", "FINISHED") }
+            loadAndSaveContests(sortedByDescending = true, predicate = Contest::isPast)
         } finally {
             mutex.unlock()
         }
     }
 
     private suspend fun loadAndSaveContests(sortedByDescending: Boolean = false,
-                                            predicate: (phaseContest: String) -> Boolean): List<Contest> {
+                                            predicate: (contest: Contest) -> Boolean): List<Contest> {
         val contests = dataBaseManager.loadAllContests().await()
 
         if (!contests.isEmpty()) {
             val lastLoadedTime = preferencesManager.getLong(LAST_LOADED_TIME_CONTESTS_KEY, 0)
             if (Date().time - lastLoadedTime < ONE_DAY) {
                 return if (sortedByDescending) {
-                    contests.filter { predicate(it.phase) }.sortedByDescending { it.startTimeSeconds }
+                    contests.filter(predicate).sortedByDescending { it.startTimeSeconds }
                 } else {
-                    contests.filter { predicate(it.phase) }.sortedBy { it.startTimeSeconds }
+                    contests.filter(predicate).sortedBy { it.startTimeSeconds }
                 }
             }
         }
@@ -77,7 +77,7 @@ class ContestsRepositoryImpl(
         }
         dataBaseManager.saveAllContests(sortedContestsList).await()
         preferencesManager.putLong(LAST_LOADED_TIME_CONTESTS_KEY, Date().time)
-        return sortedContestsList.filter { predicate(it.phase) }
+        return sortedContestsList.filter(predicate)
     }
 
     companion object {

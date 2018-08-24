@@ -24,4 +24,14 @@ data class Contest(
         @SerializedName("durationSeconds")
         @ColumnInfo(name = "duration_seconds")
         val durationSeconds: Long
-)
+) {
+
+    val isUpcomming: Boolean
+        get() = phase == "BEFORE"
+
+    val isCurrent: Boolean
+        get() = phase == "CODING"
+
+    val isPast: Boolean
+        get() = phase in arrayOf("PENDING_SYSTEM_TEST", "SYSTEM_TEST", "FINISHED")
+}
