@@ -2,6 +2,7 @@ package com.example.sergey.codeforcesapplication.feature.main
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.model.Contest
 import kotlinx.android.extensions.LayoutContainer
@@ -21,6 +22,13 @@ class ContestsListViewHolder(override val containerView: View?) :
             itemView.context.getString(R.string.contest_start_unknown)
         }
         contestDurationView.text = durationFormatter(contest.durationSeconds)
+
+        contestCardView.setOnClickListener(null)
+        if (!contest.isUpcomming) {
+            contestCardView.setOnClickListener { v ->
+                Toast.makeText(v.context, "CARD CLICK", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun startTimeFormatter(seconds: Long): String {
