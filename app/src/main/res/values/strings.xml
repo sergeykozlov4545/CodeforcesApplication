@@ -10,7 +10,8 @@
     <string name="emptyContestsList">Список контестов пуст</string>
 
     <string name="contest_name">Название контеста</string>
-    <string name="contest_start">Начало</string>
-    <string name="contest_duration">Длительность</string>
+    <string name="contest_start">Начало:</string>
+    <string name="contest_start_unknown">неизвестно</string>
+    <string name="contest_duration">Длительность:</string>
 
 </resources>

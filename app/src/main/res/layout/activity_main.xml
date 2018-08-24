@@ -65,6 +65,7 @@
             android:id="@+id/contestsListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/contestsListBackground"
             android:scrollbars="vertical"
             android:visibility="gone"
             tools:itemCount="5"
