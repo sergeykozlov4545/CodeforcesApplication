@@ -25,7 +25,7 @@ class MainActivityPresenterImpl(private val contestsRepository: ContestsReposito
             getView()?.hideContests()
             getView()?.showProgress()
 
-            var contests = loadContestsFunction().await()
+            val contests = loadContestsFunction().await()
             getView()?.hideProgress()
 
             if (contests.isEmpty()) {

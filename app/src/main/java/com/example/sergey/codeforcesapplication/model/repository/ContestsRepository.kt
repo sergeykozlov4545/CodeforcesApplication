@@ -56,7 +56,7 @@ class ContestsRepositoryImpl(
 
         if (!contests.isEmpty()) {
             val lastLoadedTime = preferencesManager.getLong(LAST_LOADED_TIME_CONTESTS_KEY, 0)
-            if (Date().time - lastLoadedTime < ONE_DAY) {
+            if (Date().time - lastLoadedTime < ONE_HOUR) {
                 return if (sortedByDescending) {
                     contests.filter(predicate).sortedByDescending { it.startTimeSeconds }
                 } else {
@@ -82,6 +82,6 @@ class ContestsRepositoryImpl(
 
     companion object {
         private const val LAST_LOADED_TIME_CONTESTS_KEY = "last_loaded_time_contests"
-        private val ONE_DAY = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)
+        private val ONE_HOUR = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
     }
 }
