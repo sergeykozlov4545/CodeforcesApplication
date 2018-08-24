@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.model.Contest
+import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
 class ContestsListAdapter : RecyclerView.Adapter<ContestsListViewHolder>() {
     private val contests: MutableList<Contest> = ArrayList()

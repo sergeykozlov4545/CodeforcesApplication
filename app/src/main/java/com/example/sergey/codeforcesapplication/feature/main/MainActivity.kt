@@ -9,7 +9,7 @@ import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
 import com.example.sergey.codeforcesapplication.extansion.hide
 import com.example.sergey.codeforcesapplication.extansion.show
-import com.example.sergey.codeforcesapplication.model.Contest
+import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 

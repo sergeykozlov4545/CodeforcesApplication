@@ -1,7 +1,7 @@
 package com.example.sergey.codeforcesapplication.feature.main
 
 import com.example.sergey.codeforcesapplication.feature.base.BasePresenter
-import com.example.sergey.codeforcesapplication.model.Contest
+import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import com.example.sergey.codeforcesapplication.model.repository.ContestsRepository
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI

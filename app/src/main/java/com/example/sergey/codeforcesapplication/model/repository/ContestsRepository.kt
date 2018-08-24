@@ -1,6 +1,6 @@
 package com.example.sergey.codeforcesapplication.model.repository
 
-import com.example.sergey.codeforcesapplication.model.Contest
+import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import com.example.sergey.codeforcesapplication.model.database.DataBaseManager
 import com.example.sergey.codeforcesapplication.model.preferences.PreferencesManager
 import com.example.sergey.codeforcesapplication.model.remote.ServiceApi

@@ -2,7 +2,7 @@ package com.example.sergey.codeforcesapplication.feature.main
 
 import com.example.sergey.codeforcesapplication.feature.base.MVPPresenter
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
-import com.example.sergey.codeforcesapplication.model.Contest
+import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
 interface MainActivityContractor {
     interface MainActivityView : MVPView {

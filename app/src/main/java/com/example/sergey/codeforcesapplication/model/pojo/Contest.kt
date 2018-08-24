@@ -1,4 +1,4 @@
-package com.example.sergey.codeforcesapplication.model
+package com.example.sergey.codeforcesapplication.model.pojo
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
 data class Contest(
         @SerializedName("id")
         @PrimaryKey
-        val id: Int,
+        val id: Long,
 
         @SerializedName("name")
         val name: String,

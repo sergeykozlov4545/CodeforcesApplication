@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.model.Contest
+import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_contest_list.*
 import java.text.DateFormat
