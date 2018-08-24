@@ -1,7 +1,8 @@
 package com.example.sergey.codeforcesapplication.model.repository
 
-import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import com.example.sergey.codeforcesapplication.model.database.DataBaseManager
+import com.example.sergey.codeforcesapplication.model.pojo.Contest
+import com.example.sergey.codeforcesapplication.model.pojo.ContestInfo
 import com.example.sergey.codeforcesapplication.model.preferences.PreferencesManager
 import com.example.sergey.codeforcesapplication.model.remote.ServiceApi
 import kotlinx.coroutines.experimental.Deferred
@@ -14,6 +15,7 @@ interface ContestsRepository {
     fun getUncommingContests(): Deferred<List<Contest>>
     fun getCurrentContests(): Deferred<List<Contest>>
     fun getPastContests(): Deferred<List<Contest>>
+    fun getContestStandings(): Deferred<ContestInfo>
 }
 
 class ContestsRepositoryImpl(
@@ -50,6 +52,16 @@ class ContestsRepositoryImpl(
         }
     }
 
+    override fun getContestStandings(): Deferred<ContestInfo> = async {
+        mutex.lock()
+        try {
+            val contestStandingsResponse = serviceApi.getContestStandings().await()
+            return@async contestStandingsResponse.result[0]
+        } finally {
+            mutex.unlock()
+        }
+    }
+
     private suspend fun loadAndSaveContests(sortedByDescending: Boolean = false,
                                             predicate: (contest: Contest) -> Boolean): List<Contest> {
         val contests = dataBaseManager.loadAllContests().await()
@@ -65,7 +77,7 @@ class ContestsRepositoryImpl(
             }
         }
 
-        val contestsResponse = serviceApi.getContestsList().await()
+        val contestsResponse = serviceApi.getContestList().await()
         if (contestsResponse.status == "FAILED") {
             return emptyList()
         }

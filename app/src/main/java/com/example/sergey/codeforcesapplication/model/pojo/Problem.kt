@@ -1,21 +1,14 @@
 package com.example.sergey.codeforcesapplication.model.pojo
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.ForeignKey
+import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "problem",
-        primaryKeys = ["contest_id, index"])
 data class Problem(
-        @ForeignKey(entity = Contest::class, parentColumns = ["id"], childColumns = ["contest_id"])
-        @ColumnInfo(name = "contest_id")
+        @SerializedName("contestId")
         val contestId: Long,
 
+        @SerializedName("index")
         val index: String,
 
-        val name: String,
-
-        val tags: List<String>
-) {
-    val tagsString = tags.joinToString()
-}
+        @SerializedName("name")
+        val name: String
+)
