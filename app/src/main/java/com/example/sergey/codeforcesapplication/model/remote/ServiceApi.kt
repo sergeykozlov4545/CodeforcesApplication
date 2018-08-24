@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface ServiceApi {
 
-    @GET("/contest.list")
+    @GET("contest.list")
     fun getContestsList(): Deferred<Response<Contest>>
 
 }

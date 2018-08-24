@@ -21,7 +21,10 @@ class MainActivityPresenterImpl(private val contestsRepository: ContestsReposito
 
     private fun getContests(loadContestsFunction: () -> Deferred<List<Contest>>) {
         launch(UI) {
+            getView()?.hideEmptyListMessage()
+            getView()?.hideContests()
             getView()?.showProgress()
+
             var contests = loadContestsFunction().await()
             getView()?.hideProgress()
 
