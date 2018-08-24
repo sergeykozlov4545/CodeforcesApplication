@@ -7,6 +7,8 @@ import com.example.sergey.codeforcesapplication.model.remote.ServiceApi
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.sync.Mutex
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 interface ContestsRepository {
     fun getUncommingContests(): Deferred<List<Contest>>
@@ -17,7 +19,7 @@ interface ContestsRepository {
 class ContestsRepositoryImpl(
         private val serviceApi: ServiceApi,
         private val dataBaseManager: DataBaseManager,
-        private val PreferencesManager: PreferencesManager
+        private val preferencesManager: PreferencesManager
 ) : ContestsRepository {
     private val mutex = Mutex()
 
@@ -53,12 +55,13 @@ class ContestsRepositoryImpl(
         val contests = dataBaseManager.loadAllContests().await()
 
         if (!contests.isEmpty()) {
-            // TODO: Тут проверать на время жизни в базе. Если > 1дня, то перелоад из сети
-
-            return if (sortedByDescending) {
-                contests.filter { predicate(it.phase) }.sortedByDescending { it.startTimeSeconds }
-            } else {
-                contests.filter { predicate(it.phase) }.sortedBy { it.startTimeSeconds }
+            val lastLoadedTime = preferencesManager.getLong(LAST_LOADED_TIME_CONTESTS_KEY, 0)
+            if (Date().time - lastLoadedTime < ONE_DAY) {
+                return if (sortedByDescending) {
+                    contests.filter { predicate(it.phase) }.sortedByDescending { it.startTimeSeconds }
+                } else {
+                    contests.filter { predicate(it.phase) }.sortedBy { it.startTimeSeconds }
+                }
             }
         }
 
@@ -73,6 +76,12 @@ class ContestsRepositoryImpl(
             contestsResponse.result.sortedBy { it.startTimeSeconds }
         }
         dataBaseManager.saveAllContests(sortedContestsList).await()
+        preferencesManager.putLong(LAST_LOADED_TIME_CONTESTS_KEY, Date().time)
         return sortedContestsList.filter { predicate(it.phase) }
+    }
+
+    companion object {
+        private const val LAST_LOADED_TIME_CONTESTS_KEY = "last_loaded_time_contests"
+        private val ONE_DAY = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)
     }
 }
