@@ -1,19 +1,23 @@
 package com.example.sergey.codeforcesapplication.feature.main.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.feature.contestInfo.ContestInfoActivity
 import com.example.sergey.codeforcesapplication.feature.main.ContestsListAdapter
 import com.example.sergey.codeforcesapplication.feature.main.fragment.CurrentContestsListFragment
 import com.example.sergey.codeforcesapplication.feature.main.fragment.PastContestsListFragment
 import com.example.sergey.codeforcesapplication.feature.main.fragment.UncommingContestsListFragment
+import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class MainActivity : AppCompatActivity(), MainActivityContractor.MainActivityView {
+class MainActivity : AppCompatActivity(), MainActivityContractor.View {
 
     private val presenter = MainActivityPresenterImpl()
 
@@ -37,9 +41,24 @@ class MainActivity : AppCompatActivity(), MainActivityContractor.MainActivityVie
         presenter.detachView()
     }
 
+    override fun getPresenter(): MainActivityContractor.Presenter<MainActivityContractor.View> {
+        return presenter
+    }
+
+    override fun showMessage(messageId: Int) {
+        Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
+    }
+
     override fun showUncommingContests() = showFragment(UncommingContestsListFragment())
     override fun showCurrentContests() = showFragment(CurrentContestsListFragment())
     override fun showPastContests() = showFragment(PastContestsListFragment())
+
+    override fun showContestInfoActivity(contest: Contest) {
+        startActivity(Intent(this, ContestInfoActivity::class.java).apply {
+            putExtra(ContestInfoActivity.CONTEST_ID_EXTRA, contest.id)
+            putExtra(ContestInfoActivity.CONTEST_NAME_EXTRA, contest.name)
+        })
+    }
 
     private fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {

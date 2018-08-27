@@ -1,6 +1,5 @@
 package com.example.sergey.codeforcesapplication.feature.main.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -9,12 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
 import com.example.sergey.codeforcesapplication.extansion.hide
 import com.example.sergey.codeforcesapplication.extansion.show
-import com.example.sergey.codeforcesapplication.feature.contestInfo.ContestInfoActivity
 import com.example.sergey.codeforcesapplication.feature.main.ContestsListAdapter
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
@@ -49,14 +46,6 @@ abstract class ContestsListFragment : Fragment(), ContestsListFragmentContractor
         presenter.detachView()
     }
 
-    override fun getPresenter(): ContestsListFragmentContractor.Presenter<ContestsListFragmentContractor.View> {
-        return presenter
-    }
-
-    override fun showMessage(messageId: Int) {
-        Toast.makeText(context, messageId, Toast.LENGTH_SHORT).show()
-    }
-
     override fun showProgress() {
         progressView.show()
     }
@@ -70,12 +59,6 @@ abstract class ContestsListFragment : Fragment(), ContestsListFragmentContractor
         contestsListView.show()
     }
 
-    override fun showContestInfoActivity(contest: Contest) {
-        startActivity(Intent(context, ContestInfoActivity::class.java).apply {
-            putExtra(ContestInfoActivity.CONTEST_ID_EXTRA, contest.id)
-            putExtra(ContestInfoActivity.CONTEST_NAME_EXTRA, contest.name)
-        })
-    }
 
     private fun initView(view: View) {
         progressView = view.findViewById(R.id.progressView)

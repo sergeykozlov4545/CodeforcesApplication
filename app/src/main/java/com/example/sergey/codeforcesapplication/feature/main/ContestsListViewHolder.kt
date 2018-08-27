@@ -3,7 +3,7 @@ package com.example.sergey.codeforcesapplication.feature.main
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.feature.main.fragment.ContestsListFragmentContractor
+import com.example.sergey.codeforcesapplication.feature.main.activity.MainActivityContractor
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_contest_list.*
@@ -26,7 +26,7 @@ class ContestsListViewHolder(override val containerView: View?) :
         contestCardView.setOnClickListener { v ->
             val context = v?.context
 
-            if (context is ContestsListFragmentContractor.View) {
+            if (context is MainActivityContractor.View) {
                 context.getPresenter().contestCardClicked(contest)
             }
         }
