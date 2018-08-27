@@ -10,5 +10,8 @@ data class Problem(
         val index: String,
 
         @SerializedName("name")
-        val name: String
+        val name: String,
+
+        @SerializedName("points")
+        val points: Double?
 )
