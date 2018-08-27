@@ -1,12 +1,16 @@
 package com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.problemsList
 
 import com.example.sergey.codeforcesapplication.feature.base.BasePresenter
+import com.example.sergey.codeforcesapplication.feature.base.MVPPresenter
 import com.example.sergey.codeforcesapplication.model.repository.ContestsRepository
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
-class ProblemsListFragmentPresenter(private val contestsRepository: ContestsRepository) :
-        BasePresenter<ProblemsListFragmentView>() {
+
+interface ProblemsListFragmentPresenter : MVPPresenter<ProblemsListFragmentView>
+
+class ProblemsListFragmentPresenterImpl(private val contestsRepository: ContestsRepository) :
+        BasePresenter<ProblemsListFragmentView>(), ProblemsListFragmentPresenter {
 
     override fun viewIsReady() {
         launch(UI) {

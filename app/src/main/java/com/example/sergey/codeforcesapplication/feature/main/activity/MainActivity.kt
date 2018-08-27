@@ -17,7 +17,6 @@ import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-
 interface MainActivityView : MVPView {
     fun getPresenter(): MainActivityPresenter
     fun showMessage(messageId: Int)

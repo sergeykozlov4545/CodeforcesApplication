@@ -10,7 +10,7 @@ import com.example.sergey.codeforcesapplication.feature.base.adapter.DataListAda
 import com.example.sergey.codeforcesapplication.feature.main.ContestsListAdapter
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
-class CurrentContestsListFragment : WithProcessingFragment<Contest>() {
+class CurrentContestsListFragment : WithProcessingFragment<Contest>(), ContestsListFragmentView {
 
     private val contestsListAdapter = ContestsListAdapter()
     private lateinit var presenter: ContestsListFragmentPresenter

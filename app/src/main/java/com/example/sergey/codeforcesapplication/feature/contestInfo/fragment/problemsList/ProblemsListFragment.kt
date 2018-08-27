@@ -60,6 +60,6 @@ class ProblemsListFragment : WithProcessingFragment<Problem>(), ProblemsListFrag
 
     private fun initPresenter() {
         val repository = (context?.applicationContext as CodeforcesApplication).contestsRepository
-        presenter = ProblemsListFragmentPresenter(repository)
+        presenter = ProblemsListFragmentPresenterImpl(repository)
     }
 }

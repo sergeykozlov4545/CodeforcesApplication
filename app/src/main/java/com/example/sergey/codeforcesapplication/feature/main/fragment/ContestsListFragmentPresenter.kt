@@ -1,14 +1,17 @@
 package com.example.sergey.codeforcesapplication.feature.main.fragment
 
 import com.example.sergey.codeforcesapplication.feature.base.BasePresenter
-import com.example.sergey.codeforcesapplication.feature.base.ViewWithProccesing
+import com.example.sergey.codeforcesapplication.feature.base.MVPPresenter
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import com.example.sergey.codeforcesapplication.model.repository.ContestsRepository
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
-abstract class ContestsListFragmentPresenter : BasePresenter<ViewWithProccesing<Contest>>() {
+interface ContestsListFragmentPresenter : MVPPresenter<ContestsListFragmentView>
+
+abstract class ContestsListFragmentPresenterImpl :
+        BasePresenter<ContestsListFragmentView>(), ContestsListFragmentPresenter {
 
     protected fun getContests(loadContestsFunction: () -> Deferred<List<Contest>>) {
         launch(UI) {
@@ -28,7 +31,7 @@ abstract class ContestsListFragmentPresenter : BasePresenter<ViewWithProccesing<
 }
 
 class UncommingContestsListFragmentPresenter(private val contestsRepository: ContestsRepository) :
-        ContestsListFragmentPresenter() {
+        ContestsListFragmentPresenterImpl() {
 
     override fun viewIsReady() {
         getContests(contestsRepository::getUncommingContests)
@@ -36,7 +39,7 @@ class UncommingContestsListFragmentPresenter(private val contestsRepository: Con
 }
 
 class CurrentContestsListFragmentPresenter(private val contestsRepository: ContestsRepository) :
-        ContestsListFragmentPresenter() {
+        ContestsListFragmentPresenterImpl() {
 
     override fun viewIsReady() {
         getContests(contestsRepository::getCurrentContests)
@@ -44,7 +47,7 @@ class CurrentContestsListFragmentPresenter(private val contestsRepository: Conte
 }
 
 class PastContestsListFragmentPresenter(private val contestsRepository: ContestsRepository) :
-        ContestsListFragmentPresenter() {
+        ContestsListFragmentPresenterImpl() {
 
     override fun viewIsReady() {
         getContests(contestsRepository::getPastContests)
