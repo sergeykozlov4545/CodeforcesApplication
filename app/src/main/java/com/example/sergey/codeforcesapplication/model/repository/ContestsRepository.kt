@@ -55,7 +55,7 @@ class ContestsRepositoryImpl(
     override fun getContestStandings(contestId: Long): Deferred<ContestInfo> = async {
         mutex.lock()
         try {
-            serviceApi.getContestStandings(contestId).await().result
+            serviceApi.getContestStandings(contestId, 100).await().result // TODO: После добавления экрана настроек получать сколько загружать вместо 100
         } finally {
             mutex.unlock()
         }

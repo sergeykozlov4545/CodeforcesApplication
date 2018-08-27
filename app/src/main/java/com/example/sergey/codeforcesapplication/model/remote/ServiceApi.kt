@@ -11,7 +11,8 @@ interface ServiceApi {
     @GET("contest.list?lang=ru")
     fun getContestList(): Deferred<Response<List<Contest>>>
 
-    @GET("contest.standings?lang=ru")
-    fun getContestStandings(@Query("contestId") contestId: Long): Deferred<Response<ContestInfo>>
+    @GET("contest.standings?lang=ru&showUnofficial=false&from=1")
+    fun getContestStandings(@Query("contestId") contestId: Long,
+                            @Query("count") count: Int): Deferred<Response<ContestInfo>>
 
 }
