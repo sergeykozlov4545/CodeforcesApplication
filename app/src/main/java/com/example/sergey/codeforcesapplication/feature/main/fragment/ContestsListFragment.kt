@@ -66,7 +66,7 @@ abstract class ContestsListFragment : Fragment(), ContestsListFragmentContractor
         contestsListView = view.findViewById(R.id.contestsListView)
 
         with(contestsListView) {
-            val columnCount = resources.getInteger(R.integer.contests_list_column_count)
+            val columnCount = resources.getInteger(R.integer.list_column_count)
             layoutManager = GridLayoutManager(context, columnCount)
             adapter = contestsListAdapter
         }

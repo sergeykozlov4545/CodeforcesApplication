@@ -1,13 +1,14 @@
-package com.example.sergey.codeforcesapplication.feature.contestInfo
+package com.example.sergey.codeforcesapplication.feature.contestInfo.activity
 
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.model.pojo.Problem
-import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
+import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.problemsList.ProblemsListFragment
+import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.standingsList.ContestStanfingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -16,7 +17,7 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoContractor.View {
     private var contestId: Long = 0
     private lateinit var contestName: String
 
-    private lateinit var presenter: ContestInfoContractor.Presenter
+    private val presenter = ContestInfoPresenterImpl()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,12 +26,12 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoContractor.View {
         restoreData(savedInstanceState)
 
         initView()
-        initPresenter()
     }
 
     override fun onResume() {
         super.onResume()
         presenter.attachView(this)
+        presenter.viewIsReady()
     }
 
     override fun onPause() {
@@ -38,15 +39,13 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoContractor.View {
         presenter.detachView()
     }
 
-    override fun showProblems(problems: List<Problem>) {
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.content, ProblemsListFragment())
-        }.commitAllowingStateLoss()
-    }
+    override fun showProblems() = showFragment(ProblemsListFragment())
 
-    override fun showRankList(rankList: List<RankListRow>) {
+    override fun showRankList() = showFragment(ContestStanfingsFragment())
+
+    private fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.content, ContestStanfingsFragment())
+            replace(R.id.content, fragment)
         }.commitAllowingStateLoss()
     }
 
@@ -82,10 +81,6 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoContractor.View {
         (toolbar.findViewById<TextView>(R.id.title_toolbar)).text = contestName
         toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp)
         toolbar.setNavigationOnClickListener { onBackPressed() }
-    }
-
-    private fun initPresenter() {
-        presenter = ContestInfoPresenterImpl()
     }
 
     companion object {

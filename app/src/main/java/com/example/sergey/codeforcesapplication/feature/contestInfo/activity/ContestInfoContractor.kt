@@ -1,14 +1,12 @@
-package com.example.sergey.codeforcesapplication.feature.contestInfo
+package com.example.sergey.codeforcesapplication.feature.contestInfo.activity
 
 import com.example.sergey.codeforcesapplication.feature.base.MVPPresenter
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
-import com.example.sergey.codeforcesapplication.model.pojo.Problem
-import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 
 interface ContestInfoContractor {
     interface View : MVPView {
-        fun showProblems(problems: List<Problem>)
-        fun showRankList(rankList: List<RankListRow>)
+        fun showProblems()
+        fun showRankList()
     }
 
     interface Presenter : MVPPresenter<View> {

@@ -1,4 +1,4 @@
-package com.example.sergey.codeforcesapplication.feature.contestInfo
+package com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.standingsList
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

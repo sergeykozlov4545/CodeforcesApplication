@@ -13,12 +13,15 @@
 
     <string name="contest_name">Название контеста</string>
     <string name="contest_start">Начало:</string>
-    <string name="contest_start_unknown">неизвестно</string>
     <string name="contest_duration">Длительность:</string>
     <string name="contest_is_not_started">Данный контест еще не начался</string>
 
     <!--Экран детализация контеста-->
     <string name="problems">Задачи</string>
     <string name="standings">Результаты</string>
+    <string name="item_problem_score_label">Количество баллов:</string>
+
+    <!--другое-->
+    <string name="unknown">неизвестно</string>
 
 </resources>

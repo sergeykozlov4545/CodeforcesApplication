@@ -8,8 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.feature.contestInfo.ContestInfoActivity
-import com.example.sergey.codeforcesapplication.feature.main.ContestsListAdapter
+import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoActivity
 import com.example.sergey.codeforcesapplication.feature.main.fragment.CurrentContestsListFragment
 import com.example.sergey.codeforcesapplication.feature.main.fragment.PastContestsListFragment
 import com.example.sergey.codeforcesapplication.feature.main.fragment.UncommingContestsListFragment

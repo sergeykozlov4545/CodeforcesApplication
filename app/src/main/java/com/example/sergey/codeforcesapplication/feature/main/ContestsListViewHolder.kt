@@ -19,7 +19,7 @@ class ContestsListViewHolder(override val containerView: View?) :
         contestStartView.text = if (contest.startTimeSeconds != null) {
             startTimeFormatter(contest.startTimeSeconds)
         } else {
-            itemView.context.getString(R.string.contest_start_unknown)
+            itemView.context.getString(R.string.unknown)
         }
         contestDurationView.text = durationFormatter(contest.durationSeconds)
 
