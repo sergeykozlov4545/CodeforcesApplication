@@ -29,10 +29,4 @@ class ContestsListAdapter : RecyclerView.Adapter<ContestsListViewHolder>() {
         this.contests.addAll(contests)
         notifyDataSetChanged()
     }
-
-    companion object {
-        const val UNCOMMING_CONTESTS = 0
-        const val CURRENT_CONTESTS = 1
-        const val PAST_CONTESTS = 2
-    }
 }

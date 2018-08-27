@@ -80,13 +80,19 @@ class MainActivity : AppCompatActivity(), MainActivityContractor.View {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    ContestsListAdapter.UNCOMMING_CONTESTS -> presenter.uncommingContestsTabClicked()
-                    ContestsListAdapter.CURRENT_CONTESTS -> presenter.currentContestsTabClicked()
-                    ContestsListAdapter.PAST_CONTESTS -> presenter.pastContestsTabClicked()
+                    UNCOMMING_CONTESTS -> presenter.uncommingContestsTabClicked()
+                    CURRENT_CONTESTS -> presenter.currentContestsTabClicked()
+                    PAST_CONTESTS -> presenter.pastContestsTabClicked()
                     else -> {
                     }
                 }
             }
         })
+    }
+
+    companion object {
+        private const val UNCOMMING_CONTESTS = 0
+        private const val CURRENT_CONTESTS = 1
+        private const val PAST_CONTESTS = 2
     }
 }
