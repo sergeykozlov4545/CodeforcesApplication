@@ -2,11 +2,17 @@ package com.example.sergey.codeforcesapplication.feature.main.activity
 
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.BasePresenter
+import com.example.sergey.codeforcesapplication.feature.base.MVPPresenter
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
-class MainActivityPresenterImpl :
-        BasePresenter<MainActivityContractor.View>(),
-        MainActivityContractor.Presenter<MainActivityContractor.View> {
+interface MainActivityPresenter : MVPPresenter<MainActivityView> {
+    fun uncommingContestsTabClicked()
+    fun currentContestsTabClicked()
+    fun pastContestsTabClicked()
+    fun contestCardClicked(contest: Contest)
+}
+
+class MainActivityPresenterImpl : BasePresenter<MainActivityView>(), MainActivityPresenter {
 
     override fun viewIsReady() {
         getView()?.showUncommingContests()

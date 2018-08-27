@@ -6,8 +6,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
 class ProblemsListFragmentPresenter(private val contestsRepository: ContestsRepository) :
-        BasePresenter<ProblemsListFragmentContractor.View>(),
-        ProblemsListFragmentContractor.Presenter<ProblemsListFragmentContractor.View> {
+        BasePresenter<ProblemsListFragmentView>() {
 
     override fun viewIsReady() {
         launch(UI) {

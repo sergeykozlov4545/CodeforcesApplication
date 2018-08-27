@@ -5,13 +5,16 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
+import com.example.sergey.codeforcesapplication.feature.base.ViewWithProccesing
 import com.example.sergey.codeforcesapplication.feature.base.WithProcessingFragment
 import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoActivity.Companion.CONTEST_ID_EXTRA
 import com.example.sergey.codeforcesapplication.model.pojo.Problem
 
-class ProblemsListFragment :
-        WithProcessingFragment<Problem>(),
-        ProblemsListFragmentContractor.View {
+interface ProblemsListFragmentView : ViewWithProccesing<Problem> {
+    fun getContestId(): Long
+}
+
+class ProblemsListFragment : WithProcessingFragment<Problem>(), ProblemsListFragmentView {
 
     private val profileListAdapter = ProblemListAdapter()
 

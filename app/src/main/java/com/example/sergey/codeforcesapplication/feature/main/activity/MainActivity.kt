@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.feature.base.MVPView
 import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoActivity
 import com.example.sergey.codeforcesapplication.feature.main.fragment.CurrentContestsListFragment
 import com.example.sergey.codeforcesapplication.feature.main.fragment.PastContestsListFragment
@@ -16,7 +17,17 @@ import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class MainActivity : AppCompatActivity(), MainActivityContractor.View {
+
+interface MainActivityView : MVPView {
+    fun getPresenter(): MainActivityPresenter
+    fun showMessage(messageId: Int)
+    fun showUncommingContests()
+    fun showCurrentContests()
+    fun showPastContests()
+    fun showContestInfoActivity(contest: Contest)
+}
+
+class MainActivity : AppCompatActivity(), MainActivityView {
 
     private val presenter = MainActivityPresenterImpl()
 
@@ -40,7 +51,7 @@ class MainActivity : AppCompatActivity(), MainActivityContractor.View {
         presenter.detachView()
     }
 
-    override fun getPresenter(): MainActivityContractor.Presenter<MainActivityContractor.View> {
+    override fun getPresenter(): MainActivityPresenter {
         return presenter
     }
 

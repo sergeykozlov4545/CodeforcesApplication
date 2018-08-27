@@ -3,14 +3,15 @@ package com.example.sergey.codeforcesapplication.feature.main
 import android.view.View
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.adapter.DataListViewHolderImpl
-import com.example.sergey.codeforcesapplication.feature.main.activity.MainActivityContractor
+import com.example.sergey.codeforcesapplication.feature.main.activity.MainActivityView
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import kotlinx.android.synthetic.main.item_contest_list.*
 import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ContestsListViewHolder(override val containerView: View?) : DataListViewHolderImpl<Contest>(containerView) {
+class ContestsListViewHolder(override val containerView: View?) :
+        DataListViewHolderImpl<Contest>(containerView) {
 
     override fun bindViewHolder(contest: Contest) {
         contestNameView.text = contest.name
@@ -24,7 +25,7 @@ class ContestsListViewHolder(override val containerView: View?) : DataListViewHo
         contestCardView.setOnClickListener { v ->
             val context = v?.context
 
-            if (context is MainActivityContractor.View) {
+            if (context is MainActivityView) {
                 context.getPresenter().contestCardClicked(contest)
             }
         }

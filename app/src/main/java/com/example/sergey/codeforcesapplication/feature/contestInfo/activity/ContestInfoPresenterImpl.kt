@@ -1,9 +1,14 @@
 package com.example.sergey.codeforcesapplication.feature.contestInfo.activity
 
 import com.example.sergey.codeforcesapplication.feature.base.BasePresenter
+import com.example.sergey.codeforcesapplication.feature.base.MVPPresenter
 
-class ContestInfoPresenterImpl :
-        BasePresenter<ContestInfoContractor.View>(), ContestInfoContractor.Presenter {
+interface ContestInfoActivityPresenter : MVPPresenter<ContestInfoActivityView> {
+    fun problemsListTabClicked()
+    fun rankListTabClicked()
+}
+
+class ContestInfoPresenterImpl : BasePresenter<ContestInfoActivityView>(), ContestInfoActivityPresenter {
 
     override fun viewIsReady() {
         getView()?.showProblems()
