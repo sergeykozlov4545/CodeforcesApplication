@@ -22,7 +22,7 @@ abstract class ContestsListFragmentPresenter : BasePresenter<ContestsListFragmen
                 return@launch
             }
 
-            getView()?.showContests(contests)
+            getView()?.showDataList(contests)
         }
     }
 }
