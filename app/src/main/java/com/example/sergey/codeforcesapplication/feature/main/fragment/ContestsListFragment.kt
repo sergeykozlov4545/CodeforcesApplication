@@ -59,7 +59,6 @@ abstract class ContestsListFragment : Fragment(), ContestsListFragmentContractor
         contestsListView.show()
     }
 
-
     private fun initView(view: View) {
         progressView = view.findViewById(R.id.progressView)
         emptyListView = view.findViewById(R.id.emptyListView)
