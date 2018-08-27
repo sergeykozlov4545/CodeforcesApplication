@@ -7,7 +7,9 @@
     <string name="currentContests">Текущие</string>
     <string name="pastContests">Прошедшие</string>
 
-    <string name="emptyContestsList">Список контестов пуст</string>
+    <string name="emptyUncommingContestsList">Предстоящих соревнований нет</string>
+    <string name="emptyCurrentContestsList">Текущих соревнований нет</string>
+    <string name="emptyPastContestsList">Прошедших соревнований нет</string>
 
     <string name="contest_name">Название контеста</string>
     <string name="contest_start">Начало:</string>
