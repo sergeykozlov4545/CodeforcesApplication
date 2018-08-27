@@ -20,6 +20,7 @@
     <string name="problems">Задачи</string>
     <string name="standings">Результаты</string>
     <string name="item_problem_score_label">Количество баллов:</string>
+    <string name="problemsListIsEmpty">Список задач пуст</string>
 
     <!--другое-->
     <string name="unknown">неизвестно</string>

@@ -44,6 +44,10 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoContractor.View {
     override fun showRankList() = showFragment(ContestStanfingsFragment())
 
     private fun showFragment(fragment: Fragment) {
+        fragment.arguments = Bundle().apply {
+            putLong(CONTEST_ID_EXTRA, contestId)
+        }
+
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.content, fragment)
         }.commitAllowingStateLoss()

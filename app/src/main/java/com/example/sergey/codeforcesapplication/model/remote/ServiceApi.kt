@@ -8,10 +8,10 @@ import retrofit2.http.Query
 
 interface ServiceApi {
 
-    @GET("contest.list")
+    @GET("contest.list?lang=ru")
     fun getContestList(): Deferred<Response<List<Contest>>>
 
-    @GET("contest.standings")
+    @GET("contest.standings?lang=ru")
     fun getContestStandings(@Query("contestId") contestId: Long): Deferred<Response<ContestInfo>>
 
 }

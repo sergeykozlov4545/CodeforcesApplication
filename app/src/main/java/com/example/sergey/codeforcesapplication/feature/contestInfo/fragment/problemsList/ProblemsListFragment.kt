@@ -1,26 +1,62 @@
 package com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.problemsList
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ProgressBar
 import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
+import com.example.sergey.codeforcesapplication.feature.base.WithProcessingFragment
+import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoActivity.Companion.CONTEST_ID_EXTRA
+import com.example.sergey.codeforcesapplication.model.pojo.Problem
 
-class ProblemsListFragment : Fragment() {
+class ProblemsListFragment :
+        WithProcessingFragment<Problem>(),
+        ProblemsListFragmentContractor.View {
 
-    private lateinit var progressView: ProgressBar
-    private lateinit var problemsListView: RecyclerView
+    private val profileListAdapter = ProblemListAdapter()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_problems_list, container, false)
+    private lateinit var presenter: ProblemsListFragmentPresenter
 
-        progressView = view.findViewById(R.id.progressView)
-        problemsListView = view.findViewById(R.id.problemsListView)
+    private var contestId: Long = 0
 
-        return view
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        restoreData()
+        initPresenter()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        presenter.attachView(this)
+        presenter.viewIsReady()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        presenter.detachView()
+    }
+
+    override fun getEmptyListMessageText(): String = getString(R.string.problemsListIsEmpty)
+
+    override fun getDataListLayoutManager(): RecyclerView.LayoutManager {
+        val columnCount = resources.getInteger(R.integer.list_column_count)
+        return GridLayoutManager(context, columnCount)
+    }
+
+    override fun getDataListAdapter() = profileListAdapter
+
+    override fun getContestId() = contestId
+
+    private fun restoreData() {
+        val localArguments = arguments ?: return
+        contestId = localArguments.getLong(CONTEST_ID_EXTRA, 0)
+    }
+
+    private fun initPresenter() {
+        val repository = (context?.applicationContext as CodeforcesApplication).contestsRepository
+        presenter = ProblemsListFragmentPresenter(repository)
+    }
 }
