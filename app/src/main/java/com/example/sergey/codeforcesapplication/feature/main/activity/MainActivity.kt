@@ -4,11 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.widget.TextView
 import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
+import com.example.sergey.codeforcesapplication.feature.base.ToolbarActivity
 import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoActivity
 import com.example.sergey.codeforcesapplication.feature.main.activity.MainActivityPresenterImpl.Companion.CURRENT_CONTESTS
 import com.example.sergey.codeforcesapplication.feature.main.activity.MainActivityPresenterImpl.Companion.PAST_CONTESTS
@@ -18,7 +17,6 @@ import com.example.sergey.codeforcesapplication.feature.main.fragment.PastContes
 import com.example.sergey.codeforcesapplication.feature.main.fragment.UncommingContestsListFragment
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 interface MainActivityView : MVPView {
     fun getPresenter(): MainActivityPresenter
@@ -30,7 +28,7 @@ interface MainActivityView : MVPView {
     fun selectTab(tabPosition: Int)
 }
 
-class MainActivity : AppCompatActivity(), MainActivityView {
+class MainActivity : ToolbarActivity(), MainActivityView {
 
     private val presenter = MainActivityPresenterImpl()
 
@@ -103,7 +101,7 @@ class MainActivity : AppCompatActivity(), MainActivityView {
     }
 
     private fun initView() {
-        (toolbar.findViewById<TextView>(R.id.title_toolbar)).setText(R.string.contestsList)
+        setToolbarTitle(R.string.contestsList)
 
         tabsLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {

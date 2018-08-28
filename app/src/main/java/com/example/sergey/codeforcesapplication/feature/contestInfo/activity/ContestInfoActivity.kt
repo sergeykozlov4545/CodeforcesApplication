@@ -3,17 +3,14 @@ package com.example.sergey.codeforcesapplication.feature.contestInfo.activity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.widget.TextView
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
+import com.example.sergey.codeforcesapplication.feature.base.ToolbarActivity
 import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoPresenterImpl.Companion.PROBLEMS
 import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoPresenterImpl.Companion.STANDINGS
 import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.problemsList.ProblemsListFragment
 import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.standingsList.ContestStandingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 interface ContestInfoActivityView : MVPView {
     fun showProblems()
@@ -21,7 +18,7 @@ interface ContestInfoActivityView : MVPView {
     fun selectTab(tabPosition: Int)
 }
 
-class ContestInfoActivity : AppCompatActivity(), ContestInfoActivityView {
+class ContestInfoActivity : ToolbarActivity(), ContestInfoActivityView {
 
     private var contestId: Long = 0
     private lateinit var contestName: String
@@ -114,14 +111,8 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoActivityView {
     }
 
     private fun initToolbar() {
-        val titleView = toolbar.findViewById<TextView>(R.id.title_toolbar)
-        titleView.text = contestName
-        titleView.isSelected = true
-
-        toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp)
-        toolbar.setNavigationOnClickListener { onBackPressed() }
-        toolbar.contentInsetStartWithNavigation = 0
-        toolbar.contentInsetEndWithActions = 0
+        showBackAction()
+        setToolbarTitle(contestName)
     }
 
     companion object {
