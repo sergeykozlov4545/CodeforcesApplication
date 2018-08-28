@@ -114,9 +114,14 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoActivityView {
     }
 
     private fun initToolbar() {
-        (toolbar.findViewById<TextView>(R.id.title_toolbar)).text = contestName
+        val titleView = toolbar.findViewById<TextView>(R.id.title_toolbar)
+        titleView.text = contestName
+        titleView.isSelected = true
+
         toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp)
         toolbar.setNavigationOnClickListener { onBackPressed() }
+        toolbar.contentInsetStartWithNavigation = 0
+        toolbar.contentInsetEndWithActions = 0
     }
 
     companion object {

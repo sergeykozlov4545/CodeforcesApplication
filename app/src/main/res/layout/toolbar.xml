@@ -9,12 +9,15 @@
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <TextView
+    <com.example.sergey.codeforcesapplication.widget.ScrollingTextView
         android:id="@+id/title_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         tools:text="@string/contestsList" />
