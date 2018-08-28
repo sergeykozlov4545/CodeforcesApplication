@@ -2,6 +2,8 @@ package com.example.sergey.codeforcesapplication.feature.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -65,4 +67,13 @@ abstract class WithProcessingFragment<T> : Fragment(), ViewWithProccesing<T> {
     abstract fun getDataListAdapter(): DataListAdapter<T>
 
     protected fun setDataListBackground(color: Int) = dataListView.setBackgroundColor(color)
+
+    protected fun showDataListDividers() {
+        val layoutManager = getDataListLayoutManager() as? LinearLayoutManager
+                ?: throw RuntimeException("layoutManager doesn't implements LinearLayoutManager")
+
+        dataListView.addItemDecoration(
+                DividerItemDecoration(dataListView.context, layoutManager.orientation)
+        )
+    }
 }

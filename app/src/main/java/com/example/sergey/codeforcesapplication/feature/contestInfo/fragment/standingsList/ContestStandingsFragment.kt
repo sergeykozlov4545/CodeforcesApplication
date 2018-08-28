@@ -33,6 +33,7 @@ class ContestStandingsFragment : WithProcessingFragment<RankListRow>(), ContestS
         super.onResume()
 
         setDataListBackground(ContextCompat.getColor(context!!, android.R.color.white))
+        showDataListDividers()
 
         presenter.attachView(this)
         presenter.viewIsReady()
