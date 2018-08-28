@@ -2,10 +2,10 @@ package com.example.sergey.codeforcesapplication.feature.main.activity
 
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.BasePresenter
-import com.example.sergey.codeforcesapplication.feature.base.MVPPresenter
+import com.example.sergey.codeforcesapplication.feature.base.TabbedActivityPresenter
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
-interface MainActivityPresenter : MVPPresenter<MainActivityView> {
+interface MainActivityPresenter : TabbedActivityPresenter<MainActivityView> {
     fun uncommingContestsTabClicked()
     fun currentContestsTabClicked()
     fun pastContestsTabClicked()
@@ -16,6 +16,10 @@ class MainActivityPresenterImpl : BasePresenter<MainActivityView>(), MainActivit
 
     override fun viewIsReady() {
         getView()?.showUncommingContests()
+    }
+
+    override fun restoredView(tabPosition: Int) {
+        getView()?.selectTab(tabPosition)
     }
 
     override fun uncommingContestsTabClicked() {
@@ -37,5 +41,11 @@ class MainActivityPresenterImpl : BasePresenter<MainActivityView>(), MainActivit
         }
 
         getView()?.showContestInfoActivity(contest)
+    }
+
+    companion object {
+        const val UNCOMMING_CONTESTS = 0
+        const val CURRENT_CONTESTS = 1
+        const val PAST_CONTESTS = 2
     }
 }

@@ -10,6 +10,9 @@ import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
 import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoActivity
+import com.example.sergey.codeforcesapplication.feature.main.activity.MainActivityPresenterImpl.Companion.CURRENT_CONTESTS
+import com.example.sergey.codeforcesapplication.feature.main.activity.MainActivityPresenterImpl.Companion.PAST_CONTESTS
+import com.example.sergey.codeforcesapplication.feature.main.activity.MainActivityPresenterImpl.Companion.UNCOMMING_CONTESTS
 import com.example.sergey.codeforcesapplication.feature.main.fragment.CurrentContestsListFragment
 import com.example.sergey.codeforcesapplication.feature.main.fragment.PastContestsListFragment
 import com.example.sergey.codeforcesapplication.feature.main.fragment.UncommingContestsListFragment
@@ -24,16 +27,20 @@ interface MainActivityView : MVPView {
     fun showCurrentContests()
     fun showPastContests()
     fun showContestInfoActivity(contest: Contest)
+    fun selectTab(tabPosition: Int)
 }
 
 class MainActivity : AppCompatActivity(), MainActivityView {
 
     private val presenter = MainActivityPresenterImpl()
 
+    private var tabPosition: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        restoreData(savedInstanceState)
         initView()
     }
 
@@ -41,13 +48,25 @@ class MainActivity : AppCompatActivity(), MainActivityView {
         super.onResume()
 
         presenter.attachView(this)
-        presenter.viewIsReady()
+        if (tabPosition == 0) {
+            presenter.viewIsReady()
+        } else {
+            presenter.restoredView(tabPosition)
+        }
     }
 
     override fun onPause() {
         super.onPause()
 
         presenter.detachView()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+
+        outState?.apply {
+            putInt(TAB_POSITION_EXTRA, tabPosition)
+        }
     }
 
     override fun getPresenter(): MainActivityPresenter {
@@ -69,10 +88,18 @@ class MainActivity : AppCompatActivity(), MainActivityView {
         })
     }
 
+    override fun selectTab(tabPosition: Int) {
+        tabsLayout.getTabAt(tabPosition)?.select()
+    }
+
     private fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.content, fragment)
         }.commitAllowingStateLoss()
+    }
+
+    private fun restoreData(savedInstanceState: Bundle?) {
+        tabPosition = savedInstanceState?.getInt(TAB_POSITION_EXTRA, 0) ?: 0
     }
 
     private fun initView() {
@@ -88,7 +115,8 @@ class MainActivity : AppCompatActivity(), MainActivityView {
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position) {
+                tabPosition = tab?.position ?: return
+                when (tabPosition) {
                     UNCOMMING_CONTESTS -> presenter.uncommingContestsTabClicked()
                     CURRENT_CONTESTS -> presenter.currentContestsTabClicked()
                     PAST_CONTESTS -> presenter.pastContestsTabClicked()
@@ -100,8 +128,6 @@ class MainActivity : AppCompatActivity(), MainActivityView {
     }
 
     companion object {
-        private const val UNCOMMING_CONTESTS = 0
-        private const val CURRENT_CONTESTS = 1
-        private const val PAST_CONTESTS = 2
+        private const val TAB_POSITION_EXTRA = "tab_position"
     }
 }
