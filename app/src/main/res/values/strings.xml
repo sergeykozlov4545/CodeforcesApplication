@@ -24,6 +24,6 @@
 
     <!--другое-->
     <string name="unknown">неизвестно</string>
-    <string name="no_connection">Нет соединения с интернетом</string>
+    <string name="noConnectionServer">Нет соединения с сервером</string>
 
 </resources>
