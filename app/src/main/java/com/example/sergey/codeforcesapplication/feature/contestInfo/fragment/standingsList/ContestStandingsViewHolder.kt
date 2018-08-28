@@ -12,7 +12,16 @@ class ContestStandingsViewHolder(override val containerView: View?) :
     @SuppressLint("SetTextI18n")
     override fun bindViewHolder(rankListRow: RankListRow) {
         rankView.text = "${rankListRow.rank}."
-        membersView.text = rankListRow.party.members.joinToString { it.handle }
+        membersView.text = getMembersInfo(rankListRow)
         pointsView.text = rankListRow.points.toInt().toString()
+    }
+
+    private fun getMembersInfo(rankListRow: RankListRow): String {
+        val membersString = rankListRow.party.members.joinToString { it.handle }
+        return if (rankListRow.party.teamName.isNullOrEmpty()) {
+            membersString
+        } else {
+            "${rankListRow.party.teamName}: $membersString"
+        }
     }
 }
