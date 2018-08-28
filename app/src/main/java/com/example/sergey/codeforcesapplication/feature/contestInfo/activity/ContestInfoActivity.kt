@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
+import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoPresenterImpl.Companion.PROBLEMS
+import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoPresenterImpl.Companion.STANDINGS
 import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.problemsList.ProblemsListFragment
 import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.standingsList.ContestStandingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -16,6 +18,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 interface ContestInfoActivityView : MVPView {
     fun showProblems()
     fun showRankList()
+    fun selectTab(tabPosition: Int)
 }
 
 class ContestInfoActivity : AppCompatActivity(), ContestInfoActivityView {
@@ -24,6 +27,8 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoActivityView {
     private lateinit var contestName: String
 
     private val presenter = ContestInfoPresenterImpl()
+
+    private var tabPosition: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,18 +41,37 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoActivityView {
 
     override fun onResume() {
         super.onResume()
+
         presenter.attachView(this)
-        presenter.viewIsReady()
+
+        if (tabPosition == 0) {
+            presenter.viewIsReady()
+        } else {
+            presenter.restoredView(tabPosition)
+        }
     }
 
     override fun onPause() {
         super.onPause()
+
         presenter.detachView()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+
+        outState?.apply {
+            putInt(TAB_POSITION_EXTRA, tabPosition)
+        }
     }
 
     override fun showProblems() = showFragment(ProblemsListFragment())
 
     override fun showRankList() = showFragment(ContestStandingsFragment())
+
+    override fun selectTab(tabPosition: Int) {
+        tabsLayout.getTabAt(tabPosition)?.select()
+    }
 
     private fun showFragment(fragment: Fragment) {
         fragment.arguments = Bundle().apply {
@@ -62,6 +86,8 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoActivityView {
     private fun restoreData(savedInstanceState: Bundle?) {
         contestId = intent.getLongExtra(CONTEST_ID_EXTRA, 0)
         contestName = intent.getStringExtra(CONTEST_NAME_EXTRA)
+
+        tabPosition = savedInstanceState?.getInt(TAB_POSITION_EXTRA, 0) ?: 0
     }
 
     private fun initView() {
@@ -77,11 +103,11 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoActivityView {
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position) {
+                tabPosition = tab?.position ?: return
+
+                when (tabPosition) {
                     PROBLEMS -> presenter.problemsListTabClicked()
                     STANDINGS -> presenter.rankListTabClicked()
-                    else -> {
-                    }
                 }
             }
         })
@@ -97,7 +123,6 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoActivityView {
         const val CONTEST_ID_EXTRA = "contest_id"
         const val CONTEST_NAME_EXTRA = "contest_name"
 
-        private const val PROBLEMS = 0
-        private const val STANDINGS = 1
+        private const val TAB_POSITION_EXTRA = "tab_position"
     }
 }

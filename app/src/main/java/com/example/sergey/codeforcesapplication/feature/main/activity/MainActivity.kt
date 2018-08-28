@@ -116,12 +116,11 @@ class MainActivity : AppCompatActivity(), MainActivityView {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tabPosition = tab?.position ?: return
+
                 when (tabPosition) {
                     UNCOMMING_CONTESTS -> presenter.uncommingContestsTabClicked()
                     CURRENT_CONTESTS -> presenter.currentContestsTabClicked()
                     PAST_CONTESTS -> presenter.pastContestsTabClicked()
-                    else -> {
-                    }
                 }
             }
         })
