@@ -15,17 +15,24 @@ abstract class ContestsListFragmentPresenterImpl :
 
     protected fun getContests(loadContestsFunction: () -> Deferred<List<Contest>>) {
         launch(UI) {
-            getView()?.showProgress()
+            try {
+                getView()?.hideAll()
 
-            val contests = loadContestsFunction().await()
-            getView()?.hideProgress()
+                getView()?.showProgress()
 
-            if (contests.isEmpty()) {
-                getView()?.showEmptyListMessage()
-                return@launch
+                val contests = loadContestsFunction().await()
+                getView()?.hideProgress()
+
+                if (contests.isEmpty()) {
+                    getView()?.showEmptyListMessage()
+                    return@launch
+                }
+
+                getView()?.showDataList(contests)
+            } catch (e: Exception) {
+                getView()?.hideProgress()
+                getView()?.showError()
             }
-
-            getView()?.showDataList(contests)
         }
     }
 }

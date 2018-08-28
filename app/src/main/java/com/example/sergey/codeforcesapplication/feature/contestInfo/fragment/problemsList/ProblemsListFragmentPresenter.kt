@@ -14,20 +14,26 @@ class ProblemsListFragmentPresenterImpl(private val contestsRepository: Contests
 
     override fun viewIsReady() {
         launch(UI) {
-            val contestId = getView()?.getContestId() ?: return@launch
+            try {
+                getView()?.hideAll()
+                val contestId = getView()?.getContestId() ?: return@launch
 
-            getView()?.showProgress()
+                getView()?.showProgress()
 
-            val contestInfo = contestsRepository.getContestStandings(contestId).await()
+                val contestInfo = contestsRepository.getContestStandings(contestId).await()
 
-            getView()?.hideProgress()
+                getView()?.hideProgress()
 
-            if (contestInfo.problems.isEmpty()) {
-                getView()?.showEmptyListMessage()
-                return@launch
+                if (contestInfo.problems.isEmpty()) {
+                    getView()?.showEmptyListMessage()
+                    return@launch
+                }
+
+                getView()?.showDataList(contestInfo.problems)
+            } catch (e: Exception) {
+                getView()?.hideProgress()
+                getView()?.showError()
             }
-
-            getView()?.showDataList(contestInfo.problems)
         }
     }
 }

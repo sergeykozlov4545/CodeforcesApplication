@@ -15,6 +15,7 @@ import com.example.sergey.codeforcesapplication.feature.base.adapter.DataListAda
 abstract class WithProcessingFragment<T> : Fragment(), ViewWithProccesing<T> {
 
     private lateinit var progressView: View
+    protected lateinit var noConnectionView: TextView
     protected lateinit var emptyListView: TextView
     private lateinit var dataListView: RecyclerView
 
@@ -22,6 +23,7 @@ abstract class WithProcessingFragment<T> : Fragment(), ViewWithProccesing<T> {
         val view = inflater.inflate(R.layout.fragment_with_processing, container, false)
 
         progressView = view.findViewById(R.id.progressView)
+        noConnectionView = view.findViewById(R.id.noConnectionView)
         emptyListView = view.findViewById(R.id.emptyListView)
         dataListView = view.findViewById(R.id.dataListView)
 
@@ -33,12 +35,22 @@ abstract class WithProcessingFragment<T> : Fragment(), ViewWithProccesing<T> {
         return view
     }
 
-    override fun showProgress() = progressView.show()
+    override fun hideAll() {
+        hideProgress()
+        hideError()
+        emptyListView.hide()
+        dataListView.hide()
+    }
 
+    override fun showProgress() = progressView.show()
     override fun hideProgress() = progressView.hide()
+
+    override fun showError() = noConnectionView.show()
+    override fun hideError() = noConnectionView.hide()
 
     override fun showEmptyListMessage() {
         emptyListView.text = getEmptyListMessageText()
+        emptyListView.show()
     }
 
     override fun showDataList(values: List<T>) {
