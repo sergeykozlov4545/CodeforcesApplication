@@ -63,4 +63,6 @@ abstract class WithProcessingFragment<T> : Fragment(), ViewWithProccesing<T> {
     abstract fun getDataListLayoutManager(): RecyclerView.LayoutManager
 
     abstract fun getDataListAdapter(): DataListAdapter<T>
+
+    protected fun setDataListBackground(color: Int) = dataListView.setBackgroundColor(color)
 }

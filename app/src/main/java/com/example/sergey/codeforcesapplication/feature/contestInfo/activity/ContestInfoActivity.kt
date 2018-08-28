@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
 import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.problemsList.ProblemsListFragment
-import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.standingsList.ContestStanfingsFragment
+import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.standingsList.ContestStandingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -47,7 +47,7 @@ class ContestInfoActivity : AppCompatActivity(), ContestInfoActivityView {
 
     override fun showProblems() = showFragment(ProblemsListFragment())
 
-    override fun showRankList() = showFragment(ContestStanfingsFragment())
+    override fun showRankList() = showFragment(ContestStandingsFragment())
 
     private fun showFragment(fragment: Fragment) {
         fragment.arguments = Bundle().apply {

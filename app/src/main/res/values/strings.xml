@@ -19,8 +19,13 @@
     <!--Экран детализация контеста-->
     <string name="problems">Задачи</string>
     <string name="standings">Результаты</string>
+
+    <!--Экран детализация контеста. Экран списка задач-->
     <string name="item_problem_score_label">Количество баллов:</string>
     <string name="problemsListIsEmpty">Список задач пуст</string>
+
+    <!--Экран детализация контеста. Экран таблицы результатов-->
+    <string name="standingsListIsEmpty">Результаты не известны</string>
 
     <!--другое-->
     <string name="unknown">неизвестно</string>
