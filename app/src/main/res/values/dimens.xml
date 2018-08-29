@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_one_line_min_height">48dp</dimen>
+    <dimen name="item_one_line_with_image_min_height">56dp</dimen>
+    <dimen name="item_one_line_title_size">16dp</dimen>
+
+    <dimen name="item_two_line_min_height">64dp</dimen>
+    <dimen name="item_two_line_with_image_min_height">72dp</dimen>
+    <dimen name="item_two_line_title_size">16dp</dimen>
+    <dimen name="item_two_line_subtitle_size">14dp</dimen>
+
+    <dimen name="item_three_line_min_height">88dp</dimen>
+    <dimen name="item_three_line_with_image_min_height">88dp</dimen>
+    <dimen name="item_three_line_first_text_size">16dp</dimen>
+    <dimen name="item_three_line_second_text_size">14dp</dimen>
+    <dimen name="item_three_line_third_text_size">14dp</dimen>
+</resources>
