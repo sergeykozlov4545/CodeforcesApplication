@@ -1,17 +1,26 @@
-package com.example.sergey.codeforcesapplication.feature.command
+package com.example.sergey.codeforcesapplication.feature.command.activity
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.feature.base.MVPView
 import com.example.sergey.codeforcesapplication.feature.base.ToolbarActivity
+import com.example.sergey.codeforcesapplication.feature.command.fragment.CommandInfoFragment
+import com.example.sergey.codeforcesapplication.feature.command.fragment.CommandInfoFragment.Companion.HANDLERS_EXTRA
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 
-interface CommandActivityView
+interface CommandActivityView : MVPView {
+    fun showUsers()
+}
 
 class CommandActivity : ToolbarActivity(), CommandActivityView {
 
     private lateinit var teamName: String
+    private lateinit var handlers: String
+
+    private val presenter = CommandActivityPresenterImpl()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,22 +33,53 @@ class CommandActivity : ToolbarActivity(), CommandActivityView {
         showBackAction()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        presenter.attachView(this)
+        presenter.viewIsReady()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        presenter.detachView()
+    }
+
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
         outState?.apply {
             putString(COMMAND_NAME_EXTRA, teamName)
+            putString(HANDLERS_EXTRA, handlers)
         }
+    }
+
+    override fun showUsers() {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.content, getCommandInfoFragment())
+        }.commitAllowingStateLoss()
+    }
+
+    private fun getCommandInfoFragment(): Fragment {
+        val fragment = CommandInfoFragment()
+
+        fragment.arguments = Bundle().apply {
+            putString(HANDLERS_EXTRA, handlers)
+        }
+
+        return fragment
     }
 
     private fun restoreData(savedInstanceState: Bundle?) {
         teamName = savedInstanceState?.getString(COMMAND_NAME_EXTRA)
                 ?: intent.getStringExtra(COMMAND_NAME_EXTRA)
+        handlers = savedInstanceState?.getString(HANDLERS_EXTRA)
+                ?: intent.getStringExtra(HANDLERS_EXTRA)
     }
 
     companion object {
         private const val COMMAND_NAME_EXTRA = "command_name"
-        private const val HANDLERS_EXTRA = "handlers"
 
         fun start(context: Context, rankListRow: RankListRow) {
             val intent = Intent(context, CommandActivity::class.java).apply {

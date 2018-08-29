@@ -27,6 +27,9 @@
     <!--Экран детализация контеста. Экран таблицы результатов-->
     <string name="standingsListIsEmpty">Результаты не известны</string>
 
+    <!--Экран информации о команде-->
+    <string name="commandMembersListIsEmpty">Список членов команды пуст</string>
+
     <!--другое-->
     <string name="unknown">неизвестно</string>
     <string name="noConnectionServer">Нет соединения с сервером</string>

@@ -10,5 +10,15 @@ data class User(
         val firstName: String?,
 
         @SerializedName("lastName")
-        val lastName: String?
-)
+        val lastName: String?,
+
+        @SerializedName("avatar")
+        val avatarUrl: String
+) {
+    val fullName: String
+        get() {
+            val firstName = this.firstName ?: ""
+            val lastName = this.lastName ?: ""
+            return "$firstName $lastName"
+        }
+}

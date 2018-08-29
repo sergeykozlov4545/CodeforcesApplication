@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
 import com.example.sergey.codeforcesapplication.feature.base.ToolbarActivity
-import com.example.sergey.codeforcesapplication.feature.command.CommandActivity
+import com.example.sergey.codeforcesapplication.feature.command.activity.CommandActivity
 import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoPresenterImpl.Companion.PROBLEMS
 import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoPresenterImpl.Companion.STANDINGS
 import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.problemsList.ProblemsListFragment

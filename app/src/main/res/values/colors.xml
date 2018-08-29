@@ -9,11 +9,11 @@
 
     <color name="contestsListBackground">#d2d2d2</color>
 
-    <color name="item_one_line_title">#000000de</color>
-    <color name="item_two_line_title">#000000de</color>
-    <color name="item_two_line_subtitle">#00000099</color>
-    <color name="item_three_line_first_line">#000000de</color>
-    <color name="item_three_line_second_line">#00000099</color>
-    <color name="item_three_line_third_line">#00000099</color>
+    <color name="item_one_line_title">#de000000</color>
+    <color name="item_two_line_title">#de000000</color>
+    <color name="item_two_line_subtitle">#99000000</color>
+    <color name="item_three_line_first_line">#de000000</color>
+    <color name="item_three_line_second_line">#99000000</color>
+    <color name="item_three_line_third_line">#99000000</color>
 
 </resources>

@@ -3,6 +3,7 @@ package com.example.sergey.codeforcesapplication.model.repository
 import com.example.sergey.codeforcesapplication.model.database.DataBaseManager
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import com.example.sergey.codeforcesapplication.model.pojo.ContestInfo
+import com.example.sergey.codeforcesapplication.model.pojo.User
 import com.example.sergey.codeforcesapplication.model.preferences.PreferencesManager
 import com.example.sergey.codeforcesapplication.model.remote.ServiceApi
 import kotlinx.coroutines.experimental.Deferred
@@ -16,6 +17,7 @@ interface ContestsRepository {
     fun getCurrentContests(): Deferred<List<Contest>>
     fun getPastContests(): Deferred<List<Contest>>
     fun getContestStandings(contestId: Long): Deferred<ContestInfo>
+    fun getUsersInfo(handlers: List<String>): Deferred<List<User>>
 }
 
 class ContestsRepositoryImpl(
@@ -56,6 +58,15 @@ class ContestsRepositoryImpl(
         mutex.lock()
         try {
             serviceApi.getContestStandings(contestId, 100).await().result // TODO: После добавления экрана настроек получать сколько загружать вместо 100
+        } finally {
+            mutex.unlock()
+        }
+    }
+
+    override fun getUsersInfo(handlers: List<String>): Deferred<List<User>> = async {
+        mutex.lock()
+        try {
+            serviceApi.getUsersInfo(handlers.joinToString(separator = ";")).await().result
         } finally {
             mutex.unlock()
         }
