@@ -34,6 +34,5 @@ class CommandInfoFragmentPresenterImpl(private val contestsRepository: ContestsR
                 getView()?.showError()
             }
         }
-
     }
 }
