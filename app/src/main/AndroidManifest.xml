@@ -23,7 +23,7 @@
 
         <activity android:name=".feature.contestInfo.activity.ContestInfoActivity" />
 
-        <activity android:name=".feature.command.activity.CommandActivity" />
+        <activity android:name=".feature.command.activity.CommandInfoActivity" />
 
     </application>
 

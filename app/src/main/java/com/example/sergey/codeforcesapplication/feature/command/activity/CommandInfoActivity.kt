@@ -4,28 +4,32 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
 import com.example.sergey.codeforcesapplication.feature.base.ToolbarActivity
 import com.example.sergey.codeforcesapplication.feature.command.fragment.CommandInfoFragment
 import com.example.sergey.codeforcesapplication.feature.command.fragment.CommandInfoFragment.Companion.HANDLERS_EXTRA
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
+import com.example.sergey.codeforcesapplication.model.pojo.User
 
-interface CommandActivityView : MVPView {
+interface CommandInfoActivityView : MVPView {
+    fun getPresenter(): CommandInfoActivityPresenter
     fun showUsers()
+    fun showUserInfoActivity(user: User)
 }
 
-class CommandActivity : ToolbarActivity(), CommandActivityView {
+class CommandInfoActivity : ToolbarActivity(), CommandInfoActivityView {
 
     private lateinit var teamName: String
     private lateinit var handlers: String
 
-    private val presenter = CommandActivityPresenterImpl()
+    private val presenter = CommandInfoActivityPresenterImpl()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_command)
+        setContentView(R.layout.activity_command_info)
 
         restoreData(savedInstanceState)
 
@@ -55,10 +59,16 @@ class CommandActivity : ToolbarActivity(), CommandActivityView {
         }
     }
 
+    override fun getPresenter() = presenter
+
     override fun showUsers() {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.content, getCommandInfoFragment())
         }.commitAllowingStateLoss()
+    }
+
+    override fun showUserInfoActivity(user: User) {
+        // TODO: Показать UserInfoActivity
     }
 
     private fun getCommandInfoFragment(): Fragment {
@@ -82,7 +92,7 @@ class CommandActivity : ToolbarActivity(), CommandActivityView {
         private const val COMMAND_NAME_EXTRA = "command_name"
 
         fun start(context: Context, rankListRow: RankListRow) {
-            val intent = Intent(context, CommandActivity::class.java).apply {
+            val intent = Intent(context, CommandInfoActivity::class.java).apply {
                 putExtra(COMMAND_NAME_EXTRA, rankListRow.party.teamName)
 
                 val handlersString = rankListRow.party.members
