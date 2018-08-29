@@ -7,7 +7,7 @@
     <color name="tabTextColor">#80ffffff</color>
     <color name="tabSelectedTextColor">@android:color/white</color>
 
-    <color name="contestsListBackground">#d2d2d2</color>
+    <color name="grayListBackground">#d2d2d2</color>
 
     <color name="item_one_line_title">#de000000</color>
     <color name="item_two_line_title">#de000000</color>

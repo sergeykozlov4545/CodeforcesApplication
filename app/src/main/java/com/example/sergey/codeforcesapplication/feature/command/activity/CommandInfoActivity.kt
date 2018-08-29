@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
 import com.example.sergey.codeforcesapplication.feature.base.ToolbarActivity
 import com.example.sergey.codeforcesapplication.feature.command.fragment.CommandInfoFragment
 import com.example.sergey.codeforcesapplication.feature.command.fragment.CommandInfoFragment.Companion.HANDLERS_EXTRA
+import com.example.sergey.codeforcesapplication.feature.userInfo.UserInfoActivity
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 import com.example.sergey.codeforcesapplication.model.pojo.User
 
@@ -68,7 +68,7 @@ class CommandInfoActivity : ToolbarActivity(), CommandInfoActivityView {
     }
 
     override fun showUserInfoActivity(user: User) {
-        // TODO: Показать UserInfoActivity
+        UserInfoActivity.start(this, user)
     }
 
     private fun getCommandInfoFragment(): Fragment {

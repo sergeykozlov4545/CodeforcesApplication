@@ -1,0 +1,47 @@
+package com.example.sergey.codeforcesapplication.feature.userInfo
+
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.feature.base.ToolbarActivity
+import com.example.sergey.codeforcesapplication.model.pojo.User
+
+class UserInfoActivity : ToolbarActivity() {
+
+    private lateinit var userHandler: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_user_info)
+
+        restoreData(savedInstanceState)
+
+        setToolbarTitle(userHandler)
+        showBackAction()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+
+        outState?.apply {
+            putString(USER_HANDLER_EXTRA, userHandler)
+        }
+    }
+
+    private fun restoreData(savedInstanceState: Bundle?) {
+        userHandler = savedInstanceState?.getString(USER_HANDLER_EXTRA)
+                ?: intent.getStringExtra(USER_HANDLER_EXTRA)
+    }
+
+    companion object {
+        private const val USER_HANDLER_EXTRA = "user_handler"
+
+        fun start(context: Context, user: User) {
+            val intent = Intent(context, UserInfoActivity::class.java).apply {
+                putExtra(USER_HANDLER_EXTRA, user.handle)
+            }
+            context.startActivity(intent)
+        }
+    }
+}
