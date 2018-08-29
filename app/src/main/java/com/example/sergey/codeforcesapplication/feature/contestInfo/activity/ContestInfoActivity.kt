@@ -6,16 +6,21 @@ import android.support.v4.app.Fragment
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
 import com.example.sergey.codeforcesapplication.feature.base.ToolbarActivity
+import com.example.sergey.codeforcesapplication.feature.command.CommandActivity
 import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoPresenterImpl.Companion.PROBLEMS
 import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoPresenterImpl.Companion.STANDINGS
 import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.problemsList.ProblemsListFragment
 import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.standingsList.ContestStandingsFragment
+import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 import kotlinx.android.synthetic.main.activity_main.*
 
 interface ContestInfoActivityView : MVPView {
+    fun getPresenter(): ContestInfoActivityPresenter
     fun showProblems()
     fun showRankList()
     fun selectTab(tabPosition: Int)
+    fun showUserInfo(userHandler: String)
+    fun showCommandInfo(rankListRow: RankListRow)
 }
 
 class ContestInfoActivity : ToolbarActivity(), ContestInfoActivityView {
@@ -62,12 +67,22 @@ class ContestInfoActivity : ToolbarActivity(), ContestInfoActivityView {
         }
     }
 
+    override fun getPresenter() = presenter
+
     override fun showProblems() = showFragment(ProblemsListFragment())
 
     override fun showRankList() = showFragment(ContestStandingsFragment())
 
     override fun selectTab(tabPosition: Int) {
         tabsLayout.getTabAt(tabPosition)?.select()
+    }
+
+    override fun showUserInfo(userHandler: String) {
+        // TODO() Отобразить инфу об пользователе
+    }
+
+    override fun showCommandInfo(rankListRow: RankListRow) {
+        CommandActivity.start(this, rankListRow)
     }
 
     private fun showFragment(fragment: Fragment) {

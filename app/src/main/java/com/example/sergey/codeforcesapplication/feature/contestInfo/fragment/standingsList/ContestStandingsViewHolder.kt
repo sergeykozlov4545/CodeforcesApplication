@@ -3,6 +3,7 @@ package com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.st
 import android.annotation.SuppressLint
 import android.view.View
 import com.example.sergey.codeforcesapplication.feature.base.adapter.DataListViewHolderImpl
+import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoActivityView
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 import kotlinx.android.synthetic.main.item_stangings_list.*
 
@@ -14,6 +15,13 @@ class ContestStandingsViewHolder(override val containerView: View?) :
         rankView.text = "${rankListRow.rank}."
         membersView.text = getMembersInfo(rankListRow)
         pointsView.text = rankListRow.points.toInt().toString()
+        itemContainer.setOnClickListener { v ->
+            val context = v?.context
+
+            if (context is ContestInfoActivityView) {
+                context.getPresenter().rankListItemClicked(rankListRow)
+            }
+        }
     }
 
     private fun getMembersInfo(rankListRow: RankListRow): String {
