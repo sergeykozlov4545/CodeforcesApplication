@@ -4,10 +4,23 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.extansion.hide
+import com.example.sergey.codeforcesapplication.extansion.show
+import com.example.sergey.codeforcesapplication.feature.base.MVPView
 import com.example.sergey.codeforcesapplication.feature.base.ToolbarActivity
 import com.example.sergey.codeforcesapplication.model.pojo.User
+import kotlinx.android.synthetic.main.activity_user_info.*
 
-class UserInfoActivity : ToolbarActivity() {
+interface UserInfoActivityView : MVPView {
+    fun hideAll()
+    fun showProgress()
+    fun hideProgress()
+    fun showError()
+    fun hideError()
+    fun showUserInfo(user: User)
+}
+
+class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
 
     private lateinit var userHandler: String
 
@@ -27,6 +40,25 @@ class UserInfoActivity : ToolbarActivity() {
         outState?.apply {
             putString(USER_HANDLER_EXTRA, userHandler)
         }
+    }
+
+    override fun hideAll() {
+        hideProgress()
+        hideError()
+        userInfoContainer.hide()
+    }
+
+    override fun showProgress() = progressView.show()
+
+    override fun hideProgress() = progressView.hide()
+
+    override fun showError() = noConnectionView.show()
+
+    override fun hideError() = noConnectionView.hide()
+
+    override fun showUserInfo(user: User) {
+        // TODO: обновить адаптер
+        userInfoContainer.show()
     }
 
     private fun restoreData(savedInstanceState: Bundle?) {
