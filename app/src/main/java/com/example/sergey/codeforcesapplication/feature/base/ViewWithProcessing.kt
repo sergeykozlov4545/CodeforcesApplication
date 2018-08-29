@@ -1,6 +1,6 @@
 package com.example.sergey.codeforcesapplication.feature.base
 
-interface ViewWithProccesing<T> : MVPView {
+interface ViewWithProcessing<T> : MVPView {
     fun hideAll()
     fun showProgress()
     fun hideProgress()

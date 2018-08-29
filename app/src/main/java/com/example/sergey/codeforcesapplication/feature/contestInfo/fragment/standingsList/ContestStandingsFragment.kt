@@ -5,12 +5,12 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
-import com.example.sergey.codeforcesapplication.feature.base.ViewWithProccesing
+import com.example.sergey.codeforcesapplication.feature.base.ViewWithProcessing
 import com.example.sergey.codeforcesapplication.feature.base.WithProcessingFragment
 import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoActivity
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 
-interface ContestStandingsView : ViewWithProccesing<RankListRow> {
+interface ContestStandingsView : ViewWithProcessing<RankListRow> {
     fun getContestId(): Long
 }
 
