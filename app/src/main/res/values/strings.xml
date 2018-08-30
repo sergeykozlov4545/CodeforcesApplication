@@ -53,6 +53,7 @@
 
     <!--Экран детализации рейтинга-->
     <string name="activityRatingDetailsTitle">Детализация рейтинга %s</string>
+    <string name="ratingChangeListIsEmpty">Пользователь не участвовал в соревнованиях</string>
 
     <!--другое-->
     <string name="unknown">неизвестно</string>

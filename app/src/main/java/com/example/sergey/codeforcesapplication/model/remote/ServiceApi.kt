@@ -2,6 +2,7 @@ package com.example.sergey.codeforcesapplication.model.remote
 
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import com.example.sergey.codeforcesapplication.model.pojo.ContestInfo
+import com.example.sergey.codeforcesapplication.model.pojo.RatingChange
 import com.example.sergey.codeforcesapplication.model.pojo.User
 import kotlinx.coroutines.experimental.Deferred
 import retrofit2.http.GET
@@ -18,4 +19,7 @@ interface ServiceApi {
 
     @GET("user.info?lang=ru")
     fun getUsersInfo(@Query("handles") handles: String): Deferred<Response<List<User>>>
+
+    @GET("user.rating?lang=ru")
+    fun getUserRatingChangesList(@Query("handle") handle: String): Deferred<Response<List<RatingChange>>>
 }

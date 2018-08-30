@@ -3,6 +3,7 @@ package com.example.sergey.codeforcesapplication.model.repository
 import com.example.sergey.codeforcesapplication.model.database.DataBaseManager
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import com.example.sergey.codeforcesapplication.model.pojo.ContestInfo
+import com.example.sergey.codeforcesapplication.model.pojo.RatingChange
 import com.example.sergey.codeforcesapplication.model.pojo.User
 import com.example.sergey.codeforcesapplication.model.preferences.PreferencesManager
 import com.example.sergey.codeforcesapplication.model.remote.ServiceApi
@@ -18,6 +19,7 @@ interface ContestsRepository {
     fun getPastContests(): Deferred<List<Contest>>
     fun getContestStandings(contestId: Long): Deferred<ContestInfo>
     fun getUsersInfo(handlers: List<String>): Deferred<List<User>>
+    fun getUserRatingChangesList(handle: String): Deferred<List<RatingChange>>
 }
 
 class ContestsRepositoryImpl(
@@ -67,6 +69,15 @@ class ContestsRepositoryImpl(
         mutex.lock()
         try {
             serviceApi.getUsersInfo(handlers.joinToString(separator = ";")).await().result
+        } finally {
+            mutex.unlock()
+        }
+    }
+
+    override fun getUserRatingChangesList(handle: String): Deferred<List<RatingChange>> = async {
+        mutex.lock()
+        try {
+            serviceApi.getUserRatingChangesList(handle).await().result.sortedByDescending { it.contestId }
         } finally {
             mutex.unlock()
         }

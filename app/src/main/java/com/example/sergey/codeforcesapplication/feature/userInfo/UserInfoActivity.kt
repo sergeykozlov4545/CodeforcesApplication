@@ -35,6 +35,7 @@ interface UserInfoActivityView : MVPView {
 // TODO: Пофиксить отображение текста в расскрытом изображении
 // TODO: Пофиксить отображение даты
 // TODO: Пофиксить отображение прогресса и соединение с сервером (Сейчас он не по центру)
+// TODO: Пофиксить проблему с кликом по детализации рейтинга (первый клик не проходит с рипл)
 
 class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
 
