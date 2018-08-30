@@ -42,7 +42,7 @@ class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
 
         restoreData(savedInstanceState)
 
-        сollapsingToolbarLayout.title = userHandler
+        collapsing_toolbar.title = userHandler
         setToolbarTitle(userHandler)
         showBackAction()
 
