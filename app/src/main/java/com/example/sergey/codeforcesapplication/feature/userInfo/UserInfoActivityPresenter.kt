@@ -7,7 +7,9 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import java.util.*
 
-interface UserInfoActivityPresenter : MVPPresenter<UserInfoActivityView>
+interface UserInfoActivityPresenter : MVPPresenter<UserInfoActivityView> {
+    fun ratingDetailsViewClicked()
+}
 
 class UserInfoActivityPresenterImpl(private val contestsRepository: ContestsRepository) :
         BasePresenter<UserInfoActivityView>(), UserInfoActivityPresenter {
@@ -28,5 +30,9 @@ class UserInfoActivityPresenterImpl(private val contestsRepository: ContestsRepo
                 getView()?.showError()
             }
         }
+    }
+
+    override fun ratingDetailsViewClicked() {
+        getView()?.showRatingDetailsActivity()
     }
 }

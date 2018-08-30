@@ -27,6 +27,8 @@
 
         <activity android:name=".feature.userInfo.UserInfoActivity" />
 
+        <activity android:name=".feature.ratingDetails.RatingDetailsActivity" />
+
     </application>
 
 </manifest>

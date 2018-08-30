@@ -11,6 +11,7 @@ import com.example.sergey.codeforcesapplication.extansion.hide
 import com.example.sergey.codeforcesapplication.extansion.show
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
 import com.example.sergey.codeforcesapplication.feature.base.ToolbarActivity
+import com.example.sergey.codeforcesapplication.feature.ratingDetails.RatingDetailsActivity
 import com.example.sergey.codeforcesapplication.model.pojo.User
 import kotlinx.android.synthetic.main.activity_user_info.*
 import kotlinx.android.synthetic.main.activity_user_info_item_main_info.*
@@ -28,6 +29,7 @@ interface UserInfoActivityView : MVPView {
     fun hideError()
     fun getUserHandler(): String
     fun showUserInfo(user: User)
+    fun showRatingDetailsActivity()
 }
 
 class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
@@ -113,8 +115,13 @@ class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
         userContributionView.text = user.contribution.toString()
         userCurrentRatingView.text = "${user.rank} (${user.rating})"
         userMaxRatingView.text = "${user.maxRank} (${user.maxRating})"
+        userRatingDetailsContainer.setOnClickListener { presenter.ratingDetailsViewClicked() }
 
         userInfoContainer.show()
+    }
+
+    override fun showRatingDetailsActivity() {
+        RatingDetailsActivity.start(this, userHandler)
     }
 
     private fun restoreData(savedInstanceState: Bundle?) {
