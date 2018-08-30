@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.bumptech.glide.Glide
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
 import com.example.sergey.codeforcesapplication.extansion.hide
@@ -41,6 +42,7 @@ class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
 
         restoreData(savedInstanceState)
 
+        сollapsingToolbarLayout.title = userHandler
         setToolbarTitle(userHandler)
         showBackAction()
 
@@ -86,6 +88,11 @@ class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
 
     @SuppressLint("SetTextI18n")
     override fun showUserInfo(user: User) {
+        //Аватар
+        Glide.with(this)
+                .load("https:${user.titlePhoto}")
+                .into(avatarView)
+
         // Основное
         firstNameView.text = user.firstName ?: getString(R.string.unknown)
         lastNameView.text = user.lastName ?: getString(R.string.unknown)

@@ -19,10 +19,10 @@ class UserInfoActivityPresenterImpl(private val contestsRepository: ContestsRepo
                 val userHandler = getView()?.getUserHandler() ?: return@launch
 
                 getView()?.showProgress()
-                val user = contestsRepository.getUsersInfo(Collections.singletonList(userHandler)).await()[0]
+                val members = contestsRepository.getUsersInfo(Collections.singletonList(userHandler)).await()
                 getView()?.hideProgress()
 
-                getView()?.showUserInfo(user)
+                getView()?.showUserInfo(members[0])
             } catch (e: Exception) {
                 getView()?.hideAll()
                 getView()?.showError()
