@@ -32,6 +32,10 @@ interface UserInfoActivityView : MVPView {
     fun showRatingDetailsActivity()
 }
 
+// TODO: Пофиксить отображение текста в расскрытом изображении
+// TODO: Пофиксить отображение даты
+// TODO: Пофиксить отображение прогресса и соединение с сервером (Сейчас он не по центру)
+
 class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
 
     private lateinit var userHandler: String
