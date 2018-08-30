@@ -39,6 +39,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/firstNameView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -63,6 +64,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/lastNameView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -87,6 +89,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/userCountryView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -111,6 +114,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/userCityView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -135,6 +139,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/userRegistrationView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"

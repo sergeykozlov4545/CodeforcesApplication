@@ -1,5 +1,6 @@
 package com.example.sergey.codeforcesapplication.feature.userInfo
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +11,12 @@ import com.example.sergey.codeforcesapplication.feature.base.MVPView
 import com.example.sergey.codeforcesapplication.feature.base.ToolbarActivity
 import com.example.sergey.codeforcesapplication.model.pojo.User
 import kotlinx.android.synthetic.main.activity_user_info.*
+import kotlinx.android.synthetic.main.activity_user_info_item_main_info.*
+import kotlinx.android.synthetic.main.activity_user_info_item_rating_info.*
+import kotlinx.android.synthetic.main.activity_user_info_item_social_info.*
+import java.text.DateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 interface UserInfoActivityView : MVPView {
     fun hideAll()
@@ -56,8 +63,29 @@ class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
 
     override fun hideError() = noConnectionView.hide()
 
+    @SuppressLint("SetTextI18n")
     override fun showUserInfo(user: User) {
-        // TODO: обновить адаптер
+        // Основное
+        firstNameView.text = user.firstName ?: getString(R.string.unknown)
+        lastNameView.text = user.lastName ?: getString(R.string.unknown)
+        userCountryView.text = user.country ?: getString(R.string.unknown)
+        userCityView.text = user.city ?: getString(R.string.unknown)
+
+        val date = Date(TimeUnit.MILLISECONDS.convert(user.registrationTimeSeconds, TimeUnit.SECONDS))
+        val dateFormatter = DateFormat.getDateInstance(DateFormat.SHORT)
+        userRegistrationView.text = dateFormatter.format(date)
+
+        // Социальное
+        userEmailView.text = user.email ?: getText(R.string.unknown)
+        userVkIdView.text = user.vkId ?: getText(R.string.unknown)
+        userOpenIdView.text = user.openId ?: getText(R.string.unknown)
+        userFriendsOfCountView.text = user.friendOfCount.toString()
+
+        // Рейтинг
+        userContributionView.text = user.contribution.toString()
+        userCurrentRatingView.text = "${user.rank} (${user.rating})"
+        userMaxRatingView.text = "${user.maxRank} (${user.maxRating})"
+
         userInfoContainer.show()
     }
 

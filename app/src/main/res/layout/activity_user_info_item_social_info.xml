@@ -39,6 +39,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/userEmailView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -63,6 +64,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/userVkIdView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -87,6 +89,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/userOpenIdView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -111,6 +114,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/userFriendsOfCountView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
