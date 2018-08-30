@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
 import com.example.sergey.codeforcesapplication.extansion.hide
 import com.example.sergey.codeforcesapplication.extansion.show
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
@@ -24,12 +25,15 @@ interface UserInfoActivityView : MVPView {
     fun hideProgress()
     fun showError()
     fun hideError()
+    fun getUserHandler(): String
     fun showUserInfo(user: User)
 }
 
 class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
 
     private lateinit var userHandler: String
+
+    private lateinit var presenter: UserInfoActivityPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +43,21 @@ class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
 
         setToolbarTitle(userHandler)
         showBackAction()
+
+        initPresenter()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        presenter.attachView(this)
+        presenter.viewIsReady()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        presenter.detachView()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -62,6 +81,8 @@ class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
     override fun showError() = noConnectionView.show()
 
     override fun hideError() = noConnectionView.hide()
+
+    override fun getUserHandler() = userHandler
 
     @SuppressLint("SetTextI18n")
     override fun showUserInfo(user: User) {
@@ -94,12 +115,17 @@ class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
                 ?: intent.getStringExtra(USER_HANDLER_EXTRA)
     }
 
+    private fun initPresenter() {
+        val repository = (applicationContext as CodeforcesApplication).contestsRepository
+        presenter = UserInfoActivityPresenterImpl(repository)
+    }
+
     companion object {
         private const val USER_HANDLER_EXTRA = "user_handler"
 
-        fun start(context: Context, user: User) {
+        fun start(context: Context, userHandler: String) {
             val intent = Intent(context, UserInfoActivity::class.java).apply {
-                putExtra(USER_HANDLER_EXTRA, user.handle)
+                putExtra(USER_HANDLER_EXTRA, userHandler)
             }
             context.startActivity(intent)
         }

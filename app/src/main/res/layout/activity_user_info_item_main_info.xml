@@ -32,7 +32,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/userFirstName"
                 android:textColor="@color/item_two_line_title"
@@ -57,7 +57,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/userLastName"
                 android:textColor="@color/item_two_line_title"
@@ -82,7 +82,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/userCountry"
                 android:textColor="@color/item_two_line_title"
@@ -107,7 +107,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/userCity"
                 android:textColor="@color/item_two_line_title"
@@ -132,7 +132,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/userRegistration"
                 android:textColor="@color/item_two_line_title"

@@ -11,6 +11,7 @@ import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.Con
 import com.example.sergey.codeforcesapplication.feature.contestInfo.activity.ContestInfoPresenterImpl.Companion.STANDINGS
 import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.problemsList.ProblemsListFragment
 import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.standingsList.ContestStandingsFragment
+import com.example.sergey.codeforcesapplication.feature.userInfo.UserInfoActivity
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -78,7 +79,7 @@ class ContestInfoActivity : ToolbarActivity(), ContestInfoActivityView {
     }
 
     override fun showUserInfo(userHandler: String) {
-        // TODO() Отобразить инфу об пользователе
+        UserInfoActivity.start(this, userHandler)
     }
 
     override fun showCommandInfo(rankListRow: RankListRow) {

@@ -16,7 +16,7 @@ import com.example.sergey.codeforcesapplication.model.pojo.User
 interface CommandInfoActivityView : MVPView {
     fun getPresenter(): CommandInfoActivityPresenter
     fun showUsers()
-    fun showUserInfoActivity(user: User)
+    fun showUserInfoActivity(userHandler: String)
 }
 
 class CommandInfoActivity : ToolbarActivity(), CommandInfoActivityView {
@@ -67,8 +67,8 @@ class CommandInfoActivity : ToolbarActivity(), CommandInfoActivityView {
         }.commitAllowingStateLoss()
     }
 
-    override fun showUserInfoActivity(user: User) {
-        UserInfoActivity.start(this, user)
+    override fun showUserInfoActivity(userHandler: String) {
+        UserInfoActivity.start(this, userHandler)
     }
 
     private fun getCommandInfoFragment(): Fragment {

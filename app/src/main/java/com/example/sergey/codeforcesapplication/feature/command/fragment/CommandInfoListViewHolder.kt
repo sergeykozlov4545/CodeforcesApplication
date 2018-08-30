@@ -22,7 +22,7 @@ class CommandInfoListViewHolder(override val containerView: View?) :
             val context = view?.context
 
             if (context is CommandInfoActivityView) {
-                context.getPresenter().commandListItemClicked(user)
+                context.getPresenter().commandListItemClicked(user.handle)
             }
         }
     }

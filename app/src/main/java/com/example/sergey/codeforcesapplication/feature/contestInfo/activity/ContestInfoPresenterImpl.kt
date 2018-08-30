@@ -30,8 +30,7 @@ class ContestInfoPresenterImpl : BasePresenter<ContestInfoActivityView>(), Conte
 
     override fun rankListItemClicked(rankListRow: RankListRow) {
         if (rankListRow.party.teamName.isNullOrEmpty()) {
-            val userHandle = rankListRow.party.members[0].handle
-            getView()?.showUserInfo(userHandle)
+            getView()?.showUserInfo(rankListRow.party.members[0].handle)
         } else {
             getView()?.showCommandInfo(rankListRow)
         }

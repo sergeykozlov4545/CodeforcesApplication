@@ -33,7 +33,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/userContribution"
                 android:textColor="@color/item_two_line_title"
@@ -58,7 +58,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/userCurrentRating"
                 android:textColor="@color/item_two_line_title"
@@ -83,7 +83,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/userMaxRating"
                 android:textColor="@color/item_two_line_title"

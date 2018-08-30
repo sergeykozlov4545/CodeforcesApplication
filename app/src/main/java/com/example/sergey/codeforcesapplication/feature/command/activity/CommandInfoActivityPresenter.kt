@@ -2,10 +2,9 @@ package com.example.sergey.codeforcesapplication.feature.command.activity
 
 import com.example.sergey.codeforcesapplication.feature.base.BasePresenter
 import com.example.sergey.codeforcesapplication.feature.base.MVPPresenter
-import com.example.sergey.codeforcesapplication.model.pojo.User
 
 interface CommandInfoActivityPresenter : MVPPresenter<CommandInfoActivityView> {
-    fun commandListItemClicked(user: User)
+    fun commandListItemClicked(userHandler: String)
 }
 
 class CommandInfoActivityPresenterImpl :
@@ -15,7 +14,7 @@ class CommandInfoActivityPresenterImpl :
         getView()?.showUsers()
     }
 
-    override fun commandListItemClicked(user: User) {
-        getView()?.showUserInfoActivity(user)
+    override fun commandListItemClicked(userHandler: String) {
+        getView()?.showUserInfoActivity(userHandler)
     }
 }
