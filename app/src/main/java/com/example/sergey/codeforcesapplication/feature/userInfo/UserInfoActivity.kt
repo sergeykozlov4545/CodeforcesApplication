@@ -7,6 +7,7 @@ import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
+import com.example.sergey.codeforcesapplication.extansion.format
 import com.example.sergey.codeforcesapplication.extansion.hide
 import com.example.sergey.codeforcesapplication.extansion.show
 import com.example.sergey.codeforcesapplication.feature.base.MVPView
@@ -17,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_user_info.*
 import kotlinx.android.synthetic.main.activity_user_info_item_main_info.*
 import kotlinx.android.synthetic.main.activity_user_info_item_rating_info.*
 import kotlinx.android.synthetic.main.activity_user_info_item_social_info.*
-import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -33,8 +33,6 @@ interface UserInfoActivityView : MVPView {
 }
 
 // TODO: Пофиксить отображение текста в расскрытом изображении
-// TODO: Пофиксить отображение даты
-// TODO: Пофиксить отображение прогресса и соединение с сервером (Сейчас он не по центру)
 // TODO: Пофиксить проблему с кликом по детализации рейтинга (первый клик не проходит с рипл)
 
 class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
@@ -99,6 +97,7 @@ class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
         Glide.with(this)
                 .load("https:${user.titlePhoto}")
                 .into(avatarView)
+        avatarView.show()
 
         // Основное
         firstNameView.text = user.firstName ?: getString(R.string.unknown)
@@ -107,8 +106,7 @@ class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
         userCityView.text = user.city ?: getString(R.string.unknown)
 
         val date = Date(TimeUnit.MILLISECONDS.convert(user.registrationTimeSeconds, TimeUnit.SECONDS))
-        val dateFormatter = DateFormat.getDateInstance(DateFormat.SHORT)
-        userRegistrationView.text = dateFormatter.format(date)
+        userRegistrationView.text = date.format()
 
         // Социальное
         userEmailView.text = user.email ?: getText(R.string.unknown)

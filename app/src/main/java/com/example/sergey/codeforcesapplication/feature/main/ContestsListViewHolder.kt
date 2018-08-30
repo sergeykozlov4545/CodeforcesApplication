@@ -2,11 +2,11 @@ package com.example.sergey.codeforcesapplication.feature.main
 
 import android.view.View
 import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.extansion.format
 import com.example.sergey.codeforcesapplication.feature.base.adapter.DataListViewHolderImpl
 import com.example.sergey.codeforcesapplication.feature.main.activity.MainActivityView
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import kotlinx.android.synthetic.main.item_contest_list.*
-import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -32,9 +32,7 @@ class ContestsListViewHolder(override val containerView: View?) :
     }
 
     private fun startTimeFormatter(seconds: Long): String {
-        val date = Date(TimeUnit.MILLISECONDS.convert(seconds, TimeUnit.SECONDS))
-        val dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(date)
-        return dateFormat.format("dd.MM.yyyy hh:mm")
+        return Date(TimeUnit.MILLISECONDS.convert(seconds, TimeUnit.SECONDS)).format()
     }
 
     private fun durationFormatter(seconds: Long): String {
