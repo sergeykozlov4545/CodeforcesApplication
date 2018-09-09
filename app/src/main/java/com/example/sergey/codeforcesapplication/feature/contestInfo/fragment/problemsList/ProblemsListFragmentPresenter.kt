@@ -20,16 +20,22 @@ class ProblemsListFragmentPresenterImpl(private val contestsRepository: Contests
 
                 getView()?.showProgress()
 
-                val contestInfo = contestsRepository.getContestStandings(contestId).await()
+                val response = contestsRepository.getContestStandings(contestId).await()
 
                 getView()?.hideProgress()
 
-                if (contestInfo.problems.isEmpty()) {
+                if (!response.isSuccess) {
+                    getView()?.showEmptyListMessage()
+                    // TODO: Показать текст response.comment
+                    return@launch
+                }
+
+                if (response.result.problems.isEmpty()) {
                     getView()?.showEmptyListMessage()
                     return@launch
                 }
 
-                getView()?.showDataList(contestInfo.problems)
+                getView()?.showDataList(response.result.problems)
             } catch (e: Exception) {
                 getView()?.hideProgress()
                 getView()?.showError()

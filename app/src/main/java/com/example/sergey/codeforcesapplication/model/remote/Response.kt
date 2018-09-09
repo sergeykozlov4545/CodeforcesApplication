@@ -4,11 +4,14 @@ import com.google.gson.annotations.SerializedName
 
 class Response<T>(
         @SerializedName("status")
-        val status: String,
+        val status: String = "OK",
 
         @SerializedName("comment")
-        val comment: String,
+        val comment: String? = null,
 
         @SerializedName("result")
         val result: T
-)
+) {
+    val isSuccess: Boolean
+        get() = status == "OK"
+}

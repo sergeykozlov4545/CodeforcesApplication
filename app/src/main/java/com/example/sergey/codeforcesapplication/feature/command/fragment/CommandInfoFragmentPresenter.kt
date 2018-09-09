@@ -19,16 +19,23 @@ class CommandInfoFragmentPresenterImpl(private val contestsRepository: ContestsR
                 getView()?.hideAll()
                 getView()?.showProgress()
 
-                val users = contestsRepository.getUsersInfo(handlers).await()
+                val response = contestsRepository.getUsersInfo(handlers).await()
 
                 getView()?.hideProgress()
 
-                if (users.isEmpty()) {
+                if (!response.isSuccess) {
+                    getView()?.showEmptyListMessage()
+                    // TODO: Показать текст response.comment
+                    return@launch
+                }
+
+                if (response.result.isEmpty()) {
                     getView()?.showEmptyListMessage()
                     return@launch
                 }
 
-                getView()?.showDataList(users)
+                getView()?.showDataList(response.result)
+
             } catch (e: Exception) {
                 getView()?.hideProgress()
                 getView()?.showError()

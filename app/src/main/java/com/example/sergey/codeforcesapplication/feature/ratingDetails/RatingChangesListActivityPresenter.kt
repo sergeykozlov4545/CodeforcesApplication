@@ -19,14 +19,22 @@ class RatingChangesListActivityPresenterImpl(private val contestsRepository: Con
                 val userHandler = getView()?.getUserHandler() ?: return@launch
 
                 getView()?.showProgress()
-                val ratingChangesList = contestsRepository.getUserRatingChangesList(userHandler).await()
+                val response = contestsRepository.getUserRatingChangesList(userHandler).await()
 
-                if (ratingChangesList.isEmpty()) {
+                getView()?.hideProgress()
+
+                if (!response.isSuccess) {
+                    getView()?.showEmptyListMessage()
+                    // TODO: Показать текст response.comment
+                    return@launch
+                }
+
+                if (response.result.isEmpty()) {
                     getView()?.showEmptyListMessage()
                     return@launch
                 }
 
-                getView()?.showDataList(ratingChangesList)
+                getView()?.showDataList(response.result.sortedByDescending { it.contestId })
             } catch (e: Exception) {
                 getView()?.hideAll()
                 getView()?.showError()

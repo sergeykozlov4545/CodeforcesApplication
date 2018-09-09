@@ -18,16 +18,23 @@ class ContestStandingsPresenterImpl(private val contestsRepository: ContestsRepo
                 val contestId = getView()?.getContestId() ?: return@launch
 
                 getView()?.showProgress()
-                val contestInfo = contestsRepository.getContestStandings(contestId).await()
+
+                val response = contestsRepository.getContestStandings(contestId).await()
 
                 getView()?.hideProgress()
 
-                if (contestInfo.ranks.isEmpty()) {
+                if (!response.isSuccess) {
+                    getView()?.showEmptyListMessage()
+                    // TODO: Показать текст response.comment
+                    return@launch
+                }
+
+                if (response.result.ranks.isEmpty()) {
                     getView()?.showEmptyListMessage()
                     return@launch
                 }
 
-                getView()?.showDataList(contestInfo.ranks)
+                getView()?.showDataList(response.result.ranks)
 
             } catch (e: Exception) {
                 getView()?.hideProgress()

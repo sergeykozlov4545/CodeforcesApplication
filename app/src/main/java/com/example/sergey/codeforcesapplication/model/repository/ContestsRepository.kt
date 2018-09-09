@@ -6,6 +6,7 @@ import com.example.sergey.codeforcesapplication.model.pojo.ContestInfo
 import com.example.sergey.codeforcesapplication.model.pojo.RatingChange
 import com.example.sergey.codeforcesapplication.model.pojo.User
 import com.example.sergey.codeforcesapplication.model.preferences.PreferencesManager
+import com.example.sergey.codeforcesapplication.model.remote.Response
 import com.example.sergey.codeforcesapplication.model.remote.ServiceApi
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
@@ -15,12 +16,10 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 interface ContestsRepository {
-    fun getUncommingContests(): Deferred<List<Contest>>
-    fun getCurrentContests(): Deferred<List<Contest>>
-    fun getPastContests(): Deferred<List<Contest>>
-    fun getContestStandings(contestId: Long): Deferred<ContestInfo>
-    fun getUsersInfo(handlers: List<String>): Deferred<List<User>>
-    fun getUserRatingChangesList(handle: String): Deferred<List<RatingChange>>
+    fun getContests(): Deferred<Response<List<Contest>>>
+    fun getContestStandings(contestId: Long): Deferred<Response<ContestInfo>>
+    fun getUsersInfo(handlers: List<String>): Deferred<Response<List<User>>>
+    fun getUserRatingChangesList(handle: String): Deferred<Response<List<RatingChange>>>
 }
 
 class ContestsRepositoryImpl(
@@ -30,66 +29,42 @@ class ContestsRepositoryImpl(
 ) : ContestsRepository {
     private val mutex = Mutex()
 
-    override fun getUncommingContests(): Deferred<List<Contest>> = async {
-        mutex.withLock { loadAndSaveContests(predicate = Contest::isUpcomming) }
-    }
+    override fun getContests(): Deferred<Response<List<Contest>>> = async {
+        mutex.withLock {
+            val contests = dataBaseManager.loadAllContests().await()
+            if (!contests.isEmpty()) {
+                val lastLoadedTime = preferencesManager.getLong(LAST_LOADED_TIME_CONTESTS_KEY, 0)
+                if (Date().time - lastLoadedTime < ONE_HOUR) {
+                    return@withLock Response(result = contests)
+                }
+            }
 
-    override fun getCurrentContests(): Deferred<List<Contest>> = async {
-        mutex.withLock { loadAndSaveContests(predicate = Contest::isCurrent) }
-    }
-
-    override fun getPastContests(): Deferred<List<Contest>> = async {
-        mutex.withLock { loadAndSaveContests(sortedByDescending = true, predicate = Contest::isPast) }
-    }
-
-    // TODO: Использовать Response<T> в качестве результата
-    override fun getContestStandings(contestId: Long): Deferred<ContestInfo> = async {
-        // TODO: После добавления экрана настроек получать сколько загружать вместо 100
-        mutex.withLock { serviceApi.getContestStandings(contestId, 100).await().result }
-    }
-
-    // TODO: Использовать Response<T> в качестве результата
-    override fun getUsersInfo(handlers: List<String>): Deferred<List<User>> = async {
-        mutex.withLock { serviceApi.getUsersInfo(handlers.joinToString(separator = ";")).await().result }
-    }
-
-    // TODO: Использовать Response<T> в качестве результата
-    override fun getUserRatingChangesList(handle: String): Deferred<List<RatingChange>> = async {
-        mutex.withLock { serviceApi.getUserRatingChangesList(handle).await().result.sortedByDescending { it.contestId } }
-    }
-
-    private suspend fun loadAndSaveContests(sortedByDescending: Boolean = false,
-                                            predicate: (contest: Contest) -> Boolean): List<Contest> {
-        val contests = dataBaseManager.loadAllContests().await()
-
-        if (!contests.isEmpty()) {
-            val lastLoadedTime = preferencesManager.getLong(LAST_LOADED_TIME_CONTESTS_KEY, 0)
-            if (Date().time - lastLoadedTime < ONE_HOUR) {
-                return if (sortedByDescending) {
-                    contests.filter(predicate).sortedByDescending { it.startTimeSeconds }
-                } else {
-                    contests.filter(predicate).sortedBy { it.startTimeSeconds }
+            val contestsResponse = serviceApi.getContestList().await()
+            return@withLock contestsResponse.apply {
+                if (isSuccess) {
+                    dataBaseManager.saveAllContests(contestsResponse.result).await()
+                    preferencesManager.putLong(LAST_LOADED_TIME_CONTESTS_KEY, Date().time)
                 }
             }
         }
+    }
 
-        val contestsResponse = serviceApi.getContestList().await()
-        if (contestsResponse.status == "FAILED") {
-            return emptyList()
-        }
+    override fun getContestStandings(contestId: Long): Deferred<Response<ContestInfo>> = async {
+        // TODO: После добавления экрана настроек получать сколько загружать вместо 100
+        mutex.withLock { serviceApi.getContestStandings(contestId, 100).await() }
+    }
 
-        val sortedContestsList = if (sortedByDescending) {
-            contestsResponse.result.sortedByDescending { it.startTimeSeconds }
-        } else {
-            contestsResponse.result.sortedBy { it.startTimeSeconds }
-        }
-        dataBaseManager.saveAllContests(sortedContestsList).await()
-        preferencesManager.putLong(LAST_LOADED_TIME_CONTESTS_KEY, Date().time)
-        return sortedContestsList.filter(predicate)
+    override fun getUsersInfo(handlers: List<String>): Deferred<Response<List<User>>> = async {
+        mutex.withLock { serviceApi.getUsersInfo(handlers.joinToString(separator = ";")).await() }
+    }
+
+    override fun getUserRatingChangesList(handle: String): Deferred<Response<List<RatingChange>>> = async {
+        mutex.withLock { serviceApi.getUserRatingChangesList(handle).await() }
     }
 
     companion object {
         private const val LAST_LOADED_TIME_CONTESTS_KEY = "last_loaded_time_contests"
+        // TODO: Когда добавится экран настроек, там можно указать время жизни
         private val ONE_HOUR = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
     }
 }
