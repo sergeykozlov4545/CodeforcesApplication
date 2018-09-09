@@ -4,9 +4,9 @@ interface ViewWithProcessing<T> : MVPView {
     fun hideAll()
     fun showProgress()
     fun hideProgress()
-    fun showError(message: String)
-    fun hideError()
     fun showData(data: T)
+    fun showErrorOperation(message: String)
+    fun showError()
 }
 
 interface ListViewWithProcessing<T> : ViewWithProcessing<List<T>> {
