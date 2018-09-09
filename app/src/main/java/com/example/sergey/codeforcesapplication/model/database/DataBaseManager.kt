@@ -7,8 +7,8 @@ import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 
 interface DataBaseManager {
-    suspend fun loadAllContests(): Deferred<List<Contest>>
-    suspend fun saveAllContests(contests: List<Contest>): Deferred<Unit>
+    fun loadAllContests(): Deferred<List<Contest>>
+    fun saveAllContests(contests: List<Contest>): Deferred<Unit>
 }
 
 class DataBaseManagerImpl(context: Context) : DataBaseManager {
@@ -18,11 +18,11 @@ class DataBaseManagerImpl(context: Context) : DataBaseManager {
                     .fallbackToDestructiveMigration()
                     .build()
 
-    override suspend fun loadAllContests(): Deferred<List<Contest>> = async {
+    override fun loadAllContests(): Deferred<List<Contest>> = async {
         database.contestDao().loadAllContests()
     }
 
-    override suspend fun saveAllContests(contests: List<Contest>): Deferred<Unit> = async {
+    override fun saveAllContests(contests: List<Contest>): Deferred<Unit> = async {
         database.contestDao().insertAll(contests)
     }
 
