@@ -14,7 +14,7 @@ import com.example.sergey.codeforcesapplication.extansion.hide
 import com.example.sergey.codeforcesapplication.extansion.show
 import com.example.sergey.codeforcesapplication.feature.base.adapter.DataListAdapter
 
-abstract class WithProcessingFragment<T> : Fragment(), ViewWithProcessing<T> {
+abstract class WithProcessingFragment<T> : Fragment(), ViewWithProcessingOld<T> {
 
     private lateinit var progressView: View
     protected lateinit var noConnectionView: TextView

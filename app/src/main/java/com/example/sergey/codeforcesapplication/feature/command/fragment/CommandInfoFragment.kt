@@ -5,11 +5,11 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
-import com.example.sergey.codeforcesapplication.feature.base.ViewWithProcessing
+import com.example.sergey.codeforcesapplication.feature.base.ViewWithProcessingOld
 import com.example.sergey.codeforcesapplication.feature.base.WithProcessingFragment
 import com.example.sergey.codeforcesapplication.model.pojo.User
 
-interface CommandInfoFragmentView : ViewWithProcessing<User> {
+interface CommandInfoFragmentView : ViewWithProcessingOld<User> {
     fun getHandlers(): List<String>
 }
 
