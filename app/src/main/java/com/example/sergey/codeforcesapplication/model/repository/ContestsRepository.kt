@@ -10,6 +10,7 @@ import com.example.sergey.codeforcesapplication.model.remote.ServiceApi
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.sync.Mutex
+import kotlinx.coroutines.experimental.sync.withLock
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -30,57 +31,31 @@ class ContestsRepositoryImpl(
     private val mutex = Mutex()
 
     override fun getUncommingContests(): Deferred<List<Contest>> = async {
-        mutex.lock()
-        try {
-            loadAndSaveContests(predicate = Contest::isUpcomming)
-        } finally {
-            mutex.unlock()
-        }
+        mutex.withLock { loadAndSaveContests(predicate = Contest::isUpcomming) }
     }
 
     override fun getCurrentContests(): Deferred<List<Contest>> = async {
-        mutex.lock()
-        try {
-            loadAndSaveContests(predicate = Contest::isCurrent)
-        } finally {
-            mutex.unlock()
-        }
+        mutex.withLock { loadAndSaveContests(predicate = Contest::isCurrent) }
     }
 
     override fun getPastContests(): Deferred<List<Contest>> = async {
-        mutex.lock()
-        try {
-            loadAndSaveContests(sortedByDescending = true, predicate = Contest::isPast)
-        } finally {
-            mutex.unlock()
-        }
+        mutex.withLock { loadAndSaveContests(sortedByDescending = true, predicate = Contest::isPast) }
     }
 
+    // TODO: Использовать Response<T> в качестве результата
     override fun getContestStandings(contestId: Long): Deferred<ContestInfo> = async {
-        mutex.lock()
-        try {
-            serviceApi.getContestStandings(contestId, 100).await().result // TODO: После добавления экрана настроек получать сколько загружать вместо 100
-        } finally {
-            mutex.unlock()
-        }
+        // TODO: После добавления экрана настроек получать сколько загружать вместо 100
+        mutex.withLock { serviceApi.getContestStandings(contestId, 100).await().result }
     }
 
+    // TODO: Использовать Response<T> в качестве результата
     override fun getUsersInfo(handlers: List<String>): Deferred<List<User>> = async {
-        mutex.lock()
-        try {
-            serviceApi.getUsersInfo(handlers.joinToString(separator = ";")).await().result
-        } finally {
-            mutex.unlock()
-        }
+        mutex.withLock { serviceApi.getUsersInfo(handlers.joinToString(separator = ";")).await().result }
     }
 
+    // TODO: Использовать Response<T> в качестве результата
     override fun getUserRatingChangesList(handle: String): Deferred<List<RatingChange>> = async {
-        mutex.lock()
-        try {
-            serviceApi.getUserRatingChangesList(handle).await().result.sortedByDescending { it.contestId }
-        } finally {
-            mutex.unlock()
-        }
+        mutex.withLock { serviceApi.getUserRatingChangesList(handle).await().result.sortedByDescending { it.contestId } }
     }
 
     private suspend fun loadAndSaveContests(sortedByDescending: Boolean = false,
