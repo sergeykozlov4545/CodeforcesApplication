@@ -3,4 +3,16 @@
     <color name="colorPrimary">#1976d2</color>
     <color name="colorPrimaryDark">#004ba0</color>
     <color name="colorAccent">#1976d2</color>
+
+    <color name="tabTextColor">#80ffffff</color>
+    <color name="tabSelectedTextColor">@android:color/white</color>
+
+    <color name="grayListBackground">#d2d2d2</color>
+
+    <color name="item_one_line_title">#de000000</color>
+    <color name="item_two_line_title">#de000000</color>
+    <color name="item_two_line_subtitle">#99000000</color>
+    <color name="item_three_line_first_line">#de000000</color>
+    <color name="item_three_line_second_line">#99000000</color>
+    <color name="item_three_line_third_line">#99000000</color>
 </resources>

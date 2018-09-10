@@ -6,6 +6,46 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="coordinatorLayoutStyle">@style/Widget.Design.CoordinatorLayout</item>
+    </style>
+
+    <style name="TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabBackground">@color/colorPrimary</item>
+        <item name="tabTextColor">@color/tabTextColor</item>
+        <item name="tabSelectedTextColor">@color/tabSelectedTextColor</item>
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="tabIndicatorHeight">2dp</item>
+    </style>
+
+    <style name="OneLineTitleTextStyle">
+        <item name="android:textColor">@color/item_one_line_title</item>
+        <item name="android:textSize">@dimen/item_one_line_title_size</item>
+    </style>
+
+    <style name="TwoLineTitleTextStyle">
+        <item name="android:textColor">@color/item_two_line_title</item>
+        <item name="android:textSize">@dimen/item_two_line_title_size</item>
+    </style>
+
+    <style name="TwoLineSubTitleTextStyle">
+        <item name="android:textColor">@color/item_two_line_subtitle</item>
+        <item name="android:textSize">@dimen/item_two_line_subtitle_size</item>
+    </style>
+
+    <style name="ThreeLineFirstLineTextStyle">
+        <item name="android:textColor">@color/item_three_line_first_line</item>
+        <item name="android:textSize">@dimen/item_three_line_first_text_size</item>
+    </style>
+
+    <style name="ThreeLineSecondLineTextStyle">
+        <item name="android:textColor">@color/item_three_line_second_line</item>
+        <item name="android:textSize">@dimen/item_three_line_second_text_size</item>
+    </style>
+
+    <style name="ThreeLineThirdLineTextStyle">
+        <item name="android:textColor">@color/item_three_line_third_line</item>
+        <item name="android:textSize">@dimen/item_three_line_third_text_size</item>
     </style>
 
 </resources>
