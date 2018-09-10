@@ -7,11 +7,15 @@ data class Response<T>(
         val status: String = "OK",
 
         @SerializedName("comment")
-        val comment: String? = null,
+        val comment: String = "",
 
         @SerializedName("result")
-        val result: T
+        val result: T? = null
 ) {
     val isSuccess: Boolean
         get() = status == "OK"
+
+    companion object {
+        fun <T> FAILED() = Response<T>(status = "FAILED")
+    }
 }
