@@ -1,4 +1,4 @@
-package com.example.sergey.codeforcesapplication.feature.widget
+package com.example.sergey.codeforcesapplication.widget
 
 import android.content.Context
 import android.graphics.Rect
