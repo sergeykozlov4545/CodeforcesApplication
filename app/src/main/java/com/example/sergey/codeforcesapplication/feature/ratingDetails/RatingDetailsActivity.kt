@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
 import com.example.sergey.codeforcesapplication.extansion.hide
@@ -59,7 +60,7 @@ class RatingDetailsActivity : ToolbarActivity(), RatingDetailsActivityView {
 
     override fun hideAll() {
         hideProgress()
-        hideError()
+        noConnectionView.hide()
         emptyListView.hide()
         dataListView.hide()
     }
@@ -68,16 +69,17 @@ class RatingDetailsActivity : ToolbarActivity(), RatingDetailsActivityView {
 
     override fun hideProgress() = progressView.hide()
 
-    override fun showError() = noConnectionView.show()
-
-    override fun hideError() = noConnectionView.hide()
-
     override fun showEmptyListMessage() = emptyListView.show()
 
     override fun showDataList(values: List<RatingChange>) {
         dataListAdapter.updateData(values)
         dataListView.show()
     }
+
+    override fun showError() = noConnectionView.show()
+
+    override fun showErrorOperation(message: String) =
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
     override fun getUserHandler() = userHandler
 

@@ -25,7 +25,7 @@ class CommandInfoFragmentPresenterImpl(private val contestsRepository: ContestsR
 
                 if (!response.isSuccess) {
                     getView()?.showEmptyListMessage()
-                    // TODO: Показать текст response.comment
+                    getView()?.showErrorOperation(response.comment!!)
                     return@launch
                 }
 

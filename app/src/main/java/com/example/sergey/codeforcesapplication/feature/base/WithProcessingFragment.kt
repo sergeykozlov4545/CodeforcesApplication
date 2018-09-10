@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.extansion.hide
 import com.example.sergey.codeforcesapplication.extansion.show
@@ -39,16 +40,13 @@ abstract class WithProcessingFragment<T> : Fragment(), ViewWithProcessing<T> {
 
     override fun hideAll() {
         hideProgress()
-        hideError()
+        noConnectionView.hide()
         emptyListView.hide()
         dataListView.hide()
     }
 
     override fun showProgress() = progressView.show()
     override fun hideProgress() = progressView.hide()
-
-    override fun showError() = noConnectionView.show()
-    override fun hideError() = noConnectionView.hide()
 
     override fun showEmptyListMessage() {
         emptyListView.text = getEmptyListMessageText()
@@ -59,6 +57,11 @@ abstract class WithProcessingFragment<T> : Fragment(), ViewWithProcessing<T> {
         getDataListAdapter().updateData(values)
         dataListView.show()
     }
+
+    override fun showError() = noConnectionView.show()
+
+    override fun showErrorOperation(message: String) =
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 
     abstract fun getEmptyListMessageText(): String
 

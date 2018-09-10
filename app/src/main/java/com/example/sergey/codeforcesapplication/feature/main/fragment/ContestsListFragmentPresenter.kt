@@ -31,7 +31,7 @@ abstract class ContestsListFragmentPresenterImpl :
 
                 if (!response.isSuccess) {
                     getView()?.showEmptyListMessage()
-                    // TODO: Показать текст response.comment
+                    getView()?.showErrorOperation(response.comment!!)
                     return@launch
                 }
 

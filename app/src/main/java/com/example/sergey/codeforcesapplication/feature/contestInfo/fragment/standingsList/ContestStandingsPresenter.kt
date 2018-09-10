@@ -25,7 +25,7 @@ class ContestStandingsPresenterImpl(private val contestsRepository: ContestsRepo
 
                 if (!response.isSuccess) {
                     getView()?.showEmptyListMessage()
-                    // TODO: Показать текст response.comment
+                    getView()?.showErrorOperation(response.comment!!)
                     return@launch
                 }
 

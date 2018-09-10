@@ -25,7 +25,7 @@ class RatingChangesListActivityPresenterImpl(private val contestsRepository: Con
 
                 if (!response.isSuccess) {
                     getView()?.showEmptyListMessage()
-                    // TODO: Показать текст response.comment
+                    getView()?.showErrorOperation(response.comment!!)
                     return@launch
                 }
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
@@ -26,7 +27,7 @@ interface UserInfoActivityView : MVPView {
     fun showProgress()
     fun hideProgress()
     fun showError()
-    fun hideError()
+    fun showErrorOperation(message: String)
     fun getUserHandler(): String
     fun showUserInfo(user: User)
     fun showRatingDetailsActivity()
@@ -77,7 +78,7 @@ class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
 
     override fun hideAll() {
         hideProgress()
-        hideError()
+        noConnectionView.hide()
         userInfoContainer.hide()
     }
 
@@ -87,7 +88,8 @@ class UserInfoActivity : ToolbarActivity(), UserInfoActivityView {
 
     override fun showError() = noConnectionView.show()
 
-    override fun hideError() = noConnectionView.hide()
+    override fun showErrorOperation(message: String) =
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
     override fun getUserHandler() = userHandler
 

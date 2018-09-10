@@ -25,7 +25,7 @@ class UserInfoActivityPresenterImpl(private val contestsRepository: ContestsRepo
                 getView()?.hideProgress()
 
                 if (!response.isSuccess) {
-                    // TODO: Показать текст response.comment
+                    getView()?.showErrorOperation(response.comment!!)
                     return@launch
                 }
 
