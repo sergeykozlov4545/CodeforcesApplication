@@ -11,11 +11,11 @@ import com.example.sergey.codeforcesapplication.application.CodeforcesApplicatio
 import com.example.sergey.codeforcesapplication.extansion.hide
 import com.example.sergey.codeforcesapplication.extansion.show
 import com.example.sergey.codeforcesapplication.feature.base.ToolbarActivity
-import com.example.sergey.codeforcesapplication.feature.base.ViewWithProcessingOld
+import com.example.sergey.codeforcesapplication.feature.base.ViewWithProcessing
 import com.example.sergey.codeforcesapplication.model.pojo.RatingChange
 import kotlinx.android.synthetic.main.fragment_with_processing.*
 
-interface RatingDetailsActivityView : ViewWithProcessingOld<RatingChange> {
+interface RatingDetailsActivityView : ViewWithProcessing<RatingChange> {
     fun getUserHandler(): String
 }
 
