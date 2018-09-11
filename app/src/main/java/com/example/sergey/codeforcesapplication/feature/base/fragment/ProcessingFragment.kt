@@ -22,6 +22,7 @@ open class ProcessingFragment<T, V: ProcessingView<T>> : Fragment(), ProcessingV
     override fun onResume() {
         super.onResume()
         presenter.attachView(this as V)
+        processingContainer.showProgress()
         presenter.loadData()
     }
 
