@@ -1,21 +1,19 @@
 package com.example.sergey.codeforcesapplication.feature.base.tabbed
 
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import com.example.sergey.codeforcesapplication.feature.main.activityFactory.FragmentInfo
 
 class PagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
-    private val fragments: MutableList<Fragment> = ArrayList()
-    private val fragmentsTitle: MutableList<String> = ArrayList()
+    private val fragmentsInfo: MutableList<FragmentInfo> = ArrayList()
 
-    override fun getItem(position: Int) = fragments[position]
+    override fun getItem(position: Int) = fragmentsInfo[position].fragment
 
-    override fun getCount() = fragments.size
+    override fun getCount() = fragmentsInfo.size
 
-    override fun getPageTitle(position: Int) = fragmentsTitle[position]
+    override fun getPageTitle(position: Int) = fragmentsInfo[position].fragmentTitle
 
-    fun addFragment(fragment: Fragment, title: String) {
-        fragments.add(fragment)
-        fragmentsTitle.add(title)
+    fun addFragments(fragmentsInfo: List<FragmentInfo>) {
+        this.fragmentsInfo.addAll(fragmentsInfo)
     }
 }

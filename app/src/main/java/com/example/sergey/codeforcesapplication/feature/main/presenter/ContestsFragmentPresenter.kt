@@ -1,7 +1,8 @@
-package com.example.sergey.codeforcesapplication.feature.main
+package com.example.sergey.codeforcesapplication.feature.main.presenter
 
 import com.example.sergey.codeforcesapplication.feature.base.presenter.ProcessingPresenter
 import com.example.sergey.codeforcesapplication.feature.base.presenter.ProcessingPresenterImpl
+import com.example.sergey.codeforcesapplication.feature.main.ContestsFragmentView
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import com.example.sergey.codeforcesapplication.model.remote.Response
 import com.example.sergey.codeforcesapplication.model.repository.ContestsRepository

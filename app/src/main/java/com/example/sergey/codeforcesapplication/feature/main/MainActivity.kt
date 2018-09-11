@@ -1,37 +1,27 @@
 package com.example.sergey.codeforcesapplication.feature.main
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.feature.base.tabbed.TabbedActivity
+import com.example.sergey.codeforcesapplication.feature.base.BaseActivity
+import com.example.sergey.codeforcesapplication.feature.base.tabbed.PagerAdapter
+import com.example.sergey.codeforcesapplication.feature.main.activityFactory.MainActivityFactory
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
-class MainActivity : TabbedActivity() {
-    override val fragmentsInfo: Map<Fragment, String>
-        get() {
-            val map: MutableMap<Fragment, String> = HashMap()
-            map.apply {
-                put(ContestsFragment(), getString(R.string.upcomingContests))
-                put(ContestsFragment(), getString(R.string.currentContests))
-                put(ContestsFragment(), getString(R.string.pastContests))
-            }
-
-            return map
-        }
-
-    override val tabLayout: TabLayout
-        get() = tabsLayout
-
-    override val viewPager: ViewPager
-        get() = pager
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initView()
+    }
+
+    private fun initView() {
         setToolbarTitle(R.string.contestsList)
+
+        val fragmentsInfo = MainActivityFactory.create(applicationContext)
+        pager.adapter = PagerAdapter(supportFragmentManager).apply { addFragments(fragmentsInfo) }
+
+        tabsLayout.setupWithViewPager(pager)
     }
 }

@@ -7,6 +7,11 @@
     <string name="currentContests">Текущие</string>
     <string name="pastContests">Прошедшие</string>
 
+    <string name="contest_name">Название контеста</string>
+    <string name="contest_start">Начало:</string>
+    <string name="contest_duration">Длительность:</string>
+    <string name="contest_is_not_started">Данный контест еще не начался</string>
+
     <!--другое-->
     <string name="unknown">неизвестно</string>
     <string name="noConnectionServer">Нет соединения с сервером</string>

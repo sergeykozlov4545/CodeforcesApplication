@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.extension.hide
 import com.example.sergey.codeforcesapplication.extension.show
+import com.example.sergey.codeforcesapplication.feature.base.adapter.DataListAdapter
 
 interface ProcessingDataContainer<T> {
     fun initView(bundle: Bundle?)
@@ -35,8 +36,11 @@ abstract class ProcessingDataContainerImpl<T>(parent: ViewGroup) : ProcessingDat
     }
 }
 
-abstract class ProcessingListDataContainerImpl<T>(parent: ViewGroup) : ProcessingDataContainer<List<T>> {
+class ProcessingListDataContainerImpl<T>(parent: ViewGroup) :
+        ProcessingDataContainerImpl<List<T>>(parent) {
+
     private val dataListView: RecyclerView = parent.findViewById(R.id.dataListView)
+    private lateinit var adapter: DataListAdapter<T>
 
     override fun initView(bundle: Bundle?) {
         val countColumns = bundle?.getInt(COUNT_COLUMNS_EXTRA, 1) ?: 1
@@ -44,6 +48,7 @@ abstract class ProcessingListDataContainerImpl<T>(parent: ViewGroup) : Processin
         val backgroundColor = bundle?.getInt(BACKGROUND_COLOR_EXTRA, 0) ?: 0
 
         dataListView.apply {
+            adapter = this@ProcessingListDataContainerImpl.adapter as RecyclerView.Adapter<*>
             layoutManager = if (countColumns == 1) {
                 LinearLayoutManager(context.applicationContext)
             } else {
@@ -56,6 +61,15 @@ abstract class ProcessingListDataContainerImpl<T>(parent: ViewGroup) : Processin
                 addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
             }
         }
+    }
+
+    override fun showData(data: List<T>) {
+        adapter.updateData(data)
+        dataListView.show()
+    }
+
+    fun setAdapter(adapter: DataListAdapter<T>) {
+        this.adapter = adapter
     }
 
     companion object {
