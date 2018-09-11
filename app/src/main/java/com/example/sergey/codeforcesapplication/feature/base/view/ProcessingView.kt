@@ -5,3 +5,7 @@ interface ProcessingView<T> : MVPView {
     fun onErrorOperation(message: String)
     fun onError()
 }
+
+interface ProcessingListView<T>: ProcessingView<List<T>> {
+    fun onEmptyData(messageId: Int)
+}

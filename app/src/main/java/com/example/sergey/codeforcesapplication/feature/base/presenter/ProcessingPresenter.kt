@@ -1,5 +1,6 @@
 package com.example.sergey.codeforcesapplication.feature.base.presenter
 
+import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingListView
 import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingView
 import com.example.sergey.codeforcesapplication.model.remote.Response
 import kotlinx.coroutines.experimental.Deferred
@@ -22,6 +23,38 @@ abstract class ProcessingPresenterImpl<T, View : ProcessingView<T>> :
 
                 if (response.isSuccess) {
                     getView()?.onSuccessOperation(prepareData(response.result!!))
+                    return@launch
+                }
+
+                getView()?.onErrorOperation(response.comment)
+
+            } catch (e: Exception) {
+                getView()?.onError()
+            }
+        }
+    }
+}
+
+interface ProcessingListPresenter<T, View : ProcessingListView<T>> :
+        ProcessingPresenter<List<T>, View> {
+
+    val emptyListMessage: Int
+}
+
+abstract class ProcessingListPresenterImpl<T, View : ProcessingListView<T>> :
+        BasePresenter<View>(), ProcessingListPresenter<T, View> {
+
+    override fun loadData() {
+        launch(UI) {
+            try {
+                val response = loadedFunction().await()
+
+                if (response.isSuccess) {
+                    if (response.result!!.isEmpty()) {
+                        getView()?.onEmptyData(emptyListMessage)
+                    } else {
+                        getView()?.onSuccessOperation(prepareData(response.result))
+                    }
                     return@launch
                 }
 

@@ -6,6 +6,7 @@ import android.view.View
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingDataContainer
 import com.example.sergey.codeforcesapplication.feature.base.presenter.ProcessingPresenter
+import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingListView
 import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingView
 
 abstract class ProcessingFragment<T, V : ProcessingView<T>> : Fragment(), ProcessingView<T> {
@@ -44,5 +45,14 @@ abstract class ProcessingFragment<T, V : ProcessingView<T>> : Fragment(), Proces
     override fun onError() {
         processingContainer.hideProgress()
         processingContainer.showStatusMessage(getString(R.string.noConnectionServer))
+    }
+}
+
+abstract class ProcessingListFragment<T, V : ProcessingListView<T>> :
+        ProcessingFragment<List<T>, V>(), ProcessingListView<T> {
+
+    override fun onEmptyData(messageId: Int) {
+        processingContainer.hideProgress()
+        processingContainer.showStatusMessage(getString(messageId))
     }
 }
