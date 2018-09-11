@@ -50,10 +50,13 @@ abstract class ProcessingListPresenterImpl<T, View : ProcessingListView<T>> :
                 val response = loadedFunction().await()
 
                 if (response.isSuccess) {
-                    if (response.result!!.isEmpty()) {
+                    val data = response.result ?: emptyList()
+                    val preparedData = prepareData(data)
+
+                    if (preparedData.isEmpty()) {
                         getView()?.onEmptyData(emptyListMessage)
                     } else {
-                        getView()?.onSuccessOperation(prepareData(response.result))
+                        getView()?.onSuccessOperation(preparedData)
                     }
                     return@launch
                 }

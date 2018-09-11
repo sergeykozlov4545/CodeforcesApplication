@@ -5,25 +5,14 @@ import com.example.sergey.codeforcesapplication.feature.base.presenter.Processin
 import com.example.sergey.codeforcesapplication.feature.base.presenter.ProcessingListPresenterImpl
 import com.example.sergey.codeforcesapplication.feature.main.ContestsFragmentView
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
-import com.example.sergey.codeforcesapplication.model.remote.Response
 import com.example.sergey.codeforcesapplication.model.repository.ContestsRepository
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
 
 interface ContestsFragmentPresenter : ProcessingListPresenter<Contest, ContestsFragmentView>
 
 abstract class ContestsFragmentPresenterImpl(private val contestsRepository: ContestsRepository) :
         ProcessingListPresenterImpl<Contest, ContestsFragmentView>(), ContestsFragmentPresenter {
 
-    override fun loadedFunction(): Deferred<Response<List<Contest>>> = async {
-        val response = contestsRepository.getContests().await()
-
-        if (response.isSuccess) {
-            return@async response.copy(result = prepareData(response.result!!))
-        }
-
-        return@async response
-    }
+    override fun loadedFunction() = contestsRepository.getContests()
 }
 
 class UpcommingContestsFragmentPresenter(contestsRepository: ContestsRepository) :
