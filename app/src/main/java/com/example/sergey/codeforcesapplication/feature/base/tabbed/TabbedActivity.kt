@@ -36,12 +36,12 @@ abstract class TabbedActivity : BaseActivity() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tabPosition = tab?.position ?: return
-                showTab(tabPosition)
+                showContentTab(tabPosition)
             }
         })
 
         if (tabPosition == 0) {
-            showTab(tabPosition)
+            showContentTab(tabPosition)
         } else {
             selectTab(tabPosition)
         }
@@ -63,7 +63,7 @@ abstract class TabbedActivity : BaseActivity() {
         tabLayout.getTabAt(tabPosition)?.select()
     }
 
-    private fun showTab(tabPosition: Int) {
+    private fun showContentTab(tabPosition: Int) {
         showFragment(fragmentsInfo[tabPosition].fragment)
     }
 

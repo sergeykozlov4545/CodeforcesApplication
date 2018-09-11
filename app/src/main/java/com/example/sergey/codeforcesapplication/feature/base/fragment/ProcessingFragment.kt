@@ -16,10 +16,10 @@ abstract class ProcessingFragment<T, V : ProcessingView<T>> : Fragment(), Proces
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         processingContainer.initView(arguments)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onResume() {
         super.onResume()
         presenter.attachView(this as V)
