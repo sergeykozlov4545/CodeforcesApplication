@@ -1,44 +1,59 @@
 package com.example.sergey.codeforcesapplication.feature.main.activityFactory
 
 import android.content.Context
+import android.os.Bundle
 import android.view.ViewGroup
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl
-import com.example.sergey.codeforcesapplication.feature.main.ContestsFragment
+import com.example.sergey.codeforcesapplication.feature.main.CurrentContestsFragment
+import com.example.sergey.codeforcesapplication.feature.main.PastContestsFragment
+import com.example.sergey.codeforcesapplication.feature.main.UpcommingContestsFragment
 import com.example.sergey.codeforcesapplication.feature.main.adapter.ContestsAdapter
-import com.example.sergey.codeforcesapplication.feature.main.presenter.CurrentContestsPresenterFactory
-import com.example.sergey.codeforcesapplication.feature.main.presenter.PastContestsPresenterFactory
-import com.example.sergey.codeforcesapplication.feature.main.presenter.UncommingContestsPresenterFactory
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
 object MainActivityFactory {
     fun create(context: Context) = arrayListOf(
-            UncommingContestsFragmentFactory.create(context),
+            UpcommingContestsFragmentFactory.create(context),
             CurrentContestsFragmentFactory.create(context),
             PastContestsFragmentFactory.create(context)
     )
 }
 
-object UncommingContestsFragmentFactory {
-    fun create(context: Context): FragmentInfo = FragmentInfo(
-            fragment = ContestsFragment.getInstance(
-                    presenter = UncommingContestsPresenterFactory.create(context)),
+object UpcommingContestsFragmentFactory {
+    fun create(context: Context) = FragmentInfo(
+            fragment = UpcommingContestsFragment().apply {
+                // TODO: использовать KTX
+                arguments = Bundle().apply {
+                    val columnCount = context.resources.getInteger(R.integer.list_column_count)
+                    putInt(ProcessingListDataContainerImpl.COUNT_COLUMNS_EXTRA, columnCount)
+                }
+            },
             fragmentTitle = context.getString(R.string.upcomingContests)
     )
 }
 
 object CurrentContestsFragmentFactory {
-    fun create(context: Context): FragmentInfo = FragmentInfo(
-            fragment = ContestsFragment.getInstance(
-                    presenter = CurrentContestsPresenterFactory.create(context)),
+    fun create(context: Context) = FragmentInfo(
+            fragment = CurrentContestsFragment().apply {
+                // TODO: использовать KTX
+                arguments = Bundle().apply {
+                    val columnCount = context.resources.getInteger(R.integer.list_column_count)
+                    putInt(ProcessingListDataContainerImpl.COUNT_COLUMNS_EXTRA, columnCount)
+                }
+            },
             fragmentTitle = context.getString(R.string.currentContests)
     )
 }
 
 object PastContestsFragmentFactory {
-    fun create(context: Context): FragmentInfo = FragmentInfo(
-            fragment = ContestsFragment.getInstance(
-                    presenter = PastContestsPresenterFactory.create(context)),
+    fun create(context: Context) = FragmentInfo(
+            fragment = PastContestsFragment().apply {
+                // TODO: использовать KTX
+                arguments = Bundle().apply {
+                    val columnCount = context.resources.getInteger(R.integer.list_column_count)
+                    putInt(ProcessingListDataContainerImpl.COUNT_COLUMNS_EXTRA, columnCount)
+                }
+            },
             fragmentTitle = context.getString(R.string.pastContests)
     )
 }

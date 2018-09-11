@@ -25,7 +25,7 @@ open class ContestsFragmentPresenterImpl(private val contestsRepository: Contest
     }
 }
 
-class UncommingContestsFragmentPresenter(contestsRepository: ContestsRepository) :
+class UpcommingContestsFragmentPresenter(contestsRepository: ContestsRepository) :
         ContestsFragmentPresenterImpl(contestsRepository) {
 
     override fun prepareData(data: List<Contest>) =

@@ -8,10 +8,10 @@ import com.example.sergey.codeforcesapplication.feature.base.ProcessingDataConta
 import com.example.sergey.codeforcesapplication.feature.base.presenter.ProcessingPresenter
 import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingView
 
-open class ProcessingFragment<T, V: ProcessingView<T>> : Fragment(), ProcessingView<T> {
+abstract class ProcessingFragment<T, V : ProcessingView<T>> : Fragment(), ProcessingView<T> {
 
-    private lateinit var processingContainer: ProcessingDataContainer<T>
-    private lateinit var presenter: ProcessingPresenter<T, V>
+    abstract val processingContainer: ProcessingDataContainer<T>
+    abstract val presenter: ProcessingPresenter<T, V>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,13 +44,5 @@ open class ProcessingFragment<T, V: ProcessingView<T>> : Fragment(), ProcessingV
     override fun onError() {
         processingContainer.hideProgress()
         processingContainer.showStatusMessage(getString(R.string.noConnectionServer))
-    }
-
-    protected fun setProcessingContainer(processingContainer: ProcessingDataContainer<T>) {
-        this.processingContainer = processingContainer
-    }
-
-    protected fun setPresenter(presenter: ProcessingPresenter<T, V>) {
-        this.presenter = presenter
     }
 }
