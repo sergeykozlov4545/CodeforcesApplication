@@ -11,6 +11,8 @@ import com.example.sergey.codeforcesapplication.feature.main.activityFactory.Fra
 @SuppressLint("Registered")
 abstract class TabbedActivity : BaseActivity() {
 
+    private lateinit var tabLayout: TabLayout
+
     private var tabPosition: Int = 0
     abstract val fragmentsInfo: List<FragmentInfo>
 
@@ -19,7 +21,7 @@ abstract class TabbedActivity : BaseActivity() {
 
         restoreData(savedInstanceState)
 
-        val tabLayout = findViewById<TabLayout>(R.id.tabsLayout)
+        tabLayout = findViewById(R.id.tabsLayout)
         fragmentsInfo.forEach { info ->
             tabLayout.addTab(tabLayout.newTab().apply {
                 text = info.fragmentTitle
@@ -34,12 +36,14 @@ abstract class TabbedActivity : BaseActivity() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tabPosition = tab?.position ?: return
-                showFragment(fragmentsInfo[tabPosition].fragment)
+                showTab(tabPosition)
             }
         })
 
         if (tabPosition == 0) {
-            showFragment(fragmentsInfo[tabPosition].fragment)
+            showTab(tabPosition)
+        } else {
+            selectTab(tabPosition)
         }
     }
 
@@ -53,6 +57,14 @@ abstract class TabbedActivity : BaseActivity() {
 
     private fun restoreData(savedInstanceState: Bundle?) {
         tabPosition = savedInstanceState?.getInt(TAB_POSITION_EXTRA, 0) ?: 0
+    }
+
+    private fun selectTab(tabPosition: Int) {
+        tabLayout.getTabAt(tabPosition)?.select()
+    }
+
+    private fun showTab(tabPosition: Int) {
+        showFragment(fragmentsInfo[tabPosition].fragment)
     }
 
     private fun showFragment(fragment: Fragment) {
