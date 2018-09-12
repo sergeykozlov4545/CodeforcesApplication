@@ -2,8 +2,6 @@ package com.example.sergey.codeforcesapplication.feature.main
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl
@@ -22,12 +20,6 @@ abstract class ContestsFragment :
     protected val processingContainerView by lazy {
         view!!.findViewById<ViewGroup>(R.id.processingContainer)!!
     }
-
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.processing_view, container, false)
 
     companion object {
         // TODO: использовать KTX
