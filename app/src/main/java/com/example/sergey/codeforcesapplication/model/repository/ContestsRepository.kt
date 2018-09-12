@@ -24,29 +24,54 @@ class ContestsRepositoryImpl(
 
     private val mutex = Mutex()
 
-    override fun getContests(): Deferred<Response<List<Contest>>> = async {
+    override fun getContests() = async {
         mutex.withLock {
-            val cachedContestsListResponse = cacheManager.getValue(CacheObjectKey.CONTESTS_LIST) as? Response<List<Contest>>
-            if (cachedContestsListResponse != null) {
-                return@withLock cachedContestsListResponse!!
-            }
+            val cachedContestsListResponse =
+                    cacheManager.getValue(CacheObjectKey.CONTESTS_LIST) as? Response<List<Contest>>
 
-            val contestsListResponse = serviceApi.getContestList().await()
-            if (contestsListResponse.isSuccess) {
-                cacheManager.putValue(
-                        key = CacheObjectKey.CONTESTS_LIST,
-                        value = contestsListResponse,
-                        timeToLiveMillis = ONE_HOUR
-                )
-            }
-
-            return@withLock contestsListResponse
+            return@withLock cachedContestsListResponse
+                    ?: loadContests().await().apply {
+                        if (isSuccess) cacheManager.putValue(
+                                key = CacheObjectKey.CONTESTS_LIST,
+                                value = this,
+                                timeToLiveMillis = ONE_HOUR
+                        )
+                    }
         }
     }
 
-    override fun getContestStandings(contestId: Long): Deferred<Response<ContestInfo>> = async {
-        // TODO: После добавления экрана настроек получать сколько загружать вместо 100
-        mutex.withLock { serviceApi.getContestStandings(contestId, 100).await() }
+    override fun getContestStandings(contestId: Long) = async {
+        mutex.withLock {
+            var cachedContestsStandings =
+                    cacheManager.getValue(CacheObjectKey.CONTEST_STANDINGS) as? MutableMap<Long, Response<ContestInfo>>
+
+            if (cachedContestsStandings == null) {
+                cachedContestsStandings = HashMap()
+                cacheManager.putValue(
+                        key = CacheObjectKey.CONTEST_STANDINGS,
+                        value = cachedContestsStandings,
+                        timeToLiveMillis = ONE_HOUR
+                )
+
+                return@withLock loadContestStandings(contestId).await().apply {
+                    if (isSuccess) cachedContestsStandings[contestId] = this
+                }
+            }
+
+            return@withLock cachedContestsStandings[contestId]
+                    ?: loadContestStandings(contestId).await().apply {
+                        if (isSuccess) cachedContestsStandings[contestId] = this
+                    }
+        }
+    }
+
+    private fun loadContests() = async {
+        serviceApi.getContestList().await()
+    }
+
+    // TODO: После добавления экрана настроек получать сколько загружать вместо 100
+    private fun loadContestStandings(contestId: Long) = async {
+        serviceApi.getContestStandings(contestId, 100).await()
     }
 
     companion object {
