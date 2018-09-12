@@ -3,6 +3,7 @@ package com.example.sergey.codeforcesapplication.model.repository
 import com.example.sergey.codeforcesapplication.model.cache.CacheManager
 import com.example.sergey.codeforcesapplication.model.cache.CacheObjectKey
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
+import com.example.sergey.codeforcesapplication.model.pojo.ContestInfo
 import com.example.sergey.codeforcesapplication.model.remote.Response
 import com.example.sergey.codeforcesapplication.model.remote.ServiceApi
 import kotlinx.coroutines.experimental.Deferred
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit
 
 interface ContestsRepository {
     fun getContests(): Deferred<Response<List<Contest>>>
+    fun getContestStandings(contestId: Long): Deferred<Response<ContestInfo>>
 }
 
 class ContestsRepositoryImpl(
@@ -40,6 +42,11 @@ class ContestsRepositoryImpl(
 
             return@withLock contestsListResponse
         }
+    }
+
+    override fun getContestStandings(contestId: Long): Deferred<Response<ContestInfo>> = async {
+        // TODO: После добавления экрана настроек получать сколько загружать вместо 100
+        mutex.withLock { serviceApi.getContestStandings(contestId, 100).await() }
     }
 
     companion object {
