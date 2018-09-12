@@ -1,0 +1,33 @@
+package com.example.sergey.codeforcesapplication.feature.main
+
+import android.view.ViewGroup
+import android.widget.Toast
+import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl
+import com.example.sergey.codeforcesapplication.feature.main.adapter.ContestsAdapter
+import com.example.sergey.codeforcesapplication.model.pojo.Contest
+
+object UpcommingContestsDataContainerFactory {
+    fun create(parent: ViewGroup) = ProcessingListDataContainerImpl<Contest>(parent).apply {
+        setAdapter(ContestsAdapter {
+            // TODO: Использовать KTX
+            Toast.makeText(parent.context, R.string.contest_is_not_started, Toast.LENGTH_SHORT).show()
+        })
+    }
+}
+
+object CurrentContestsDataContainerFactory {
+    fun create(parent: ViewGroup) = ProcessingListDataContainerImpl<Contest>(parent).apply {
+        setAdapter(ContestsAdapter {
+            // TODO: Окрыть экран инфо об контесте
+        })
+    }
+}
+
+object PastContestsDataContainerFactory {
+    fun create(parent: ViewGroup) = ProcessingListDataContainerImpl<Contest>(parent).apply {
+        setAdapter(ContestsAdapter {
+            // TODO: Окрыть экран инфо об контесте
+        })
+    }
+}

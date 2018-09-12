@@ -9,8 +9,10 @@ import kotlinx.android.synthetic.main.item_contest_list.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ContestViewHolder (override val containerView: View?) :
-        DataListViewHolderImpl<Contest>(containerView) {
+class ContestViewHolder(
+        override val containerView: View?,
+        private val itemClick: (Contest) -> Unit
+) : DataListViewHolderImpl<Contest>(containerView) {
 
     override fun bindViewHolder(contest: Contest) {
         contestNameView.text = contest.name
@@ -21,13 +23,7 @@ class ContestViewHolder (override val containerView: View?) :
         }
         contestDurationView.text = durationFormatter(contest.durationSeconds)
 
-        contestCardView.setOnClickListener { v ->
-            val context = v?.context
-
-//            if (context is MainActivityView) {
-//                context.getPresenter().contestCardClicked(contest)
-//            }
-        }
+        contestCardView.setOnClickListener { itemClick.invoke(contest) }
     }
 
     private fun startTimeFormatter(seconds: Long): String {

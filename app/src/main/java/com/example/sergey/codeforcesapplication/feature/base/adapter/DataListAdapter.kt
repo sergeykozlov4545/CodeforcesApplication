@@ -6,7 +6,8 @@ interface DataListAdapter<T> {
     fun updateData(values: List<T>)
 }
 
-abstract class DataListAdapterImpl<T> : RecyclerView.Adapter<DataListViewHolderImpl<T>>(), DataListAdapter<T> {
+abstract class DataListAdapterImpl<T> :
+        RecyclerView.Adapter<DataListViewHolderImpl<T>>(), DataListAdapter<T> {
 
     private val values: MutableList<T> = ArrayList()
 

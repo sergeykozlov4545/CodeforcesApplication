@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.fragment.ProcessingListFragment
 import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingListView
-import com.example.sergey.codeforcesapplication.feature.main.activityFactory.ContestsDataContainerFactory
 import com.example.sergey.codeforcesapplication.feature.main.presenter.CurrentContestsPresenterFactory
 import com.example.sergey.codeforcesapplication.feature.main.presenter.PastContestsPresenterFactory
 import com.example.sergey.codeforcesapplication.feature.main.presenter.UpcommingContestsPresenterFactory
@@ -18,8 +17,8 @@ interface ContestsFragmentView : ProcessingListView<Contest>
 abstract class ContestsFragment :
         ProcessingListFragment<Contest, ContestsFragmentView>(), ContestsFragmentView {
 
-    override val processingContainer by lazy {
-        ContestsDataContainerFactory.create(view!!.findViewById(R.id.processingContainer))
+    protected val processingContainerView by lazy {
+        view!!.findViewById<ViewGroup>(R.id.processingContainer)!!
     }
 
     override fun onCreateView(
@@ -30,13 +29,25 @@ abstract class ContestsFragment :
 }
 
 class UpcommingContestsFragment : ContestsFragment() {
+    override val processingContainer by lazy {
+        UpcommingContestsDataContainerFactory.create(processingContainerView)
+    }
+
     override val presenter by lazy { UpcommingContestsPresenterFactory.create(context!!) }
 }
 
 class CurrentContestsFragment : ContestsFragment() {
+    override val processingContainer by lazy {
+        CurrentContestsDataContainerFactory.create(processingContainerView)
+    }
+
     override val presenter by lazy { CurrentContestsPresenterFactory.create(context!!) }
 }
 
 class PastContestsFragment : ContestsFragment() {
+    override val processingContainer by lazy {
+        PastContestsDataContainerFactory.create(processingContainerView)
+    }
+
     override val presenter by lazy { PastContestsPresenterFactory.create(context!!) }
 }

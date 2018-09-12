@@ -2,14 +2,11 @@ package com.example.sergey.codeforcesapplication.feature.main.activityFactory
 
 import android.content.Context
 import android.os.Bundle
-import android.view.ViewGroup
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl
 import com.example.sergey.codeforcesapplication.feature.main.CurrentContestsFragment
 import com.example.sergey.codeforcesapplication.feature.main.PastContestsFragment
 import com.example.sergey.codeforcesapplication.feature.main.UpcommingContestsFragment
-import com.example.sergey.codeforcesapplication.feature.main.adapter.ContestsAdapter
-import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
 object MainActivityFactory {
     fun create(context: Context) = arrayListOf(
@@ -56,10 +53,4 @@ object PastContestsFragmentFactory {
             },
             fragmentTitle = context.getString(R.string.pastContests)
     )
-}
-
-object ContestsDataContainerFactory {
-    fun create(parent: ViewGroup) = ProcessingListDataContainerImpl<Contest>(parent).apply {
-        setAdapter(ContestsAdapter())
-    }
 }
