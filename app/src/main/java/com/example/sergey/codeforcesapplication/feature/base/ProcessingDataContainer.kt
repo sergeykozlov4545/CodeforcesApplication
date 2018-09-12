@@ -57,8 +57,9 @@ class ProcessingListDataContainerImpl<T>(parent: ViewGroup) :
             if (backgroundColor != 0) {
                 setBackgroundColor(backgroundColor)
             }
-            if (visibleDividers) {
-                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
+            if (visibleDividers && countColumns == 1) {
+                addItemDecoration(DividerItemDecoration(context,
+                        (layoutManager as LinearLayoutManager).orientation))
             }
         }
     }

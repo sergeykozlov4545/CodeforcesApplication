@@ -1,4 +1,4 @@
-package com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.problemsList
+package com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.standingsList
 
 import android.content.Context
 import android.os.Bundle
@@ -7,15 +7,15 @@ import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl
 import com.example.sergey.codeforcesapplication.feature.base.fragment.ProcessingListFragment
 import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingListView
-import com.example.sergey.codeforcesapplication.feature.contestInfo.ProblemsContainerFactory
-import com.example.sergey.codeforcesapplication.model.pojo.Problem
+import com.example.sergey.codeforcesapplication.feature.contestInfo.ContestStandingsContainerFactory
+import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 
-interface ProblemsListFragmentView : ProcessingListView<Problem> {
+interface ContestStandingsFragmentView : ProcessingListView<RankListRow> {
     fun getContestId(): Long
 }
 
-class ProblemsListFragment :
-        ProcessingListFragment<Problem, ProblemsListFragmentView>(), ProblemsListFragmentView {
+class ContestStandingsFragment :
+        ProcessingListFragment<RankListRow, ContestStandingsFragmentView>(), ContestStandingsFragmentView {
 
     private var contestId: Long = 0
 
@@ -27,25 +27,25 @@ class ProblemsListFragment :
 
     override val processingContainer by lazy {
         val processingContainerView = view!!.findViewById<ViewGroup>(R.id.processingContainer)
-        ProblemsContainerFactory.create(processingContainerView)
+        ContestStandingsContainerFactory.create(processingContainerView)
     }
 
-    override val presenter by lazy { ProblemsListFragmentPresenterFactory.create(context!!) }
+    override val presenter by lazy { ContestStandingsPresenterFactory.create(context!!) }
 
     override fun getContestId() = contestId
 
     companion object {
         private const val CONTEST_ID_EXTRA = "contest_id"
 
-        fun create(context: Context, contestId: Long) = ProblemsListFragment().apply {
+        fun create(context: Context, contestId: Long) = ContestStandingsFragment().apply {
             arguments = getArguments(context, contestId)
         }
 
         // TODO: использовать KTX
         private fun getArguments(context: Context, contestId: Long) = Bundle().apply {
-            putInt(ProcessingListDataContainerImpl.COUNT_COLUMNS_EXTRA,
-                    context.resources.getInteger(R.integer.list_column_count))
             putLong(CONTEST_ID_EXTRA, contestId)
+            putInt(ProcessingListDataContainerImpl.BACKGROUND_COLOR_EXTRA, android.R.color.white)
+            putBoolean(ProcessingListDataContainerImpl.VISIBLE_DIVIDERS_EXTRA, true)
         }
     }
 }

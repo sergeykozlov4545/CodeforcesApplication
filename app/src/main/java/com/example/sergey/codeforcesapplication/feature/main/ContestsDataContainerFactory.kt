@@ -8,7 +8,7 @@ import com.example.sergey.codeforcesapplication.feature.contestInfo.ContestInfoA
 import com.example.sergey.codeforcesapplication.feature.main.adapter.ContestsAdapter
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
-object UpcommingContestsDataContainerFactory {
+object UpcommingContestsContainerFactory {
     fun create(parent: ViewGroup) = ProcessingListDataContainerImpl<Contest>(parent).apply {
         setAdapter(ContestsAdapter {
             // TODO: Использовать KTX
@@ -17,7 +17,7 @@ object UpcommingContestsDataContainerFactory {
     }
 }
 
-object CurrentContestsDataContainerFactory {
+object CurrentContestsContainerFactory {
     fun create(parent: ViewGroup) = ProcessingListDataContainerImpl<Contest>(parent).apply {
         setAdapter(
                 ContestsAdapter { context -> ContestInfoActivity.start(parent.context, context) }
@@ -25,7 +25,7 @@ object CurrentContestsDataContainerFactory {
     }
 }
 
-object PastContestsDataContainerFactory {
+object PastContestsContainerFactory {
     fun create(parent: ViewGroup) = ProcessingListDataContainerImpl<Contest>(parent).apply {
         setAdapter(
                 ContestsAdapter { context -> ContestInfoActivity.start(parent.context, context) }

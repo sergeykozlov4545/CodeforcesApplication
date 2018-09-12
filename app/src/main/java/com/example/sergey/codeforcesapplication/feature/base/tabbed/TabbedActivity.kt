@@ -6,7 +6,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.BaseActivity
-import com.example.sergey.codeforcesapplication.feature.main.activityFactory.FragmentInfo
+import com.example.sergey.codeforcesapplication.feature.main.activityFactory.TabInfo
 
 @SuppressLint("Registered")
 abstract class TabbedActivity : BaseActivity() {
@@ -14,7 +14,7 @@ abstract class TabbedActivity : BaseActivity() {
     private lateinit var tabLayout: TabLayout
 
     private var tabPosition: Int = 0
-    abstract val tabsInfo: List<FragmentInfo>
+    abstract val tabsInfo: List<TabInfo>
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)

@@ -32,7 +32,7 @@ abstract class ContestsFragment :
 
 class UpcommingContestsFragment : ContestsFragment() {
     override val processingContainer by lazy {
-        UpcommingContestsDataContainerFactory.create(processingContainerView)
+        UpcommingContestsContainerFactory.create(processingContainerView)
     }
 
     override val presenter by lazy { UpcommingContestsPresenterFactory.create(context!!) }
@@ -46,7 +46,7 @@ class UpcommingContestsFragment : ContestsFragment() {
 
 class CurrentContestsFragment : ContestsFragment() {
     override val processingContainer by lazy {
-        CurrentContestsDataContainerFactory.create(processingContainerView)
+        CurrentContestsContainerFactory.create(processingContainerView)
     }
 
     override val presenter by lazy { CurrentContestsPresenterFactory.create(context!!) }
@@ -60,7 +60,7 @@ class CurrentContestsFragment : ContestsFragment() {
 
 class PastContestsFragment : ContestsFragment() {
     override val processingContainer by lazy {
-        PastContestsDataContainerFactory.create(processingContainerView)
+        PastContestsContainerFactory.create(processingContainerView)
     }
 
     override val presenter by lazy { PastContestsPresenterFactory.create(context!!) }

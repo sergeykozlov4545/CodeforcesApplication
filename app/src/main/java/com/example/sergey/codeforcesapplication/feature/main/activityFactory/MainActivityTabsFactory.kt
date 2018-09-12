@@ -15,22 +15,22 @@ object MainActivityTabsFactory {
 }
 
 object UpcommingContestsTabFactory {
-    fun create(context: Context) = FragmentInfo(
-            fragment = UpcommingContestsFragment.create(context),
-            fragmentTitle = context.getString(R.string.upcomingContests)
+    fun create(context: Context) = TabInfo(
+            fragmentTitle = context.getString(R.string.upcomingContests),
+            fragment = UpcommingContestsFragment.create(context)
     )
 }
 
 object CurrentContestsTabFactory {
-    fun create(context: Context) = FragmentInfo(
-            fragment = CurrentContestsFragment.create(context),
-            fragmentTitle = context.getString(R.string.currentContests)
+    fun create(context: Context) = TabInfo(
+            fragmentTitle = context.getString(R.string.currentContests),
+            fragment = CurrentContestsFragment.create(context)
     )
 }
 
 object PastContestsTabFactory {
-    fun create(context: Context) = FragmentInfo(
-            fragment = PastContestsFragment.create(context),
-            fragmentTitle = context.getString(R.string.pastContests)
+    fun create(context: Context) = TabInfo(
+            fragmentTitle = context.getString(R.string.pastContests),
+            fragment = PastContestsFragment.create(context)
     )
 }

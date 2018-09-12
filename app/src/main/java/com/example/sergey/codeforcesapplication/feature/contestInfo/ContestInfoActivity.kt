@@ -5,14 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.tabbed.TabbedActivity
-import com.example.sergey.codeforcesapplication.feature.main.activityFactory.FragmentInfo
+import com.example.sergey.codeforcesapplication.feature.main.activityFactory.TabInfo
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
 class ContestInfoActivity : TabbedActivity() {
 
-    override val tabsInfo: List<FragmentInfo> by lazy {
-        ContestInfoActivityTabsFactory.create(applicationContext, contestId)
-    }
+    override val tabsInfo: List<TabInfo>
+        get() = ContestInfoActivityTabsFactory.create(applicationContext, contestId)
 
     private var contestId: Long = 0
     private lateinit var contestName: String
