@@ -1,10 +1,12 @@
 package com.example.sergey.codeforcesapplication.feature.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl
 import com.example.sergey.codeforcesapplication.feature.base.fragment.ProcessingListFragment
 import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingListView
 import com.example.sergey.codeforcesapplication.feature.main.presenter.CurrentContestsPresenterFactory
@@ -26,6 +28,14 @@ abstract class ContestsFragment :
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.processing_view, container, false)
+
+    companion object {
+        // TODO: использовать KTX
+        fun getArguments(context: Context) = Bundle().apply {
+            val columnCount = context.resources.getInteger(R.integer.list_column_count)
+            putInt(ProcessingListDataContainerImpl.COUNT_COLUMNS_EXTRA, columnCount)
+        }
+    }
 }
 
 class UpcommingContestsFragment : ContestsFragment() {
@@ -34,6 +44,12 @@ class UpcommingContestsFragment : ContestsFragment() {
     }
 
     override val presenter by lazy { UpcommingContestsPresenterFactory.create(context!!) }
+
+    companion object {
+        fun create(context: Context) = UpcommingContestsFragment().apply {
+            arguments = ContestsFragment.getArguments(context)
+        }
+    }
 }
 
 class CurrentContestsFragment : ContestsFragment() {
@@ -42,6 +58,12 @@ class CurrentContestsFragment : ContestsFragment() {
     }
 
     override val presenter by lazy { CurrentContestsPresenterFactory.create(context!!) }
+
+    companion object {
+        fun create(context: Context) = CurrentContestsFragment().apply {
+            arguments = ContestsFragment.getArguments(context)
+        }
+    }
 }
 
 class PastContestsFragment : ContestsFragment() {
@@ -50,4 +72,10 @@ class PastContestsFragment : ContestsFragment() {
     }
 
     override val presenter by lazy { PastContestsPresenterFactory.create(context!!) }
+
+    companion object {
+        fun create(context: Context) = PastContestsFragment().apply {
+            arguments = ContestsFragment.getArguments(context)
+        }
+    }
 }
