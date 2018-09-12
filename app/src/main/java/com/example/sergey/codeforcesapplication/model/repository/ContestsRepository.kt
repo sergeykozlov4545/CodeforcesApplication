@@ -9,6 +9,7 @@ import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.sync.Mutex
 import kotlinx.coroutines.experimental.sync.withLock
+import java.util.concurrent.TimeUnit
 
 interface ContestsRepository {
     fun getContests(): Deferred<Response<List<Contest>>>
@@ -30,10 +31,18 @@ class ContestsRepositoryImpl(
 
             val contestsListResponse = serviceApi.getContestList().await()
             if (contestsListResponse.isSuccess) {
-                cacheManager.putValue(CacheObjectKey.CONTESTS_LIST, contestsListResponse)
+                cacheManager.putValue(
+                        key = CacheObjectKey.CONTESTS_LIST,
+                        value = contestsListResponse,
+                        timeToLiveMillis = ONE_HOUR
+                )
             }
 
             return@withLock contestsListResponse
         }
+    }
+
+    companion object {
+        private val ONE_HOUR = TimeUnit.HOURS.toMillis(1)
     }
 }
