@@ -6,29 +6,29 @@ import com.example.sergey.codeforcesapplication.feature.main.CurrentContestsFrag
 import com.example.sergey.codeforcesapplication.feature.main.PastContestsFragment
 import com.example.sergey.codeforcesapplication.feature.main.UpcommingContestsFragment
 
-object MainActivityFactory {
+object MainActivityTabsFactory {
     fun create(context: Context) = arrayListOf(
-            UpcommingContestsFragmentFactory.create(context),
-            CurrentContestsFragmentFactory.create(context),
-            PastContestsFragmentFactory.create(context)
+            UpcommingContestsTabFactory.create(context),
+            CurrentContestsTabFactory.create(context),
+            PastContestsTabFactory.create(context)
     )
 }
 
-object UpcommingContestsFragmentFactory {
+object UpcommingContestsTabFactory {
     fun create(context: Context) = FragmentInfo(
             fragment = UpcommingContestsFragment.create(context),
             fragmentTitle = context.getString(R.string.upcomingContests)
     )
 }
 
-object CurrentContestsFragmentFactory {
+object CurrentContestsTabFactory {
     fun create(context: Context) = FragmentInfo(
             fragment = CurrentContestsFragment.create(context),
             fragmentTitle = context.getString(R.string.currentContests)
     )
 }
 
-object PastContestsFragmentFactory {
+object PastContestsTabFactory {
     fun create(context: Context) = FragmentInfo(
             fragment = PastContestsFragment.create(context),
             fragmentTitle = context.getString(R.string.pastContests)

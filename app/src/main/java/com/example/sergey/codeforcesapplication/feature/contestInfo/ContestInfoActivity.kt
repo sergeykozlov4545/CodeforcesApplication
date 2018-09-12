@@ -10,8 +10,8 @@ import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
 class ContestInfoActivity : TabbedActivity() {
 
-    override val fragmentsInfo: List<FragmentInfo> by lazy {
-        ContestInfoActivityFactory.create(applicationContext, contestId)
+    override val tabsInfo: List<FragmentInfo> by lazy {
+        ContestInfoActivityTabsFactory.create(applicationContext, contestId)
     }
 
     private var contestId: Long = 0

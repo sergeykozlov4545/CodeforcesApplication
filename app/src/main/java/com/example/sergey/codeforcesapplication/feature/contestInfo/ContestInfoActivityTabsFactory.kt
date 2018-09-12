@@ -5,13 +5,13 @@ import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.problemsList.ProblemsListFragment
 import com.example.sergey.codeforcesapplication.feature.main.activityFactory.FragmentInfo
 
-object ContestInfoActivityFactory {
+object ContestInfoActivityTabsFactory {
     fun create(context: Context, contestId: Long) = arrayListOf(
-            ProblemsListFragmentFactory.create(context, contestId)
+            ProblemsTabFactory.create(context, contestId)
     )
 }
 
-object ProblemsListFragmentFactory {
+object ProblemsTabFactory {
     fun create(context: Context, contestId: Long) = FragmentInfo(
             fragment = ProblemsListFragment.create(context, contestId),
             fragmentTitle = context.getString(R.string.problems)

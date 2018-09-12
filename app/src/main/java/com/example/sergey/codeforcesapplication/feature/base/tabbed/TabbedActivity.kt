@@ -14,7 +14,7 @@ abstract class TabbedActivity : BaseActivity() {
     private lateinit var tabLayout: TabLayout
 
     private var tabPosition: Int = 0
-    abstract val fragmentsInfo: List<FragmentInfo>
+    abstract val tabsInfo: List<FragmentInfo>
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
@@ -22,7 +22,7 @@ abstract class TabbedActivity : BaseActivity() {
         restoreData(savedInstanceState)
 
         tabLayout = findViewById(R.id.tabsLayout)
-        fragmentsInfo.forEach { info ->
+        tabsInfo.forEach { info ->
             tabLayout.addTab(tabLayout.newTab().apply {
                 text = info.fragmentTitle
             })
@@ -64,7 +64,7 @@ abstract class TabbedActivity : BaseActivity() {
     }
 
     private fun showContentTab(tabPosition: Int) {
-        showFragment(fragmentsInfo[tabPosition].fragment)
+        showFragment(tabsInfo[tabPosition].fragment)
     }
 
     private fun showFragment(fragment: Fragment) {
