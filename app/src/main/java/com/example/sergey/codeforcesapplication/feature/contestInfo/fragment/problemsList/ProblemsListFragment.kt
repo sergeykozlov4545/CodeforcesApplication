@@ -1,8 +1,10 @@
 package com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.problemsList
 
+import android.content.Context
 import android.os.Bundle
 import android.view.ViewGroup
 import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl
 import com.example.sergey.codeforcesapplication.feature.base.fragment.ProcessingListFragment
 import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingListView
 import com.example.sergey.codeforcesapplication.feature.contestInfo.ProblemsListDataContainerFactory
@@ -35,12 +37,15 @@ class ProblemsListFragment :
     companion object {
         private const val CONTEST_ID_EXTRA = "contest_id"
 
-        fun create(contestId: Long) = ProblemsListFragment().apply {
-            arguments = getArguments(contestId)
+        fun create(context: Context, contestId: Long) = ProblemsListFragment().apply {
+            arguments = getArguments(context, contestId)
         }
 
-        private fun getArguments(contestId: Long) = Bundle().apply {
+        // TODO: использовать KTX
+        private fun getArguments(context: Context, contestId: Long) = Bundle().apply {
             putLong(CONTEST_ID_EXTRA, contestId)
+            putInt(ProcessingListDataContainerImpl.COUNT_COLUMNS_EXTRA,
+                    context.resources.getInteger(R.integer.list_column_count))
         }
     }
 }

@@ -13,7 +13,7 @@ object ContestInfoActivityFactory {
 
 object ProblemsListFragmentFactory {
     fun create(context: Context, contestId: Long) = FragmentInfo(
-            fragment = ProblemsListFragment.create(contestId),
+            fragment = ProblemsListFragment.create(context, contestId),
             fragmentTitle = context.getString(R.string.problems)
     )
 }
