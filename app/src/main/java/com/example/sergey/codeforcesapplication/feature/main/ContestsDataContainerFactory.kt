@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl
+import com.example.sergey.codeforcesapplication.feature.contestInfo.ContestInfoActivity
 import com.example.sergey.codeforcesapplication.feature.main.adapter.ContestsAdapter
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
@@ -18,16 +19,16 @@ object UpcommingContestsDataContainerFactory {
 
 object CurrentContestsDataContainerFactory {
     fun create(parent: ViewGroup) = ProcessingListDataContainerImpl<Contest>(parent).apply {
-        setAdapter(ContestsAdapter {
-            // TODO: Окрыть экран инфо об контесте
-        })
+        setAdapter(
+                ContestsAdapter { context -> ContestInfoActivity.start(parent.context, context) }
+        )
     }
 }
 
 object PastContestsDataContainerFactory {
     fun create(parent: ViewGroup) = ProcessingListDataContainerImpl<Contest>(parent).apply {
-        setAdapter(ContestsAdapter {
-            // TODO: Окрыть экран инфо об контесте
-        })
+        setAdapter(
+                ContestsAdapter { context -> ContestInfoActivity.start(parent.context, context) }
+        )
     }
 }
