@@ -17,7 +17,11 @@ object ProblemsContainerFactory {
 object ContestStandingsContainerFactory {
     fun create(context: Context) = ProcessingListDataContainerImpl<RankListRow>().apply {
         setAdapter(ContestStandingsAdapter { rankRow ->
-            CommandInfoActivity.start(context, rankRow)
+            if (rankRow.party.teamName.isNullOrEmpty()) {
+                // TODO: Открыть сразу инфу о первом пользователе
+            } else {
+                CommandInfoActivity.start(context, rankRow)
+            }
         })
     }
 }
