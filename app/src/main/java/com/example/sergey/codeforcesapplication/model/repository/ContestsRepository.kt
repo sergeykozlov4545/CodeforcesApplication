@@ -4,6 +4,7 @@ import com.example.sergey.codeforcesapplication.model.cache.CacheManager
 import com.example.sergey.codeforcesapplication.model.cache.CacheObjectKey
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import com.example.sergey.codeforcesapplication.model.pojo.ContestInfo
+import com.example.sergey.codeforcesapplication.model.pojo.User
 import com.example.sergey.codeforcesapplication.model.remote.Response
 import com.example.sergey.codeforcesapplication.model.remote.ServiceApi
 import kotlinx.coroutines.experimental.Deferred
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit
 interface ContestsRepository {
     fun getContests(): Deferred<Response<List<Contest>>>
     fun getContestStandings(contestId: Long): Deferred<Response<ContestInfo>>
+    fun getUsersInfo(handlers: List<String>): Deferred<Response<List<User>>>
 }
 
 class ContestsRepositoryImpl(
@@ -63,6 +65,10 @@ class ContestsRepositoryImpl(
                         if (isSuccess) cachedContestsStandings[contestId] = this
                     }
         }
+    }
+
+    override fun getUsersInfo(handlers: List<String>) = async {
+        mutex.withLock { serviceApi.getUsersInfo(handlers.joinToString(separator = ";")).await() }
     }
 
     private fun loadContests() = async {
