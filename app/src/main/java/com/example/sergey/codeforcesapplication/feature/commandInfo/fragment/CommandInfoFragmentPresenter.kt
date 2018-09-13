@@ -1,4 +1,4 @@
-package com.example.sergey.codeforcesapplication.feature.commandInfo
+package com.example.sergey.codeforcesapplication.feature.commandInfo.fragment
 
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.presenter.ProcessingListPresenter

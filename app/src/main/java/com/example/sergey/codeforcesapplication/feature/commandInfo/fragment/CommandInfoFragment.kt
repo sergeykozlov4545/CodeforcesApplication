@@ -1,9 +1,10 @@
-package com.example.sergey.codeforcesapplication.feature.commandInfo
+package com.example.sergey.codeforcesapplication.feature.commandInfo.fragment
 
 import android.os.Bundle
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl
 import com.example.sergey.codeforcesapplication.feature.base.fragment.ProcessingListFragment
 import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingListView
+import com.example.sergey.codeforcesapplication.feature.commandInfo.CommandInfoActivity
 import com.example.sergey.codeforcesapplication.model.pojo.User
 
 interface CommandInfoFragmentView : ProcessingListView<User> {

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.activity.ProcessingFragmentActivity
+import com.example.sergey.codeforcesapplication.feature.commandInfo.fragment.CommandInfoFragment
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 
 class CommandInfoActivity : ProcessingFragmentActivity() {

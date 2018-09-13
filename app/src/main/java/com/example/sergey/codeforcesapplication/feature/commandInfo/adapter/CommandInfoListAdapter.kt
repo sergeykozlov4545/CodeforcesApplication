@@ -1,4 +1,4 @@
-package com.example.sergey.codeforcesapplication.feature.commandInfo
+package com.example.sergey.codeforcesapplication.feature.commandInfo.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
