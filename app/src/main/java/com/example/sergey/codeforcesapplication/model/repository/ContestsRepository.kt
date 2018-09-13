@@ -28,6 +28,7 @@ class ContestsRepositoryImpl(
 
     override fun getContests() = async {
         mutex.withLock {
+            // TODO: Не хранить Response, а хранить List<Contest>
             val cachedContestsListResponse =
                     cacheManager.getValue(CacheObjectKey.CONTESTS_LIST) as? Response<List<Contest>>
 
@@ -44,6 +45,7 @@ class ContestsRepositoryImpl(
 
     override fun getContestStandings(contestId: Long) = async {
         mutex.withLock {
+            // TODO: Не хранить Response, а хранить ContestInfo
             var cachedContestsStandings =
                     cacheManager.getValue(CacheObjectKey.CONTEST_STANDINGS) as? MutableMap<Long, Response<ContestInfo>>
 
@@ -67,8 +69,46 @@ class ContestsRepositoryImpl(
         }
     }
 
-    override fun getUsersInfo(handlers: List<String>) = async {
-        mutex.withLock { serviceApi.getUsersInfo(handlers.joinToString(separator = ";")).await() }
+    override fun getUsersInfo(handlers: List<String>): Deferred<Response<List<User>>> = async {
+        mutex.withLock {
+            var cachedUsers = cacheManager.getValue(CacheObjectKey.USERS)
+                    as? MutableMap<String, User>
+
+            if (cachedUsers == null) {
+                cachedUsers = HashMap()
+                cacheManager.putValue(
+                        key = CacheObjectKey.USERS,
+                        value = cachedUsers,
+                        timeToLiveMillis = ONE_HOUR
+                )
+
+                return@withLock loadUsersInfo(handlers).await().apply {
+                    if (isSuccess) {
+                        result?.forEach { user -> cachedUsers[user.handle] = user }
+                    }
+                }
+            }
+
+            val users = cachedUsers.filter { it.key in handlers }.values.toMutableList()
+
+            if (users.size == handlers.size) {
+                return@withLock Response(result = users.toList())
+            }
+
+            val response = loadUsersInfo(handlers.filter { it !in cachedUsers }).await()
+            if (response.isSuccess) {
+                response.result?.let {
+                    users.addAll(response.result)
+                    response.result.forEach { user -> cachedUsers[user.handle] = user }
+                }
+            }
+
+            return@withLock Response(
+                    status = response.status,
+                    comment = response.comment,
+                    result = if (response.isSuccess) users.toList() else null
+            )
+        }
     }
 
     private fun loadContests() = async {
@@ -78,6 +118,10 @@ class ContestsRepositoryImpl(
     // TODO: После добавления экрана настроек получать сколько загружать вместо 100
     private fun loadContestStandings(contestId: Long) = async {
         serviceApi.getContestStandings(contestId, 100).await()
+    }
+
+    private fun loadUsersInfo(handlers: List<String>) = async {
+        serviceApi.getUsersInfo(handlers.joinToString(separator = ";")).await()
     }
 
     companion object {
