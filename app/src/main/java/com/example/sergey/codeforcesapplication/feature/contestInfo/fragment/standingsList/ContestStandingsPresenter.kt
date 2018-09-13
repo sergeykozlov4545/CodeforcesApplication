@@ -17,7 +17,7 @@ class ContestStandingsPresenterImpl(private val contestsRepository: ContestsRepo
 
     override fun loadedFunction(): Deferred<Response<List<RankListRow>>> = async {
         val contestId = getView()?.getContestId()
-                ?: return@async Response<List<RankListRow>>(status = "FAILED")
+                ?: return@async Response.FAILED<List<RankListRow>>()
 
         val contestStandingsResponse = contestsRepository.getContestStandings(contestId).await()
 

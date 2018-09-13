@@ -17,7 +17,7 @@ class ProblemsListFragmentPresenterImpl(private val contestsRepository: Contests
 
     override fun loadedFunction(): Deferred<Response<List<Problem>>> = async {
         val contestId = getView()?.getContestId()
-                ?: return@async Response<List<Problem>>(status = "FAILED")
+                ?: return@async Response.FAILED<List<Problem>>()
 
         val contestStandingsResponse = contestsRepository.getContestStandings(contestId).await()
 

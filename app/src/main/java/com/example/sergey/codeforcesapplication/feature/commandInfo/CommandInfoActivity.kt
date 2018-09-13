@@ -3,11 +3,15 @@ package com.example.sergey.codeforcesapplication.feature.commandInfo
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.feature.base.activity.BaseActivity
+import com.example.sergey.codeforcesapplication.feature.base.activity.ProcessingFragmentActivity
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 
-class CommandInfoActivity : BaseActivity() {
+class CommandInfoActivity : ProcessingFragmentActivity() {
+
+    override val fragment: Fragment
+        get() = CommandInfoFragment.create(handlers)
 
     private lateinit var teamName: String
     private lateinit var handlers: String
