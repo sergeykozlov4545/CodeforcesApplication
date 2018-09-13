@@ -2,7 +2,6 @@ package com.example.sergey.codeforcesapplication.feature.main
 
 import android.content.Context
 import android.os.Bundle
-import android.view.ViewGroup
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl
 import com.example.sergey.codeforcesapplication.feature.base.fragment.ProcessingListFragment
@@ -17,10 +16,6 @@ interface ContestsFragmentView : ProcessingListView<Contest>
 abstract class ContestsFragment :
         ProcessingListFragment<Contest, ContestsFragmentView>(), ContestsFragmentView {
 
-    protected val processingContainerView by lazy {
-        view!!.findViewById<ViewGroup>(R.id.processingContainer)!!
-    }
-
     companion object {
         // TODO: использовать KTX
         fun getArguments(context: Context) = Bundle().apply {
@@ -31,10 +26,7 @@ abstract class ContestsFragment :
 }
 
 class UpcommingContestsFragment : ContestsFragment() {
-    override val processingContainer by lazy {
-        UpcommingContestsContainerFactory.create(processingContainerView)
-    }
-
+    override val processingContainer by lazy { UpcommingContestsContainerFactory.create(context!!) }
     override val presenter by lazy { UpcommingContestsPresenterFactory.create(context!!) }
 
     companion object {
@@ -45,10 +37,7 @@ class UpcommingContestsFragment : ContestsFragment() {
 }
 
 class CurrentContestsFragment : ContestsFragment() {
-    override val processingContainer by lazy {
-        CurrentContestsContainerFactory.create(processingContainerView)
-    }
-
+    override val processingContainer by lazy { CurrentContestsContainerFactory.create(context!!) }
     override val presenter by lazy { CurrentContestsPresenterFactory.create(context!!) }
 
     companion object {
@@ -59,10 +48,7 @@ class CurrentContestsFragment : ContestsFragment() {
 }
 
 class PastContestsFragment : ContestsFragment() {
-    override val processingContainer by lazy {
-        PastContestsContainerFactory.create(processingContainerView)
-    }
-
+    override val processingContainer by lazy { PastContestsContainerFactory.create(context!!) }
     override val presenter by lazy { PastContestsPresenterFactory.create(context!!) }
 
     companion object {

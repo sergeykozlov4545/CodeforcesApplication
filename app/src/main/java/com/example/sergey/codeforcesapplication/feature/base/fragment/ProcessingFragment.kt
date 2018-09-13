@@ -24,7 +24,7 @@ abstract class ProcessingFragment<T, V : ProcessingView<T>> : Fragment(), Proces
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        processingContainer.initView(arguments)
+        processingContainer.initView(view, arguments)
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -38,6 +38,11 @@ abstract class ProcessingFragment<T, V : ProcessingView<T>> : Fragment(), Proces
     override fun onPause() {
         super.onPause()
         presenter.detachView()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        processingContainer.destroyView()
     }
 
     override fun onSuccessOperation(data: T) {

@@ -15,14 +15,14 @@ object ContestInfoActivityTabsFactory {
 
 object ProblemsTabFactory {
     fun create(context: Context, contestId: Long) = TabInfo(
-            fragmentTitle = context.getString(R.string.problems),
+            tabTitle = context.getString(R.string.problems),
             fragment = ProblemsListFragment.create(context, contestId)
     )
 }
 
 object StandingsTabFactory {
     fun create(context: Context, contestId: Long) = TabInfo(
-            fragmentTitle = context.getString(R.string.standings),
+            tabTitle = context.getString(R.string.standings),
             fragment = ContestStandingsFragment.create(context, contestId)
     )
 }

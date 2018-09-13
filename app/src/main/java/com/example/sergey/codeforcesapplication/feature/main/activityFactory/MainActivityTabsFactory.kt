@@ -16,21 +16,21 @@ object MainActivityTabsFactory {
 
 object UpcommingContestsTabFactory {
     fun create(context: Context) = TabInfo(
-            fragmentTitle = context.getString(R.string.upcomingContests),
+            tabTitle = context.getString(R.string.upcomingContests),
             fragment = UpcommingContestsFragment.create(context)
     )
 }
 
 object CurrentContestsTabFactory {
     fun create(context: Context) = TabInfo(
-            fragmentTitle = context.getString(R.string.currentContests),
+            tabTitle = context.getString(R.string.currentContests),
             fragment = CurrentContestsFragment.create(context)
     )
 }
 
 object PastContestsTabFactory {
     fun create(context: Context) = TabInfo(
-            fragmentTitle = context.getString(R.string.pastContests),
+            tabTitle = context.getString(R.string.pastContests),
             fragment = PastContestsFragment.create(context)
     )
 }

@@ -6,7 +6,6 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.extension.hide
@@ -14,40 +13,58 @@ import com.example.sergey.codeforcesapplication.extension.show
 import com.example.sergey.codeforcesapplication.feature.base.adapter.DataListAdapter
 
 interface ProcessingDataContainer<T> {
-    fun initView(bundle: Bundle?)
+    fun initView(parent: View, bundle: Bundle?)
+    fun destroyView()
     fun showProgress()
     fun hideProgress()
     fun showStatusMessage(message: String)
     fun showData(data: T)
 }
 
-abstract class ProcessingDataContainerImpl<T>(parent: ViewGroup) : ProcessingDataContainer<T> {
+abstract class ProcessingDataContainerImpl<T> : ProcessingDataContainer<T> {
 
-    private val progressView: View = parent.findViewById(R.id.progressView)
-    private val statusMessageView: TextView = parent.findViewById(R.id.statusMessageView)
+    private var progressView: View? = null
+    private var statusMessageView: TextView? = null
 
-    override fun showProgress() = progressView.show()
+    override fun initView(parent: View, bundle: Bundle?) {
+        progressView = parent.findViewById(R.id.progressView)
+        statusMessageView = parent.findViewById(R.id.statusMessageView)
+    }
 
-    override fun hideProgress() = progressView.hide()
+    override fun destroyView() {
+        progressView = null
+        statusMessageView = null
+    }
+
+    override fun showProgress() {
+        progressView?.show()
+    }
+
+    override fun hideProgress() {
+        progressView?.hide()
+    }
 
     override fun showStatusMessage(message: String) {
-        statusMessageView.text = message
-        statusMessageView.show()
+        statusMessageView?.text = message
+        statusMessageView?.show()
     }
 }
 
-class ProcessingListDataContainerImpl<T>(parent: ViewGroup) :
-        ProcessingDataContainerImpl<List<T>>(parent) {
+class ProcessingListDataContainerImpl<T> :
+        ProcessingDataContainerImpl<List<T>>() {
 
-    private val dataListView: RecyclerView = parent.findViewById(R.id.dataListView)
+    private var dataListView: RecyclerView? = null
     private lateinit var adapter: DataListAdapter<T>
 
-    override fun initView(bundle: Bundle?) {
+    override fun initView(parent: View, bundle: Bundle?) {
+        super.initView(parent, bundle)
+
         val countColumns = bundle?.getInt(COUNT_COLUMNS_EXTRA, 1) ?: 1
         val visibleDividers = bundle?.getBoolean(VISIBLE_DIVIDERS_EXTRA, false) ?: false
         val backgroundColor = bundle?.getInt(BACKGROUND_COLOR_EXTRA, 0) ?: 0
 
-        dataListView.apply {
+        dataListView = parent.findViewById(R.id.dataListView)
+        dataListView?.apply {
             adapter = this@ProcessingListDataContainerImpl.adapter as RecyclerView.Adapter<*>
             layoutManager = if (countColumns == 1) {
                 LinearLayoutManager(context.applicationContext)
@@ -64,9 +81,14 @@ class ProcessingListDataContainerImpl<T>(parent: ViewGroup) :
         }
     }
 
+    override fun destroyView() {
+        super.destroyView()
+        dataListView = null
+    }
+
     override fun showData(data: List<T>) {
         adapter.updateData(data)
-        dataListView.show()
+        dataListView?.show()
     }
 
     fun setAdapter(adapter: DataListAdapter<T>) {

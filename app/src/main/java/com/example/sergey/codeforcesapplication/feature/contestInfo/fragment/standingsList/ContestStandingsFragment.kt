@@ -2,8 +2,6 @@ package com.example.sergey.codeforcesapplication.feature.contestInfo.fragment.st
 
 import android.content.Context
 import android.os.Bundle
-import android.view.ViewGroup
-import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl
 import com.example.sergey.codeforcesapplication.feature.base.fragment.ProcessingListFragment
 import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingListView
@@ -11,6 +9,7 @@ import com.example.sergey.codeforcesapplication.feature.contestInfo.ContestStand
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 
 interface ContestStandingsFragmentView : ProcessingListView<RankListRow> {
+    // TODO: Попробовать использовать свойство вместо этой функции
     fun getContestId(): Long
 }
 
@@ -18,19 +17,14 @@ class ContestStandingsFragment :
         ProcessingListFragment<RankListRow, ContestStandingsFragmentView>(), ContestStandingsFragmentView {
 
     private var contestId: Long = 0
+    override val processingContainer by lazy { ContestStandingsContainerFactory.create() }
+    override val presenter by lazy { ContestStandingsPresenterFactory.create(context!!) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         contestId = arguments?.getLong(CONTEST_ID_EXTRA, -1) ?: -2
     }
-
-    override val processingContainer by lazy {
-        val processingContainerView = view!!.findViewById<ViewGroup>(R.id.processingContainer)
-        ContestStandingsContainerFactory.create(processingContainerView)
-    }
-
-    override val presenter by lazy { ContestStandingsPresenterFactory.create(context!!) }
 
     override fun getContestId() = contestId
 
