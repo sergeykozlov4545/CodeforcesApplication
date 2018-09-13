@@ -1,4 +1,4 @@
-package com.example.sergey.codeforcesapplication.feature.base
+package com.example.sergey.codeforcesapplication.feature.base.activity
 
 import android.annotation.SuppressLint
 import android.support.v4.content.ContextCompat

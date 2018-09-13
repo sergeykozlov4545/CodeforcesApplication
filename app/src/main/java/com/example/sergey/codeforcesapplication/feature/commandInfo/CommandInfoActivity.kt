@@ -1,0 +1,44 @@
+package com.example.sergey.codeforcesapplication.feature.commandInfo
+
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.feature.base.activity.BaseActivity
+import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
+
+class CommandInfoActivity : BaseActivity() {
+
+    private lateinit var teamName: String
+    private lateinit var handlers: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_command_info)
+        restoreData(savedInstanceState)
+        showBackAction()
+        setToolbarTitle(teamName)
+    }
+
+    private fun restoreData(savedInstanceState: Bundle?) {
+        teamName = savedInstanceState?.getString(COMMAND_NAME_EXTRA)
+                ?: intent.getStringExtra(COMMAND_NAME_EXTRA)
+        handlers = savedInstanceState?.getString(COMMAND_HANDLERS_EXTRA)
+                ?: intent.getStringExtra(COMMAND_HANDLERS_EXTRA)
+    }
+
+    companion object {
+        private const val COMMAND_NAME_EXTRA = "command_name"
+        const val COMMAND_HANDLERS_EXTRA = "handlers"
+
+        fun start(context: Context, rankListRow: RankListRow) {
+            // TODO: Использовать KTX
+            context.startActivity(
+                    Intent(context, CommandInfoActivity::class.java).apply {
+                        putExtra(COMMAND_NAME_EXTRA, rankListRow.party.teamName)
+                        putExtra(COMMAND_HANDLERS_EXTRA, rankListRow.party.membersString)
+                    }
+            )
+        }
+    }
+}

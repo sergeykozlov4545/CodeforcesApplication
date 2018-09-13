@@ -1,4 +1,4 @@
-package com.example.sergey.codeforcesapplication.feature.base.tabbed
+package com.example.sergey.codeforcesapplication.feature.base.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.feature.base.BaseActivity
 import com.example.sergey.codeforcesapplication.feature.main.activityFactory.TabInfo
 
 @SuppressLint("Registered")

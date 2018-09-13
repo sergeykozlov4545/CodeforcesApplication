@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.feature.base.tabbed.TabbedActivity
+import com.example.sergey.codeforcesapplication.feature.base.activity.TabbedActivity
 import com.example.sergey.codeforcesapplication.feature.main.activityFactory.TabInfo
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 
