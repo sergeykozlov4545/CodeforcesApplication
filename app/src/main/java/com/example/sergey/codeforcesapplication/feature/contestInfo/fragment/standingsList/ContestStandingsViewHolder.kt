@@ -6,17 +6,17 @@ import com.example.sergey.codeforcesapplication.feature.base.adapter.DataListVie
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 import kotlinx.android.synthetic.main.item_stangings_list.*
 
-class ContestStandingsViewHolder(override val containerView: View?) :
-        DataListViewHolderImpl<RankListRow>(containerView) {
+class ContestStandingsViewHolder(
+        override val containerView: View?,
+        private val itemClick: (RankListRow) -> Unit
+) : DataListViewHolderImpl<RankListRow>(containerView) {
 
     @SuppressLint("SetTextI18n")
     override fun bindViewHolder(rankListRow: RankListRow) {
         rankView.text = "${rankListRow.rank}."
         membersView.text = getMembersInfo(rankListRow)
         pointsView.text = rankListRow.points.toInt().toString()
-        itemContainer.setOnClickListener { v ->
-            // TODO: КЛИК
-        }
+        itemContainer.setOnClickListener { itemClick.invoke(rankListRow) }
     }
 
     private fun getMembersInfo(rankListRow: RankListRow): String {

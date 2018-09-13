@@ -1,6 +1,7 @@
 package com.example.sergey.codeforcesapplication.feature.commandInfo
 
 import android.os.Bundle
+import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl
 import com.example.sergey.codeforcesapplication.feature.base.fragment.ProcessingListFragment
 import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingListView
 import com.example.sergey.codeforcesapplication.model.pojo.User
@@ -30,6 +31,8 @@ class CommandInfoFragment : ProcessingListFragment<User, CommandInfoFragmentView
     companion object {
         fun create(handlers: String) = CommandInfoFragment().apply {
             arguments = Bundle().apply {
+                putInt(ProcessingListDataContainerImpl.BACKGROUND_COLOR_EXTRA, android.R.color.white)
+                putBoolean(ProcessingListDataContainerImpl.VISIBLE_DIVIDERS_EXTRA, true)
                 putString(CommandInfoActivity.COMMAND_HANDLERS_EXTRA, handlers)
             }
         }

@@ -17,7 +17,7 @@ class ContestStandingsFragment :
         ProcessingListFragment<RankListRow, ContestStandingsFragmentView>(), ContestStandingsFragmentView {
 
     private var contestId: Long = 0
-    override val processingContainer by lazy { ContestStandingsContainerFactory.create() }
+    override val processingContainer by lazy { ContestStandingsContainerFactory.create(context!!) }
     override val presenter by lazy { ContestStandingsPresenterFactory.create(context!!) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +37,9 @@ class ContestStandingsFragment :
 
         // TODO: использовать KTX
         private fun getArguments(context: Context, contestId: Long) = Bundle().apply {
-            putLong(CONTEST_ID_EXTRA, contestId)
             putInt(ProcessingListDataContainerImpl.BACKGROUND_COLOR_EXTRA, android.R.color.white)
             putBoolean(ProcessingListDataContainerImpl.VISIBLE_DIVIDERS_EXTRA, true)
+            putLong(CONTEST_ID_EXTRA, contestId)
         }
     }
 }

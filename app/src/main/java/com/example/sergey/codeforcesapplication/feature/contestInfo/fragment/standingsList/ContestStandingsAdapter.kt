@@ -7,11 +7,11 @@ import com.example.sergey.codeforcesapplication.feature.base.adapter.DataListAda
 import com.example.sergey.codeforcesapplication.feature.base.adapter.DataListViewHolderImpl
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 
-class ContestStandingsAdapter : DataListAdapterImpl<RankListRow>() {
+class ContestStandingsAdapter(private val itemClick: (RankListRow) -> Unit) : DataListAdapterImpl<RankListRow>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataListViewHolderImpl<RankListRow> {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_stangings_list, parent, false)
-        return ContestStandingsViewHolder(view)
+        return ContestStandingsViewHolder(view, itemClick)
     }
 }
