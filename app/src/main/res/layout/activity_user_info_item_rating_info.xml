@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/userRatingDetailsContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginRight="16dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/ripple"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="0dp"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="16sp"
+    app:contentPaddingBottom="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/userRatingInfo"
+            android:textColor="@color/item_two_line_subtitle"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/userContribution"
+                android:textColor="@color/item_two_line_title"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/userContributionView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/item_two_line_title"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/userCurrentRating"
+                android:textColor="@color/item_two_line_title"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/userCurrentRatingView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/item_two_line_title"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/userMaxRating"
+                android:textColor="@color/item_two_line_title"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/userMaxRatingView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/item_two_line_title"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical|end"
+            android:minHeight="48dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/userRatingDetailsView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/userRatingDetails"
+                android:textColor="@color/item_two_line_title"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_chevron_right_black_24dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

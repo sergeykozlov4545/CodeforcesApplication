@@ -30,6 +30,27 @@
     <!--Экран информации о команде-->
     <string name="commandMembersListIsEmpty">Список членов команды пуст</string>
 
+    <!--Экран информации о пользователе-->
+    <string name="userMainInfo">Основное</string>
+    <string name="userSocialInfo">Социальное</string>
+    <string name="userRatingInfo">Рейтинг</string>
+
+    <string name="userFirstName">Имя:</string>
+    <string name="userLastName">Фамилия:</string>
+    <string name="userCountry">Страна:</string>
+    <string name="userCity">Город:</string>
+    <string name="userRegistration">Зарегистрирован:</string>
+
+    <string name="userEmail">email:</string>
+    <string name="userVkId">vkId:</string>
+    <string name="userOpenId">openId:</string>
+    <string name="userFriendsOfCount">Количество друзей:</string>
+
+    <string name="userContribution">Вклад:</string>
+    <string name="userCurrentRating">Текущий рейтинг:</string>
+    <string name="userMaxRating">Максимальный рейтинг:</string>
+    <string name="userRatingDetails">Детализация рейтинга</string>
+
     <!--другое-->
     <string name="unknown">неизвестно</string>
     <string name="noConnectionServer">Нет соединения с сервером</string>

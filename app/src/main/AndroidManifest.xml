@@ -25,6 +25,8 @@
 
         <activity android:name=".feature.commandInfo.CommandInfoActivity" />
 
+        <activity android:name=".feature.userInfo.UserInfoActivity" />
+
     </application>
 
 </manifest>
