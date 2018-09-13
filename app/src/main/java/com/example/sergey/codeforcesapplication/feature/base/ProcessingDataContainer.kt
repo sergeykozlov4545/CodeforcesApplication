@@ -1,5 +1,6 @@
 package com.example.sergey.codeforcesapplication.feature.base
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
@@ -22,16 +23,18 @@ interface ProcessingDataContainer<T> {
 }
 
 abstract class ProcessingDataContainerImpl<T> : ProcessingDataContainer<T> {
-
+    protected var context: Context? = null
     private var progressView: View? = null
     private var statusMessageView: TextView? = null
 
     override fun initView(parent: View, bundle: Bundle?) {
+        context = parent.context
         progressView = parent.findViewById(R.id.progressView)
         statusMessageView = parent.findViewById(R.id.statusMessageView)
     }
 
     override fun destroyView() {
+        context = null
         progressView = null
         statusMessageView = null
     }

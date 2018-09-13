@@ -6,7 +6,6 @@ import com.example.sergey.codeforcesapplication.feature.base.presenter.Processin
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
 import com.example.sergey.codeforcesapplication.model.remote.Response
 import com.example.sergey.codeforcesapplication.model.repository.ContestsRepository
-import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 
 interface ContestStandingsPresenter : ProcessingListPresenter<RankListRow, ContestStandingsFragmentView>
@@ -15,20 +14,17 @@ class ContestStandingsPresenterImpl(private val contestsRepository: ContestsRepo
         ProcessingListPresenterImpl<RankListRow, ContestStandingsFragmentView>(),
         ContestStandingsPresenter {
 
-    override fun loadedFunction(): Deferred<Response<List<RankListRow>>> = async {
+    override fun loadedFunction() = async {
         val contestId = getView()?.getContestId()
                 ?: return@async Response.FAILED<List<RankListRow>>()
 
-        val contestStandingsResponse = contestsRepository.getContestStandings(contestId).await()
+        val response = contestsRepository.getContestStandings(contestId).await()
 
-        if (!contestStandingsResponse.isSuccess) {
-            return@async Response<List<RankListRow>>(
-                    contestStandingsResponse.status,
-                    contestStandingsResponse.comment
-            )
+        return@async if (!response.isSuccess) {
+            Response.FAILED(comment = response.comment)
+        } else {
+            Response(result = response.result!!.ranks)
         }
-
-        return@async Response(result = contestStandingsResponse.result!!.ranks)
     }
 
     override val emptyListMessage: Int

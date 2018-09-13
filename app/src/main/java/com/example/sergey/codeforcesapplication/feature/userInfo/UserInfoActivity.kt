@@ -3,10 +3,14 @@ package com.example.sergey.codeforcesapplication.feature.userInfo
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.feature.base.activity.BaseActivity
+import com.example.sergey.codeforcesapplication.feature.base.activity.ProcessingFragmentActivity
+import com.example.sergey.codeforcesapplication.feature.userInfo.fragment.UserInfoFragment
 
-class UserInfoActivity : BaseActivity() {
+class UserInfoActivity : ProcessingFragmentActivity() {
+    override val fragment: Fragment
+        get() = UserInfoFragment.create(userHandler)
 
     private lateinit var userHandler: String
 
@@ -32,7 +36,7 @@ class UserInfoActivity : BaseActivity() {
     }
 
     companion object {
-        private const val USER_HANDLER_EXTRA = "user_handler"
+        const val USER_HANDLER_EXTRA = "user_handler"
 
         fun start(context: Context, userHandler: String) {
             context.startActivity(

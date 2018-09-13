@@ -11,6 +11,6 @@ data class Response<T>(
         get() = status == "OK"
 
     companion object {
-        fun <T> FAILED() = Response<T>(status = "FAILED")
+        fun <T> FAILED(comment: String = "") = Response<T>(status = "FAILED", comment = comment)
     }
 }
