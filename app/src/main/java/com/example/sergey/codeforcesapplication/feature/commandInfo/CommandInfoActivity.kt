@@ -25,6 +25,15 @@ class CommandInfoActivity : ProcessingFragmentActivity() {
         setToolbarTitle(teamName)
     }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+
+        outState?.apply {
+            putString(COMMAND_NAME_EXTRA, teamName)
+            putString(COMMAND_HANDLERS_EXTRA, handlers)
+        }
+    }
+
     private fun restoreData(savedInstanceState: Bundle?) {
         teamName = savedInstanceState?.getString(COMMAND_NAME_EXTRA)
                 ?: intent.getStringExtra(COMMAND_NAME_EXTRA)

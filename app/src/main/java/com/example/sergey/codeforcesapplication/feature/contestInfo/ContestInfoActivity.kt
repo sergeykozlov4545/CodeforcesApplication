@@ -26,13 +26,6 @@ class ContestInfoActivity : TabbedActivity() {
         setToolbarTitle(contestName)
     }
 
-    private fun restoreData(savedInstanceState: Bundle?) {
-        contestId = savedInstanceState?.getLong(CONTEST_ID_EXTRA, 0)
-                ?: intent.getLongExtra(CONTEST_ID_EXTRA, 0)
-        contestName = savedInstanceState?.getString(CONTEST_NAME_EXTRA)
-                ?: intent.getStringExtra(CONTEST_NAME_EXTRA)
-    }
-
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
@@ -40,6 +33,13 @@ class ContestInfoActivity : TabbedActivity() {
             putLong(CONTEST_ID_EXTRA, contestId)
             putString(CONTEST_NAME_EXTRA, contestName)
         }
+    }
+
+    private fun restoreData(savedInstanceState: Bundle?) {
+        contestId = savedInstanceState?.getLong(CONTEST_ID_EXTRA, 0)
+                ?: intent.getLongExtra(CONTEST_ID_EXTRA, 0)
+        contestName = savedInstanceState?.getString(CONTEST_NAME_EXTRA)
+                ?: intent.getStringExtra(CONTEST_NAME_EXTRA)
     }
 
     companion object {
