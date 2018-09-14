@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <FrameLayout
+        android:id="@+id/processingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressView"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/statusMessageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/userInfoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/grayListBackground"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/avatarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="192dp"
+                android:scaleType="centerCrop" />
+
+            <include layout="@layout/activity_user_info_item_main_info" />
+
+            <include layout="@layout/activity_user_info_item_social_info" />
+
+            <include layout="@layout/activity_user_info_item_rating_info" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</android.support.v4.widget.NestedScrollView>
