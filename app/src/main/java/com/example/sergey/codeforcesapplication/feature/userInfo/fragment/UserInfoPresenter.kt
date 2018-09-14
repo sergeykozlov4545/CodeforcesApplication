@@ -13,7 +13,7 @@ class UserInfoPresenterImpl(private val contestsRepository: ContestsRepository) 
         ProcessingPresenterImpl<User, UserInfoFragmentView>(), UserInfoPresenter {
 
     override fun loadedFunction() = async {
-        val handler = getView()?.getUserHandler()
+        val handler = getView()?.userHandler
                 ?: return@async Response.FAILED<User>()
 
         val response = contestsRepository.getUsersInfo(arrayListOf(handler)).await()

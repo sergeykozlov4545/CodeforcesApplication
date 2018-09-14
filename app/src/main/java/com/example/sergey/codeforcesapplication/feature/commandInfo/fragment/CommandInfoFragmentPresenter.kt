@@ -14,7 +14,7 @@ class CommandInfoFragmentPresenterImpl(private val contestsRepository: ContestsR
         ProcessingListPresenterImpl<User, CommandInfoFragmentView>(), CommandInfoFragmentPresenter {
 
     override fun loadedFunction() = async {
-        val handlers = getView()?.getHandlers()
+        val handlers = getView()?.handlers
                 ?: return@async Response.FAILED<List<User>>()
         return@async contestsRepository.getUsersInfo(handlers).await()
     }
