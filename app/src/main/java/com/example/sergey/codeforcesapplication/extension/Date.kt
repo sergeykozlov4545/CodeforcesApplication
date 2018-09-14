@@ -5,4 +5,4 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @SuppressLint("SimpleDateFormat")
-fun Date.format() = SimpleDateFormat("dd.MM.yyyy hh:mm").format(this)!!
+fun Date.format() = SimpleDateFormat("HH:mm, dd.MM.yyyy").format(this)!!
