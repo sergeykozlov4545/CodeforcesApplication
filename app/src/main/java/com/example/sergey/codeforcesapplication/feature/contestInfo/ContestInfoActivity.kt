@@ -43,7 +43,7 @@ class ContestInfoActivity : TabbedActivity() {
     }
 
     companion object {
-        private const val CONTEST_ID_EXTRA = "contest_id"
+        const val CONTEST_ID_EXTRA = "contest_id"
         private const val CONTEST_NAME_EXTRA = "contest_name"
 
         fun start(context: Context, contest: Contest) {

@@ -15,7 +15,7 @@ class ProblemsListFragmentPresenterImpl(private val contestsRepository: Contests
         ProblemsListFragmentPresenter {
 
     override fun loadedFunction() = async {
-        val contestId = getView()?.getContestId()
+        val contestId = getView()?.contestId
                 ?: return@async Response.FAILED<List<Problem>>()
 
         val response = contestsRepository.getContestStandings(contestId).await()

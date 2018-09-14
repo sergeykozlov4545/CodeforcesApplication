@@ -15,7 +15,7 @@ class ContestStandingsPresenterImpl(private val contestsRepository: ContestsRepo
         ContestStandingsPresenter {
 
     override fun loadedFunction() = async {
-        val contestId = getView()?.getContestId()
+        val contestId = getView()?.contestId
                 ?: return@async Response.FAILED<List<RankListRow>>()
 
         val response = contestsRepository.getContestStandings(contestId).await()
