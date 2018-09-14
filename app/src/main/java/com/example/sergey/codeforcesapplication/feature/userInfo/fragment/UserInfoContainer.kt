@@ -9,9 +9,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.sergey.codeforcesapplication.R
+import com.example.sergey.codeforcesapplication.extension.format
 import com.example.sergey.codeforcesapplication.extension.show
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingDataContainerImpl
 import com.example.sergey.codeforcesapplication.model.pojo.User
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class UserInfoContainer(private val ratingClick: (User) -> Unit) : ProcessingDataContainerImpl<User>() {
     private var userInfoContainer: LinearLayout? = null
@@ -24,6 +27,7 @@ class UserInfoContainer(private val ratingClick: (User) -> Unit) : ProcessingDat
     private var lastNameView: TextView? = null
     private var userCountryView: TextView? = null
     private var userCityView: TextView? = null
+    private var userRegistrationView: TextView? = null
 
     // Социальное
     private var userEmailView: TextView? = null
@@ -45,6 +49,7 @@ class UserInfoContainer(private val ratingClick: (User) -> Unit) : ProcessingDat
         lastNameView = parent.findViewById(R.id.lastNameView)
         userCountryView = parent.findViewById(R.id.userCountryView)
         userCityView = parent.findViewById(R.id.userCityView)
+        userRegistrationView = parent.findViewById(R.id.userRegistrationView)
         userEmailView = parent.findViewById(R.id.userEmailView)
         userVkIdView = parent.findViewById(R.id.userVkIdView)
         userOpenIdView = parent.findViewById(R.id.userOpenIdView)
@@ -63,6 +68,7 @@ class UserInfoContainer(private val ratingClick: (User) -> Unit) : ProcessingDat
         lastNameView = null
         userCountryView = null
         userCityView = null
+        userRegistrationView = null
         userEmailView = null
         userVkIdView = null
         userOpenIdView = null
@@ -93,6 +99,9 @@ class UserInfoContainer(private val ratingClick: (User) -> Unit) : ProcessingDat
         lastNameView?.text = user.lastName ?: context!!.getString(R.string.unknown)
         userCountryView?.text = user.country ?: context!!.getString(R.string.unknown)
         userCityView?.text = user.city ?: context!!.getString(R.string.unknown)
+
+        val date = Date(TimeUnit.MILLISECONDS.convert(user.registrationTimeSeconds, TimeUnit.SECONDS))
+        userRegistrationView?.text = date.format()
     }
 
     private fun showSocialUserInfo(user: User) {
