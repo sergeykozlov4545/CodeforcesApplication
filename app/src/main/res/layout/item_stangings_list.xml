@@ -20,8 +20,9 @@
         android:minWidth="25dp"
         android:textColor="@android:color/black"
         android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/membersView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/membersView"
         tools:text="1111" />
 
     <TextView
@@ -35,9 +36,10 @@
         android:layout_weight="1"
         android:textColor="@android:color/black"
         android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/pointsView"
         app:layout_constraintStart_toEndOf="@+id/rankView"
-        app:layout_constraintTop_toTopOf="@+id/rankView"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="tourist" />
 
     <TextView
@@ -48,6 +50,7 @@
         android:minWidth="60dp"
         android:textColor="@android:color/black"
         android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/membersView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/membersView"
         tools:text="8745" />
