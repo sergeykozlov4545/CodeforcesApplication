@@ -47,11 +47,11 @@
                 android:minHeight="192dp"
                 android:scaleType="centerCrop" />
 
-            <include layout="@layout/activity_user_info_item_main_info" />
+            <include layout="@layout/fragment_user_info_item_main_info" />
 
-            <include layout="@layout/activity_user_info_item_social_info" />
+            <include layout="@layout/fragment_user_info_item_social_info" />
 
-            <include layout="@layout/activity_user_info_item_rating_info" />
+            <include layout="@layout/fragment_user_info_item_rating_info" />
 
         </LinearLayout>
 
