@@ -12,5 +12,6 @@ data class Response<T>(
 
     companion object {
         fun <T> FAILED(comment: String = "") = Response<T>(status = "FAILED", comment = comment)
+        fun <T> OK(result: T) = Response(status = "OK", result = result)
     }
 }
