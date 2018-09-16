@@ -1,4 +1,4 @@
-package com.example.sergey.codeforcesapplication.feature.userInfo.fragment
+package com.example.sergey.codeforcesapplication.feature.userInfo
 
 import android.annotation.SuppressLint
 import android.os.Bundle

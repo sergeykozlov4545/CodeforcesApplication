@@ -3,16 +3,20 @@ package com.example.sergey.codeforcesapplication.feature.userInfo
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.feature.base.activity.ProcessingFragmentActivity
-import com.example.sergey.codeforcesapplication.feature.userInfo.fragment.UserInfoFragment
+import com.example.sergey.codeforcesapplication.feature.base.activity.ProcessingActivity
+import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingView
+import com.example.sergey.codeforcesapplication.model.pojo.User
 
-class UserInfoActivity : ProcessingFragmentActivity() {
-    override val fragment: Fragment
-        get() = UserInfoFragment.create(userHandler)
 
-    private lateinit var userHandler: String
+interface UserInfoView : ProcessingView<User> {
+    val userHandler: String
+}
+
+class UserInfoActivity : ProcessingActivity<User, UserInfoView>(), UserInfoView {
+    override val processingContainer by lazy { UserInfoContainerFactory.create(this) }
+    override val presenter by lazy { UserInfoPresenterFactory.create(this) }
+    override lateinit var userHandler: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

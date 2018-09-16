@@ -1,4 +1,4 @@
-package com.example.sergey.codeforcesapplication.feature.userInfo.fragment
+package com.example.sergey.codeforcesapplication.feature.userInfo
 
 import android.content.Context
 import com.example.sergey.codeforcesapplication.application.CodeforcesApplication

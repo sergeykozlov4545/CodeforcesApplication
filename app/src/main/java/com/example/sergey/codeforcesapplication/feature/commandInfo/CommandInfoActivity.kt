@@ -6,7 +6,6 @@ import android.os.Bundle
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl.Companion.BACKGROUND_COLOR_EXTRA
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl.Companion.VISIBLE_DIVIDERS_EXTRA
-import com.example.sergey.codeforcesapplication.feature.base.activity.ProcessingActivity
 import com.example.sergey.codeforcesapplication.feature.base.activity.ProcessingListActivity
 import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingListView
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
@@ -57,8 +56,7 @@ class CommandInfoActivity :
             // TODO: Использовать KTX
             context.startActivity(
                     Intent(context, CommandInfoActivity::class.java).apply {
-                        putExtra(ProcessingActivity.PARENT_ID_EXTRA, R.id.processingContainer)
-                        putExtra(ProcessingActivity.ARGUMENTS_BUNDLE_EXTRA, Bundle().apply {
+                        putExtra(DATA_CONTAINER_ARGUMENTS_BUNDLE_EXTRA, Bundle().apply {
                             putInt(BACKGROUND_COLOR_EXTRA, android.R.color.white)
                             putBoolean(VISIBLE_DIVIDERS_EXTRA, true)
                         })

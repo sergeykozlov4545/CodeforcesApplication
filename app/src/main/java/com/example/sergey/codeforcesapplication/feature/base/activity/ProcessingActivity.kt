@@ -15,24 +15,15 @@ abstract class ProcessingActivity<T, V : ProcessingView<T>> : BaseActivity(), Pr
     abstract val processingContainer: ProcessingDataContainer<T>
     abstract val presenter: ProcessingPresenter<T, V>
 
-    private var parentId: Int = 0
     private var arguments: Bundle? = null
-
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-        parentId = savedInstanceState?.getInt(PARENT_ID_EXTRA, 0)
-                ?: intent.getIntExtra(PARENT_ID_EXTRA, 0)
+        arguments = savedInstanceState?.getParcelable(DATA_CONTAINER_ARGUMENTS_BUNDLE_EXTRA)
+                ?: intent.getParcelableExtra(DATA_CONTAINER_ARGUMENTS_BUNDLE_EXTRA)
 
-        if (parentId == 0) {
-            throw RuntimeException("Не передан parentId")
-        }
-
-        arguments = savedInstanceState?.getParcelable(ARGUMENTS_BUNDLE_EXTRA)
-                ?: intent.getParcelableExtra(ARGUMENTS_BUNDLE_EXTRA)
-
-        processingContainer.initView(findViewById<View>(parentId), arguments)
+        processingContainer.initView(findViewById<View>(R.id.processingContainer), arguments)
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -56,8 +47,7 @@ abstract class ProcessingActivity<T, V : ProcessingView<T>> : BaseActivity(), Pr
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.apply {
-            putInt(PARENT_ID_EXTRA, parentId)
-            putParcelable(ARGUMENTS_BUNDLE_EXTRA, arguments)
+            putParcelable(DATA_CONTAINER_ARGUMENTS_BUNDLE_EXTRA, arguments)
         }
     }
 
@@ -77,8 +67,7 @@ abstract class ProcessingActivity<T, V : ProcessingView<T>> : BaseActivity(), Pr
     }
 
     companion object {
-        const val PARENT_ID_EXTRA = "parent_id"
-        const val ARGUMENTS_BUNDLE_EXTRA = "arguments_bundle"
+        const val DATA_CONTAINER_ARGUMENTS_BUNDLE_EXTRA = "arguments_bundle"
     }
 }
 
