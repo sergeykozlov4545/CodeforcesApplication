@@ -4,11 +4,21 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.feature.base.activity.BaseActivity
+import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl.Companion.BACKGROUND_COLOR_EXTRA
+import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl.Companion.VISIBLE_DIVIDERS_EXTRA
+import com.example.sergey.codeforcesapplication.feature.base.activity.ProcessingListActivity
+import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingListView
+import com.example.sergey.codeforcesapplication.model.pojo.RatingChange
 
-class RatingInfoActivity : BaseActivity() {
+interface RatingInfoView : ProcessingListView<RatingChange> {
+    val userHandler: String
+}
 
-    private lateinit var userHandler: String
+class RatingInfoActivity : ProcessingListActivity<RatingChange, RatingInfoView>(), RatingInfoView {
+
+    override val processingContainer by lazy { RatingInfoContainerFactory.create(this) }
+    override val presenter by lazy { RatingInfoPresenterFactory.create(this) }
+    override lateinit var userHandler: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +43,10 @@ class RatingInfoActivity : BaseActivity() {
 
         fun start(context: Context, userHandler: String) {
             context.startActivity(Intent(context, RatingInfoActivity::class.java).apply {
+                putExtra(DATA_CONTAINER_ARGUMENTS_BUNDLE_EXTRA, Bundle().apply {
+                    putInt(BACKGROUND_COLOR_EXTRA, android.R.color.white)
+                    putBoolean(VISIBLE_DIVIDERS_EXTRA, true)
+                })
                 putExtra(USER_HANDLER_EXTRA, userHandler)
             })
         }
