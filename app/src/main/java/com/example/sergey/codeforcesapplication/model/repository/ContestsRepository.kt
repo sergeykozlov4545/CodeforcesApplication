@@ -32,7 +32,8 @@ class ContestsRepositoryImpl(
         mutex.withLock {
             // TODO: Не хранить Response, а хранить List<Contest>
             val cachedContestsListResponse =
-                    cacheManager.getValue(CacheObjectKey.CONTESTS_LIST) as? Response<List<Contest>>
+                    cacheManager.getValue(CacheObjectKey.CONTESTS_LIST)
+                            as? Response<List<Contest>>
 
             return@withLock cachedContestsListResponse
                     ?: loadContests().await().apply {
@@ -49,7 +50,8 @@ class ContestsRepositoryImpl(
         mutex.withLock {
             // TODO: Не хранить Response, а хранить ContestInfo
             var cachedContestsStandings =
-                    cacheManager.getValue(CacheObjectKey.CONTEST_STANDINGS) as? MutableMap<Long, Response<ContestInfo>>
+                    cacheManager.getValue(CacheObjectKey.CONTEST_STANDINGS)
+                            as? MutableMap<Long, Response<ContestInfo>>
 
             if (cachedContestsStandings == null) {
                 cachedContestsStandings = HashMap()
@@ -73,8 +75,9 @@ class ContestsRepositoryImpl(
 
     override fun getUsersInfo(handlers: List<String>) = async {
         mutex.withLock {
-            var cachedUsers = cacheManager.getValue(CacheObjectKey.USERS)
-                    as? MutableMap<String, User>
+            var cachedUsers =
+                    cacheManager.getValue(CacheObjectKey.USERS)
+                            as? MutableMap<String, User>
 
             if (cachedUsers == null) {
                 cachedUsers = HashMap()
@@ -114,21 +117,45 @@ class ContestsRepositoryImpl(
     }
 
     override fun getUserRatingChangesList(handle: String) = async {
-        mutex.withLock { serviceApi.getUserRatingChangesList(handle).await() }
+        mutex.withLock {
+            var cachedRatingInfo =
+                    cacheManager.getValue(CacheObjectKey.RATINGS)
+                            as? MutableMap<String, List<RatingChange>>
+
+            if (cachedRatingInfo == null) {
+                cachedRatingInfo = HashMap()
+                cacheManager.putValue(
+                        key = CacheObjectKey.RATINGS,
+                        value = cachedRatingInfo,
+                        timeToLiveMillis = ONE_HOUR
+                )
+
+                return@async loadRatingInfo(handle).await().apply {
+                    if (isSuccess) cachedRatingInfo[handle] = this.result!!
+                }
+            }
+
+            val cachedHandleRatingInfo = cachedRatingInfo[handle]
+            if (cachedHandleRatingInfo != null) {
+                return@async Response(result = cachedHandleRatingInfo)
+            }
+
+            return@withLock loadRatingInfo(handle).await().apply {
+                if (isSuccess) cachedRatingInfo[handle] = this.result!!
+            }
+        }
     }
 
-    private fun loadContests() = async {
-        serviceApi.getContestList().await()
-    }
+    private fun loadContests() = serviceApi.getContestList()
 
     // TODO: После добавления экрана настроек получать сколько загружать вместо 100
-    private fun loadContestStandings(contestId: Long) = async {
-        serviceApi.getContestStandings(contestId, 100).await()
-    }
+    private fun loadContestStandings(contestId: Long) =
+            serviceApi.getContestStandings(contestId, 100)
 
-    private fun loadUsersInfo(handlers: List<String>) = async {
-        serviceApi.getUsersInfo(handlers.joinToString(separator = ";")).await()
-    }
+    private fun loadUsersInfo(handlers: List<String>) =
+            serviceApi.getUsersInfo(handlers.joinToString(separator = ";"))
+
+    private fun loadRatingInfo(handle: String) = serviceApi.getUserRatingChangesList(handle)
 
     companion object {
         private val ONE_HOUR = TimeUnit.HOURS.toMillis(1)
