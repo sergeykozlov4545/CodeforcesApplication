@@ -1,4 +1,4 @@
-package com.example.sergey.codeforcesapplication.feature.commandInfo.fragment
+package com.example.sergey.codeforcesapplication.feature.commandInfo
 
 import android.content.Context
 import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl

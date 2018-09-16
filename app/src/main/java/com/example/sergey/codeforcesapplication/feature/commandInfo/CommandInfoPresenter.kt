@@ -1,4 +1,4 @@
-package com.example.sergey.codeforcesapplication.feature.commandInfo.fragment
+package com.example.sergey.codeforcesapplication.feature.commandInfo
 
 import com.example.sergey.codeforcesapplication.R
 import com.example.sergey.codeforcesapplication.feature.base.presenter.ProcessingListPresenter
@@ -8,10 +8,10 @@ import com.example.sergey.codeforcesapplication.model.remote.Response
 import com.example.sergey.codeforcesapplication.model.repository.ContestsRepository
 import kotlinx.coroutines.experimental.async
 
-interface CommandInfoFragmentPresenter : ProcessingListPresenter<User, CommandInfoFragmentView>
+interface CommandInfoPresenter : ProcessingListPresenter<User, CommandInfoView>
 
-class CommandInfoFragmentPresenterImpl(private val contestsRepository: ContestsRepository) :
-        ProcessingListPresenterImpl<User, CommandInfoFragmentView>(), CommandInfoFragmentPresenter {
+class CommandInfoPresenterImpl(private val contestsRepository: ContestsRepository) :
+        ProcessingListPresenterImpl<User, CommandInfoView>(), CommandInfoPresenter {
 
     override fun loadedFunction() = async {
         val handlers = getView()?.handlers

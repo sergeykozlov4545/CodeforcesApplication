@@ -1,10 +1,10 @@
-package com.example.sergey.codeforcesapplication.feature.commandInfo.fragment
+package com.example.sergey.codeforcesapplication.feature.commandInfo
 
 import android.content.Context
 import com.example.sergey.codeforcesapplication.application.CodeforcesApplication
 
-object CommandInfoFragmentPresenterFactory {
-    fun create(context: Context) = CommandInfoFragmentPresenterImpl(
+object CommandInfoPresenterFactory {
+    fun create(context: Context) = CommandInfoPresenterImpl(
             (context.applicationContext as CodeforcesApplication).contestsRepository
     )
 }

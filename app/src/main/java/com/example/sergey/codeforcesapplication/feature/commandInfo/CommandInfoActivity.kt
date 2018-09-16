@@ -3,19 +3,28 @@ package com.example.sergey.codeforcesapplication.feature.commandInfo
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import com.example.sergey.codeforcesapplication.R
-import com.example.sergey.codeforcesapplication.feature.base.activity.ProcessingFragmentActivity
-import com.example.sergey.codeforcesapplication.feature.commandInfo.fragment.CommandInfoFragment
+import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl.Companion.BACKGROUND_COLOR_EXTRA
+import com.example.sergey.codeforcesapplication.feature.base.ProcessingListDataContainerImpl.Companion.VISIBLE_DIVIDERS_EXTRA
+import com.example.sergey.codeforcesapplication.feature.base.activity.ProcessingActivity
+import com.example.sergey.codeforcesapplication.feature.base.activity.ProcessingListActivity
+import com.example.sergey.codeforcesapplication.feature.base.view.ProcessingListView
 import com.example.sergey.codeforcesapplication.model.pojo.RankListRow
+import com.example.sergey.codeforcesapplication.model.pojo.User
 
-class CommandInfoActivity : ProcessingFragmentActivity() {
+interface CommandInfoView : ProcessingListView<User> {
+    val handlers: List<String>
+}
 
-    override val fragment: Fragment
-        get() = CommandInfoFragment.create(handlers)
+class CommandInfoActivity :
+        ProcessingListActivity<User, CommandInfoView>(), CommandInfoView {
+
+    override val processingContainer by lazy { CommandInfoContainerFactory.create(this) }
+    override val presenter by lazy { CommandInfoPresenterFactory.create(this) }
+    override val handlers by lazy { handlersString.split(",") }
 
     private lateinit var teamName: String
-    private lateinit var handlers: String
+    private lateinit var handlersString: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,17 +36,16 @@ class CommandInfoActivity : ProcessingFragmentActivity() {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-
         outState?.apply {
             putString(COMMAND_NAME_EXTRA, teamName)
-            putString(COMMAND_HANDLERS_EXTRA, handlers)
+            putString(COMMAND_HANDLERS_EXTRA, handlersString)
         }
     }
 
     private fun restoreData(savedInstanceState: Bundle?) {
         teamName = savedInstanceState?.getString(COMMAND_NAME_EXTRA)
                 ?: intent.getStringExtra(COMMAND_NAME_EXTRA)
-        handlers = savedInstanceState?.getString(COMMAND_HANDLERS_EXTRA)
+        handlersString = savedInstanceState?.getString(COMMAND_HANDLERS_EXTRA)
                 ?: intent.getStringExtra(COMMAND_HANDLERS_EXTRA)
     }
 
@@ -49,6 +57,11 @@ class CommandInfoActivity : ProcessingFragmentActivity() {
             // TODO: Использовать KTX
             context.startActivity(
                     Intent(context, CommandInfoActivity::class.java).apply {
+                        putExtra(ProcessingActivity.PARENT_ID_EXTRA, R.id.processingContainer)
+                        putExtra(ProcessingActivity.ARGUMENTS_BUNDLE_EXTRA, Bundle().apply {
+                            putInt(BACKGROUND_COLOR_EXTRA, android.R.color.white)
+                            putBoolean(VISIBLE_DIVIDERS_EXTRA, true)
+                        })
                         putExtra(COMMAND_NAME_EXTRA, rankListRow.party.teamName)
                         putExtra(COMMAND_HANDLERS_EXTRA, rankListRow.party.membersString)
                     }
