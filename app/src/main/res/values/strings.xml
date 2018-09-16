@@ -51,6 +51,10 @@
     <string name="userMaxRating">Максимальный рейтинг:</string>
     <string name="userRatingDetails">Детализация рейтинга</string>
 
+    <!--Экран детализации рейтинга-->
+    <string name="activityRatingInfoTitle">Детализация рейтинга %s</string>
+    <string name="ratingChangeListIsEmpty">Пользователь не участвовал в соревнованиях</string>
+
     <!--другое-->
     <string name="unknown">неизвестно</string>
     <string name="noConnectionServer">Нет соединения с сервером</string>

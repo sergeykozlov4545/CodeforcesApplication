@@ -28,6 +28,8 @@
 
         <activity android:name=".feature.userInfo.UserInfoActivity" />
 
+        <activity android:name=".feature.ratingInfo.RatingInfoActivity" />
+
     </application>
 
 </manifest>
