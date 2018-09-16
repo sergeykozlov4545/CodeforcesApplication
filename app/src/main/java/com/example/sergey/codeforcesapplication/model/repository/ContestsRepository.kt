@@ -4,6 +4,7 @@ import com.example.sergey.codeforcesapplication.model.cache.CacheManager
 import com.example.sergey.codeforcesapplication.model.cache.CacheObjectKey
 import com.example.sergey.codeforcesapplication.model.pojo.Contest
 import com.example.sergey.codeforcesapplication.model.pojo.ContestInfo
+import com.example.sergey.codeforcesapplication.model.pojo.RatingChange
 import com.example.sergey.codeforcesapplication.model.pojo.User
 import com.example.sergey.codeforcesapplication.model.remote.Response
 import com.example.sergey.codeforcesapplication.model.remote.ServiceApi
@@ -17,6 +18,7 @@ interface ContestsRepository {
     fun getContests(): Deferred<Response<List<Contest>>>
     fun getContestStandings(contestId: Long): Deferred<Response<ContestInfo>>
     fun getUsersInfo(handlers: List<String>): Deferred<Response<List<User>>>
+    fun getUserRatingChangesList(handle: String): Deferred<Response<List<RatingChange>>>
 }
 
 class ContestsRepositoryImpl(
@@ -69,7 +71,7 @@ class ContestsRepositoryImpl(
         }
     }
 
-    override fun getUsersInfo(handlers: List<String>): Deferred<Response<List<User>>> = async {
+    override fun getUsersInfo(handlers: List<String>) = async {
         mutex.withLock {
             var cachedUsers = cacheManager.getValue(CacheObjectKey.USERS)
                     as? MutableMap<String, User>
@@ -109,6 +111,10 @@ class ContestsRepositoryImpl(
                     result = if (response.isSuccess) users.toList() else null
             )
         }
+    }
+
+    override fun getUserRatingChangesList(handle: String) = async {
+        mutex.withLock { serviceApi.getUserRatingChangesList(handle).await() }
     }
 
     private fun loadContests() = async {
